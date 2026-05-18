@@ -266,7 +266,7 @@ const App = {
         closeOtherMenu();
 
         // モバイル表示用に body 直下に移動 (親要素の hidden の影響を避ける)
-        window.appRef.current.body.appendChild(menu);
+        document.body.appendChild(menu);
 
         menu.classList.remove('hidden');
         menu.classList.add('mobile-menu-fixed');
