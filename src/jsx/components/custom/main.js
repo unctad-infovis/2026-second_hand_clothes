@@ -521,20 +521,20 @@ const App = {
     const catBadge = flowCat ? `<span class="si-badge" style="color:${CONFIG.flowColors[flowCat]};border-color:${CONFIG.flowColors[flowCat]}55">${catLabels[flowCat]}</span>` : '';
 
     let html = `
-    <div class="si-kpi-grid cols-3">
-      <div class="si-kpi-card exp">
-        <div class="si-kpi-label">${expName} →</div>
-        <div class="si-kpi-value">${mf.fmt(curAtoB)}</div>
+      <div class="si-kpi-grid cols-3">
+        <div class="si-kpi-card exp">
+          <div class="si-kpi-label">${expName} →</div>
+          <div class="si-kpi-value">${mf.fmt(curAtoB)}</div>
+        </div>
+        <div class="si-kpi-card net">
+          <div class="si-kpi-label">Net (${cy})</div>
+          <div class="si-kpi-value" style="color:${netCol}">${netSign}${mf.fmt(Math.abs(curNet))}</div>
+        </div>
+        <div class="si-kpi-card imp">
+          <div class="si-kpi-label">← ${impName}</div>
+          <div class="si-kpi-value">${mf.fmt(curBtoA)}</div>
+        </div>
       </div>
-      <div class="si-kpi-card net">
-        <div class="si-kpi-label">Net (${cy})</div>
-        <div class="si-kpi-value" style="color:${netCol}">${netSign}${mf.fmt(Math.abs(curNet))}</div>
-      </div>
-      <div class="si-kpi-card imp">
-        <div class="si-kpi-label">← ${impName}</div>
-        <div class="si-kpi-value">${mf.fmt(curBtoA)}</div>
-      </div>
-    </div>
     ${catBadge ? `<div style="text-align:center;margin-bottom:12px">${catBadge}</div>` : ''}`;
 
     const W = 440,
@@ -550,25 +550,25 @@ const App = {
         const isCur = y === cy;
         const yr = String(y).slice(2);
         return `
-        <rect x="${x}" y="${H / 2 - aH}" width="${bw}" height="${aH}" rx="1" fill="#009EDB" opacity="${isCur ? 1 : 0.45}"/>
-        <rect x="${x}" y="${H / 2}" width="${bw}" height="${bH}" rx="1" fill="#ED1847" opacity="${isCur ? 1 : 0.45}"/>
-        ${isCur ? `<rect x="${x - 0.5}" y="2" width="${bw + 1}" height="${H - 4}" rx="2" fill="none" stroke="#0077B8" stroke-width="1"/>` : ''}
-        <text x="${x + bw / 2}" y="${H + 11}" text-anchor="middle" font-size="7" fill="${isCur ? '#0077B8' : '#AEA29A'}" font-family="Inter,monospace">${yr}</text>`;
+          <rect x="${x}" y="${H / 2 - aH}" width="${bw}" height="${aH}" rx="1" fill="#009EDB" opacity="${isCur ? 1 : 0.45}"/>
+          <rect x="${x}" y="${H / 2}" width="${bw}" height="${bH}" rx="1" fill="#ED1847" opacity="${isCur ? 1 : 0.45}"/>
+          ${isCur ? `<rect x="${x - 0.5}" y="2" width="${bw + 1}" height="${H - 4}" rx="2" fill="none" stroke="#0077B8" stroke-width="1"/>` : ''}
+          <text x="${x + bw / 2}" y="${H + 11}" text-anchor="middle" font-size="7" fill="${isCur ? '#0077B8' : '#AEA29A'}" font-family="Inter,monospace">${yr}</text>`;
       })
       .join('');
 
     html += `
-    <div class="si-section">
-      <div class="si-label">Bilateral Trade History</div>
-      <div class="si-chart-legend">
-        <div class="si-legend-item"><div class="si-legend-swatch" style="background:#009EDB"></div><span>${expName} exports</span></div>
-        <div class="si-legend-item"><div class="si-legend-swatch" style="background:#ED1847"></div><span>${impName} exports</span></div>
-      </div>
-      <svg width="${W}" height="${H + 14}" style="width:100%;overflow:visible">
-        <line x1="0" y1="${H / 2}" x2="${W}" y2="${H / 2}" stroke="#DED9D5" stroke-width="0.5"/>
-        ${bars}
-      </svg>
-    </div>`;
+      <div class="si-section">
+        <div class="si-label">Bilateral Trade History</div>
+        <div class="si-chart-legend">
+          <div class="si-legend-item"><div class="si-legend-swatch" style="background:#009EDB"></div><span>${expName} exports</span></div>
+          <div class="si-legend-item"><div class="si-legend-swatch" style="background:#ED1847"></div><span>${impName} exports</span></div>
+        </div>
+        <svg width="${W}" height="${H + 14}" style="width:100%;overflow:visible">
+          <line x1="0" y1="${H / 2}" x2="${W}" y2="${H / 2}" stroke="#DED9D5" stroke-width="0.5"/>
+          ${bars}
+        </svg>
+      </div>`;
 
     const tableRows = years
       .filter(y => atoBs[years.indexOf(y)] > 0 || bToAs[years.indexOf(y)] > 0)
@@ -577,30 +577,31 @@ const App = {
         const net = nets[idx];
         const nCol = net >= 0 ? '#009EDB' : '#ED1847';
         const isCur = y === cy;
-        return `<tr${isCur ? ' class="row-cur"' : ''}>
-        <td class="al${isCur ? ' cur' : ' muted'}">${y}</td>
-        <td class="ar" style="color:#0077B8">${mf.fmt(atoBs[idx])}</td>
-        <td class="ar" style="color:#ED1847">${mf.fmt(bToAs[idx])}</td>
-        <td class="ar bold" style="color:${nCol}">${net >= 0 ? '+' : ''}${mf.fmt(Math.abs(net))}</td>
-      </tr>`;
+        return `
+          <tr${isCur ? ' class="row-cur"' : ''}>
+            <td class="al${isCur ? ' cur' : ' muted'}">${y}</td>
+            <td class="ar" style="color:#0077B8">${mf.fmt(atoBs[idx])}</td>
+            <td class="ar" style="color:#ED1847">${mf.fmt(bToAs[idx])}</td>
+            <td class="ar bold" style="color:${nCol}">${net >= 0 ? '+' : ''}${mf.fmt(Math.abs(net))}</td>
+          </tr>`;
       })
       .join('');
 
     html += `
-    <div class="si-section">
-      <div class="si-label">Year-by-Year Table</div>
-      <table class="si-table">
-        <thead>
-          <tr>
-            <th class="al">Year</th>
-            <th class="ar" style="color:#0077B8">${expName} →</th>
-            <th class="ar" style="color:#ED1847">← ${impName}</th>
-            <th class="ar">Net</th>
-          </tr>
-        </thead>
-        <tbody>${tableRows}</tbody>
-      </table>
-    </div>`;
+      <div class="si-section">
+        <div class="si-label">Year-by-Year Table</div>
+        <table class="si-table">
+          <thead>
+            <tr>
+              <th class="al">Year</th>
+              <th class="ar" style="color:#0077B8">${expName} →</th>
+              <th class="ar" style="color:#ED1847">← ${impName}</th>
+              <th class="ar">Net</th>
+            </tr>
+          </thead>
+          <tbody>${tableRows}</tbody>
+        </table>
+      </div>`;
 
     return html;
   },
@@ -666,27 +667,28 @@ const App = {
       .map(r => {
         const hlA = r.winA === true ? 'color:#72BF44' : r.winA === false ? 'color:#ED1847' : '';
         const hlB = r.winA === false ? 'color:#72BF44' : r.winA === true ? 'color:#ED1847' : '';
-        return `<tr>
-        <td class="ar" style="${hlA}">${r.vA}</td>
-        <td class="ac muted bold" style="font-size:9px;text-transform:uppercase;letter-spacing:0.04em">${r.label}</td>
-        <td style="${hlB}">${r.vB}</td>
-      </tr>`;
+        return `
+          <tr>
+            <td class="ar" style="${hlA}">${r.vA}</td>
+            <td class="ac muted bold" style="font-size:9px;text-transform:uppercase;letter-spacing:0.04em">${r.label}</td>
+            <td style="${hlB}">${r.vB}</td>
+          </tr>`;
       })
       .join('');
 
     let html = `
-    <div class="si-kpi-grid cols-3" style="margin-bottom:12px">
-      <div class="si-kpi-card exp" style="border-radius:8px 0 0 8px;border-right:none">
-        <div class="si-kpi-value" style="font-size:11px">${nameA}</div>
+      <div class="si-kpi-grid cols-3" style="margin-bottom:12px">
+        <div class="si-kpi-card exp" style="border-radius:8px 0 0 8px;border-right:none">
+          <div class="si-kpi-value" style="font-size:11px">${nameA}</div>
+        </div>
+        <div class="si-kpi-card net" style="border-radius:0;display:flex;align-items:center;justify-content:center">
+          <span style="color:#AEA29A;font-weight:700;font-size:14px">vs</span>
+        </div>
+        <div class="si-kpi-card" style="border-radius:0 8px 8px 0;border-left:none;background:rgba(251,175,23,0.1);border:1px solid rgba(251,175,23,0.3)">
+          <div class="si-kpi-value" style="font-size:11px;color:#b45309">${nameB}</div>
+        </div>
       </div>
-      <div class="si-kpi-card net" style="border-radius:0;display:flex;align-items:center;justify-content:center">
-        <span style="color:#AEA29A;font-weight:700;font-size:14px">vs</span>
-      </div>
-      <div class="si-kpi-card" style="border-radius:0 8px 8px 0;border-left:none;background:rgba(251,175,23,0.1);border:1px solid rgba(251,175,23,0.3)">
-        <div class="si-kpi-value" style="font-size:11px;color:#b45309">${nameB}</div>
-      </div>
-    </div>
-    <table class="si-table" style="margin-bottom:14px">${headerRows}</table>`;
+      <table class="si-table" style="margin-bottom:14px">${headerRows}</table>`;
 
     const W = 580,
       H = 60,
@@ -727,18 +729,18 @@ const App = {
       .join('');
 
     html += `
-    <div class="si-section">
-      <div class="si-label">Trade Volume Trend</div>
-      <div class="si-chart-legend">
-        <div class="si-legend-item"><div class="si-legend-swatch" style="background:#009EDB;height:2px"></div><span>${nameA}</span></div>
-        <div class="si-legend-item"><div class="si-legend-swatch" style="background:#FBAF17;height:2px"></div><span>${nameB}</span></div>
-      </div>
-      <svg width="${W}" height="${H + 16}" style="width:100%;overflow:visible">
-        <polyline points="${points(totA)}" fill="none" stroke="#009EDB" stroke-width="1.5" opacity="0.8"/>
-        <polyline points="${points(totB)}" fill="none" stroke="#B06E2A" stroke-width="1.5" opacity="0.8"/>
-        ${dotsA}${dotsB}${xLabels}
-      </svg>
-    </div>`;
+      <div class="si-section">
+        <div class="si-label">Trade Volume Trend</div>
+        <div class="si-chart-legend">
+          <div class="si-legend-item"><div class="si-legend-swatch" style="background:#009EDB;height:2px"></div><span>${nameA}</span></div>
+          <div class="si-legend-item"><div class="si-legend-swatch" style="background:#FBAF17;height:2px"></div><span>${nameB}</span></div>
+        </div>
+        <svg width="${W}" height="${H + 16}" style="width:100%;overflow:visible">
+          <polyline points="${points(totA)}" fill="none" stroke="#009EDB" stroke-width="1.5" opacity="0.8"/>
+          <polyline points="${points(totB)}" fill="none" stroke="#B06E2A" stroke-width="1.5" opacity="0.8"/>
+          ${dotsA}${dotsB}${xLabels}
+        </svg>
+      </div>`;
 
     const tableRows = years
       .filter(y => totA[y] > 0 || totB[y] > 0)
@@ -746,28 +748,29 @@ const App = {
       .map(y => {
         const isCur = y === STATE.year;
         const winA = totA[y] > totB[y];
-        return `<tr${isCur ? ' class="row-cur"' : ''}>
-        <td class="ar" style="color:${winA ? '#72BF44' : '#AEA29A'}">${mf.fmt(totA[y])}</td>
-        <td class="ac${isCur ? ' cur' : ' muted'}">${y}</td>
-        <td style="color:${!winA ? '#72BF44' : '#AEA29A'}">${mf.fmt(totB[y])}</td>
-      </tr>`;
+        return `
+          <tr${isCur ? ' class="row-cur"' : ''}>
+            <td class="ar" style="color:${winA ? '#72BF44' : '#AEA29A'}">${mf.fmt(totA[y])}</td>
+            <td class="ac${isCur ? ' cur' : ' muted'}">${y}</td>
+            <td style="color:${!winA ? '#72BF44' : '#AEA29A'}">${mf.fmt(totB[y])}</td>
+          </tr>`;
       })
       .join('');
 
     html += `
-    <div class="si-section">
-      <div class="si-label">Year-by-Year Comparison</div>
-      <table class="si-table">
-        <thead>
-          <tr>
-            <th class="ar" style="color:#0077B8">${nameA}</th>
-            <th class="ac">Year</th>
-            <th style="color:#B06E2A">${nameB}</th>
-          </tr>
-        </thead>
-        <tbody>${tableRows}</tbody>
-      </table>
-    </div>`;
+      <div class="si-section">
+        <div class="si-label">Year-by-Year Comparison</div>
+        <table class="si-table">
+          <thead>
+            <tr>
+              <th class="ar" style="color:#0077B8">${nameA}</th>
+              <th class="ac">Year</th>
+              <th style="color:#B06E2A">${nameB}</th>
+            </tr>
+          </thead>
+          <tbody>${tableRows}</tbody>
+        </table>
+      </div>`;
 
     return html;
   },
@@ -786,31 +789,33 @@ const App = {
 
     let html = '';
 
-    html += `<div class="si-narrative-box">
-      <div class="si-narrative-title">Auto Insights</div>
-      ${this._generateNarrative(iso, stats, partnerExports, partnerImports, yearlyTotals, mf)}
-    </div>`;
+    html += `
+      <div class="si-narrative-box">
+        <div class="si-narrative-title">Auto Insights</div>
+        ${this._generateNarrative(iso, stats, partnerExports, partnerImports, yearlyTotals, mf)}
+      </div>`;
 
     if (!stats) return html;
 
     const isExp = stats.netBalance >= 0;
     const balColor = isExp ? '#009EDB' : '#ED1847';
-    html += `<div class="si-section">
-      <div class="si-label">Key Metrics (${STATE.year})</div>
-      <div class="si-kpi-grid cols-2">
-        <div class="si-kpi-card net">
-          <div class="si-kpi-label">${mf.grossLabel.replace(':', '')}</div>
-          <div class="si-kpi-value">${mf.fmt(stats.grossVolume)}</div>
+    html += `
+      <div class="si-section">
+        <div class="si-label">Key Metrics (${STATE.year})</div>
+        <div class="si-kpi-grid cols-2">
+          <div class="si-kpi-card net">
+            <div class="si-kpi-label">${mf.grossLabel.replace(':', '')}</div>
+            <div class="si-kpi-value">${mf.fmt(stats.grossVolume)}</div>
+          </div>
+          <div class="si-kpi-card ${isExp ? 'exp' : 'imp'}">
+            <div class="si-kpi-label">${mf.netLabel.replace(':', '')}</div>
+            <div class="si-kpi-value" style="color:${balColor}">${isExp ? '+' : ''}${mf.fmt(Math.abs(stats.netBalance))}</div>
+          </div>
         </div>
-        <div class="si-kpi-card ${isExp ? 'exp' : 'imp'}">
-          <div class="si-kpi-label">${mf.netLabel.replace(':', '')}</div>
-          <div class="si-kpi-value" style="color:${balColor}">${isExp ? '+' : ''}${mf.fmt(Math.abs(stats.netBalance))}</div>
+        <div class="si-role-wrap">
+          <span class="si-role-badge ${isExp ? 'exp' : 'imp'}">${isExp ? 'Net Exporter' : 'Net Importer'}</span>
         </div>
-      </div>
-      <div class="si-role-wrap">
-        <span class="si-role-badge ${isExp ? 'exp' : 'imp'}">${isExp ? 'Net Exporter' : 'Net Importer'}</span>
-      </div>
-    </div>`;
+      </div>`;
 
     html += this._buildConcentrationGauge(iso, mf);
 
@@ -887,27 +892,29 @@ const App = {
             }
           }
 
-          return `<div class="si-partner-row">
-          <span class="si-rank">${rankDisplay}</span>
-          <span class="si-arrow" style="color:${aColor}">${arrow}</span>
-          <span class="si-name">${pName}</span>
-          <div class="si-bar-wrap"><div class="si-bar-fill" style="width:${barPct}%;background:${aColor}"></div></div>
-          <span class="si-split">${splitBadge}</span>
-          <span class="si-val">${mf.fmt(val)}</span>
-          <div class="si-actions">
-            <button onclick="App.openArcModal('${arcExpIso}','${arcImpIso}')" class="si-btn" title="Bilateral history">↗</button>
-            <button onclick="App.openCompareModal('${iso}','${pIso}')" class="si-btn cmp" title="Compare">⇄</button>
-          </div>
-        </div>`;
+          return `
+            <div class="si-partner-row">
+              <span class="si-rank">${rankDisplay}</span>
+              <span class="si-arrow" style="color:${aColor}">${arrow}</span>
+              <span class="si-name">${pName}</span>
+              <div class="si-bar-wrap"><div class="si-bar-fill" style="width:${barPct}%;background:${aColor}"></div></div>
+              <span class="si-split">${splitBadge}</span>
+              <span class="si-val">${mf.fmt(val)}</span>
+              <div class="si-actions">
+                <button onclick="App.openArcModal('${arcExpIso}','${arcImpIso}')" class="si-btn" title="Bilateral history">↗</button>
+                <button onclick="App.openCompareModal('${iso}','${pIso}')" class="si-btn cmp" title="Compare">⇄</button>
+              </div>
+            </div>`;
         })
         .join('');
-      html += `<div class="si-section">
-        <div class="si-partners-hdr">
-          <div class="si-label" style="margin-bottom:0">Trading Partners</div>
-          <span class="si-partners-hint">rank you · them · split</span>
-        </div>
-        <div class="si-partners">${rows}</div>
-      </div>`;
+      html += `
+        <div class="si-section">
+          <div class="si-partners-hdr">
+            <div class="si-label" style="margin-bottom:0">Trading Partners</div>
+            <span class="si-partners-hint">rank you · them · split</span>
+          </div>
+          <div class="si-partners">${rows}</div>
+        </div>`;
     }
 
     html += this._buildButterflyChart(iso);
@@ -931,10 +938,11 @@ const App = {
           return `<rect x="${x}" y="${H - h}" width="${barW}" height="${h}" rx="2" fill="${isCur ? '#004990' : '#DED9D5'}" ${isCur ? 'stroke="#0077B8" stroke-width="1"' : ''}/><text x="${x + barW / 2}" y="${H + 11}" text-anchor="middle" font-size="7" fill="${isCur ? '#0077B8' : '#AEA29A'}" font-family="Inter,monospace">${yLabel}</text>`;
         })
         .join('');
-      html += `<div class="si-section">
-        <div class="si-label">Trade Trend (2015–${STATE.year})</div>
-        <svg width="${W}" height="${H + 14}" style="width:100%;overflow:visible">${bars}</svg>
-      </div>`;
+      html += `
+        <div class="si-section">
+          <div class="si-label">Trade Trend (2015–${STATE.year})</div>
+          <svg width="${W}" height="${H + 14}" style="width:100%;overflow:visible">${bars}</svg>
+        </div>`;
     }
 
     const catTotals = {};
@@ -953,18 +961,20 @@ const App = {
       const barSegs = segments.map(s => `<div style="width:${s.pct}%;background:${CONFIG.flowColors[s.cat]};height:100%"></div>`).join('');
       const compRows = segments
         .map(
-          s => `<div class="si-comp-row">
-        <div class="si-comp-dot" style="background:${CONFIG.flowColors[s.cat]}"></div>
-        <span class="si-comp-label">${catFull[s.cat]}</span>
-        <span class="si-comp-pct" style="color:${CONFIG.flowColors[s.cat]}">${Math.round(s.pct)}%</span>
-      </div>`
+          s => `
+            <div class="si-comp-row">
+              <div class="si-comp-dot" style="background:${CONFIG.flowColors[s.cat]}"></div>
+              <span class="si-comp-label">${catFull[s.cat]}</span>
+              <span class="si-comp-pct" style="color:${CONFIG.flowColors[s.cat]}">${Math.round(s.pct)}%</span>
+            </div>`
         )
         .join('');
-      html += `<div class="si-section">
-        <div class="si-label">Flow Composition</div>
-        <div class="si-flow-bar">${barSegs}</div>
-        <div class="si-comp-rows">${compRows}</div>
-      </div>`;
+      html += `
+        <div class="si-section">
+          <div class="si-label">Flow Composition</div>
+          <div class="si-flow-bar">${barSegs}</div>
+          <div class="si-comp-rows">${compRows}</div>
+        </div>`;
     }
 
     return html;
@@ -1036,28 +1046,29 @@ const App = {
     const mx2 = cx + (r + 6) * Math.cos(valA),
       my2 = cy + (r + 6) * Math.sin(valA);
 
-    return `<div class="si-section">
-      <div class="si-label">Partner Concentration (HHI)</div>
-      <div class="si-sublabel">${scopeNote}</div>
-      <div class="si-card">
-        <svg viewBox="0 0 ${W} ${H}" style="width:100%;max-height:130px" preserveAspectRatio="xMidYMid meet">
-          <path d="${arcPath(startA, endA)}" stroke="#DED9D5" stroke-width="9" fill="none" stroke-linecap="round"/>
-          <path d="${arcPath(startA, valA)}" stroke="${badge}" stroke-width="9" fill="none" stroke-linecap="round"/>
-          ${tick(0.2)}${tick(0.4)}
-          <line x1="${mx1.toFixed(2)}" y1="${my1.toFixed(2)}" x2="${mx2.toFixed(2)}" y2="${my2.toFixed(2)}" stroke="#231F20" stroke-width="2.5" stroke-linecap="round"/>
-          <text x="${cx}" y="${cy - 36}" text-anchor="middle" font-size="22" font-weight="700" fill="#231F20" font-family="Inter,monospace">${(hhi * 10000).toFixed(0)}</text>
-          <text x="${cx}" y="${cy - 20}" text-anchor="middle" font-size="9" fill="#6E6259" font-family="Inter,sans-serif">HHI score (0–10000)</text>
-        </svg>
-        <div style="text-align:center;margin-top:-4px">
-          <span class="si-badge" style="background:${badge}22;color:${badge};border-color:${badge}44">${label}</span>
+    return `
+      <div class="si-section">
+        <div class="si-label">Partner Concentration (HHI)</div>
+        <div class="si-sublabel">${scopeNote}</div>
+        <div class="si-card">
+          <svg viewBox="0 0 ${W} ${H}" style="width:100%;max-height:130px" preserveAspectRatio="xMidYMid meet">
+            <path d="${arcPath(startA, endA)}" stroke="#DED9D5" stroke-width="9" fill="none" stroke-linecap="round"/>
+            <path d="${arcPath(startA, valA)}" stroke="${badge}" stroke-width="9" fill="none" stroke-linecap="round"/>
+            ${tick(0.2)}${tick(0.4)}
+            <line x1="${mx1.toFixed(2)}" y1="${my1.toFixed(2)}" x2="${mx2.toFixed(2)}" y2="${my2.toFixed(2)}" stroke="#231F20" stroke-width="2.5" stroke-linecap="round"/>
+            <text x="${cx}" y="${cy - 36}" text-anchor="middle" font-size="22" font-weight="700" fill="#231F20" font-family="Inter,monospace">${(hhi * 10000).toFixed(0)}</text>
+            <text x="${cx}" y="${cy - 20}" text-anchor="middle" font-size="9" fill="#6E6259" font-family="Inter,sans-serif">HHI score (0–10000)</text>
+          </svg>
+          <div style="text-align:center;margin-top:-4px">
+            <span class="si-badge" style="background:${badge}22;color:${badge};border-color:${badge}44">${label}</span>
+          </div>
+          <div class="si-hhi-stats">
+            <div><div class="hhi-l">Top 1</div><div class="hhi-v">${top1Pct.toFixed(0)}%</div><div class="hhi-s" title="${top1Name}">${top1Name}</div></div>
+            <div><div class="hhi-l">Top 3</div><div class="hhi-v">${top3Pct.toFixed(0)}%</div><div class="hhi-s">share</div></div>
+            <div><div class="hhi-l">Top 5</div><div class="hhi-v">${top5Pct.toFixed(0)}%</div><div class="hhi-s">share</div></div>
+          </div>
         </div>
-        <div class="si-hhi-stats">
-          <div><div class="hhi-l">Top 1</div><div class="hhi-v">${top1Pct.toFixed(0)}%</div><div class="hhi-s" title="${top1Name}">${top1Name}</div></div>
-          <div><div class="hhi-l">Top 3</div><div class="hhi-v">${top3Pct.toFixed(0)}%</div><div class="hhi-s">share</div></div>
-          <div><div class="hhi-l">Top 5</div><div class="hhi-v">${top5Pct.toFixed(0)}%</div><div class="hhi-s">share</div></div>
-        </div>
-      </div>
-    </div>`;
+      </div>`;
   },
 
   // Polar Fingerprint: geographic bearing computed via great-circle formula.
@@ -1139,20 +1150,21 @@ const App = {
     parts.push(`<circle cx="${cx}" cy="${cy}" r="3.2" fill="#231F20"/>`);
 
     const scopeNote = isRegional ? `${STATE.region} intra-regional · pre-threshold` : 'All net bilateral flows · pre-threshold';
-    return `<div class="si-section">
-      <div class="si-label">Trade Fingerprint</div>
-      <div class="si-sublabel">${scopeNote}</div>
-      <div class="si-card" style="display:flex;flex-direction:column;align-items:center">
-        <svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:220px" preserveAspectRatio="xMidYMid meet">
-          ${parts.join('')}
-        </svg>
-        <div class="si-chart-footer">
-          <div class="si-legend-item"><div class="si-legend-swatch" style="background:#009EDB"></div><span>Exports</span></div>
-          <div class="si-legend-item"><div class="si-legend-swatch" style="background:#ED1847"></div><span>Imports</span></div>
+    return `
+      <div class="si-section">
+        <div class="si-label">Trade Fingerprint</div>
+        <div class="si-sublabel">${scopeNote}</div>
+        <div class="si-card" style="display:flex;flex-direction:column;align-items:center">
+          <svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:220px" preserveAspectRatio="xMidYMid meet">
+            ${parts.join('')}
+          </svg>
+          <div class="si-chart-footer">
+            <div class="si-legend-item"><div class="si-legend-swatch" style="background:#009EDB"></div><span>Exports</span></div>
+            <div class="si-legend-item"><div class="si-legend-swatch" style="background:#ED1847"></div><span>Imports</span></div>
+          </div>
+          <div style="font-size:8px;color:#6E6259;font-style:italic;margin-top:4px;text-align:center">Bar direction = geographic bearing from this country</div>
         </div>
-        <div style="font-size:8px;color:#6E6259;font-style:italic;margin-top:4px;text-align:center">Bar direction = geographic bearing from this country</div>
-      </div>
-    </div>`;
+      </div>`;
   },
 
   // Butterfly chart: for each of the top 7 partners, show export bar (right, blue)
@@ -1242,16 +1254,17 @@ const App = {
 
     const scopeNote = isRegional ? `${STATE.region} · top 7 · pre-threshold` : 'Top 7 partners · gross bilateral · pre-threshold';
 
-    return `<div class="si-section">
-      <div class="si-label">Bilateral Trade Split</div>
-      <div class="si-sublabel">${scopeNote}</div>
-      <div class="si-card">
-        <svg viewBox="0 -10 ${W} ${totalH + 12}" style="width:100%;overflow:visible" preserveAspectRatio="xMidYMid meet">
-          ${grid}
-          ${rows}
-        </svg>
-      </div>
-    </div>`;
+    return `
+      <div class="si-section">
+        <div class="si-label">Bilateral Trade Split</div>
+        <div class="si-sublabel">${scopeNote}</div>
+        <div class="si-card">
+          <svg viewBox="0 -10 ${W} ${totalH + 12}" style="width:100%;overflow:visible" preserveAspectRatio="xMidYMid meet">
+            ${grid}
+            ${rows}
+          </svg>
+        </div>
+      </div>`;
   },
 
   _generateNarrative(iso, stats, partnerExports, partnerImports, yearlyTotals, mf) {
@@ -1370,10 +1383,10 @@ const App = {
     const regionTag = region && region !== 'Other' ? `<span style="font-size:9px;color:#6E6259">${region} · ${devStatus}</span>` : '';
 
     let content = `
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px">
-      <div style="font-weight:700;color:#004990;font-size:13px;line-height:1.2">${name}</div>
-      ${regionTag}
-    </div>`;
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px">
+        <div style="font-weight:700;color:#004990;font-size:13px;line-height:1.2">${name}</div>
+        ${regionTag}
+      </div>`;
 
     if (!stats) {
       tooltip.innerHTML = content;
@@ -1388,19 +1401,19 @@ const App = {
     const roleBg = isNetExporter ? 'background:rgba(0,158,219,0.15);color:#009EDB' : 'background:rgba(237,24,71,0.15);color:#ED1847';
 
     content += `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-      <div style="background:#f2f8fc;border:1px solid #DED9D5;border-radius:6px;padding:6px 8px">
-        <div style="font-size:8px;color:#6E6259;text-transform:uppercase;font-weight:700;margin-bottom:2px">${mf.grossLabel.replace(':', '')}</div>
-        <div style="font-size:12px;font-weight:700;color:#231F20;font-family:monospace">${mf.fmt(stats.grossVolume)}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+        <div style="background:#f2f8fc;border:1px solid #DED9D5;border-radius:6px;padding:6px 8px">
+          <div style="font-size:8px;color:#6E6259;text-transform:uppercase;font-weight:700;margin-bottom:2px">${mf.grossLabel.replace(':', '')}</div>
+          <div style="font-size:12px;font-weight:700;color:#231F20;font-family:monospace">${mf.fmt(stats.grossVolume)}</div>
+        </div>
+        <div style="background:#f2f8fc;border:1px solid #DED9D5;border-radius:6px;padding:6px 8px">
+          <div style="font-size:8px;color:#6E6259;text-transform:uppercase;font-weight:700;margin-bottom:2px">${mf.netLabel.replace(':', '')}</div>
+          <div style="font-size:12px;font-weight:700;font-family:monospace;color:${balanceColor}">${balanceSign}${mf.fmt(Math.abs(stats.netBalance))}</div>
+        </div>
       </div>
-      <div style="background:#f2f8fc;border:1px solid #DED9D5;border-radius:6px;padding:6px 8px">
-        <div style="font-size:8px;color:#6E6259;text-transform:uppercase;font-weight:700;margin-bottom:2px">${mf.netLabel.replace(':', '')}</div>
-        <div style="font-size:12px;font-weight:700;font-family:monospace;color:${balanceColor}">${balanceSign}${mf.fmt(Math.abs(stats.netBalance))}</div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-bottom:8px">
-      <span style="font-size:9px;font-weight:700;padding:2px 10px;border-radius:99px;${roleBg}">${roleLabel}</span>
-    </div>`;
+      <div style="text-align:center;margin-bottom:8px">
+        <span style="font-size:9px;font-weight:700;padding:2px 10px;border-radius:99px;${roleBg}">${roleLabel}</span>
+      </div>`;
 
     const partnerExports = {};
     const partnerImports = {};
@@ -1435,22 +1448,22 @@ const App = {
           const arrow = isExportTo ? '→' : '←';
           const arrowColor = isExportTo ? '#009EDB' : '#ED1847';
           return `
-        <div style="display:flex;align-items:center;gap:6px;font-size:10px;margin-bottom:3px">
-          <span style="color:${arrowColor};font-weight:700;flex-shrink:0">${arrow}</span>
-          <span style="color:#231F20;width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0">${shortName}</span>
-          <div style="flex:1;height:5px;background:#EBEAE6;border-radius:99px;overflow:hidden">
-            <div style="width:${barPct}%;height:100%;background:${arrowColor};opacity:0.7;border-radius:99px"></div>
-          </div>
-          <span style="color:#6E6259;font-family:monospace;font-size:9px;width:52px;text-align:right;flex-shrink:0">${mf.fmt(val)}</span>
-        </div>`;
+            <div style="display:flex;align-items:center;gap:6px;font-size:10px;margin-bottom:3px">
+              <span style="color:${arrowColor};font-weight:700;flex-shrink:0">${arrow}</span>
+              <span style="color:#231F20;width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0">${shortName}</span>
+              <div style="flex:1;height:5px;background:#EBEAE6;border-radius:99px;overflow:hidden">
+                <div style="width:${barPct}%;height:100%;background:${arrowColor};opacity:0.7;border-radius:99px"></div>
+              </div>
+              <span style="color:#6E6259;font-family:monospace;font-size:9px;width:52px;text-align:right;flex-shrink:0">${mf.fmt(val)}</span>
+            </div>`;
         })
         .join('');
 
       content += `
-      <div style="padding-top:8px;border-top:1px solid #DED9D5;margin-top:2px">
-        <div style="font-size:9px;color:#6E6259;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">Top Partners</div>
-        ${partnerRows}
-      </div>`;
+        <div style="padding-top:8px;border-top:1px solid #DED9D5;margin-top:2px">
+          <div style="font-size:9px;color:#6E6259;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">Top Partners</div>
+          ${partnerRows}
+        </div>`;
     }
 
     const catTotals = {};
@@ -1472,11 +1485,11 @@ const App = {
       const labelSpans = segments.map(s => `<span style="color:${CONFIG.flowColors[s.cat]};font-size:9px;font-weight:700">${catLabels[s.cat]} ${Math.round(s.pct)}%</span>`).join('<span style="color:#DED9D5;font-size:9px;margin:0 2px">·</span>');
 
       content += `
-      <div style="margin-top:8px;padding-top:8px;border-top:1px solid #DED9D5">
-        <div style="font-size:9px;color:#6E6259;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">Flow Composition</div>
-        <div style="display:flex;height:4px;border-radius:99px;overflow:hidden;gap:1px">${barSegments}</div>
-        <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-top:5px;flex-wrap:wrap">${labelSpans}</div>
-      </div>`;
+        <div style="margin-top:8px;padding-top:8px;border-top:1px solid #DED9D5">
+          <div style="font-size:9px;color:#6E6259;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">Flow Composition</div>
+          <div style="display:flex;height:4px;border-radius:99px;overflow:hidden;gap:1px">${barSegments}</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-top:5px;flex-wrap:wrap">${labelSpans}</div>
+        </div>`;
     }
 
     const yearlyTotals = {};
@@ -1521,16 +1534,16 @@ const App = {
       }
 
       content += `
-      <div style="margin-top:8px;padding-top:8px;border-top:1px solid #DED9D5">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
-          <span style="font-size:9px;color:#6E6259;font-weight:700;text-transform:uppercase;letter-spacing:0.05em">Trend</span>
-          <div style="display:flex;align-items:center;gap:8px">${yoyHtml}${cagrHtml}</div>
-        </div>
-        <svg width="${W}" height="${H}" style="width:100%">${bars}</svg>
-        <div style="display:flex;justify-content:space-between;font-size:8px;color:#AEA29A;font-family:monospace;margin-top:2px">
-          <span>${years[0]}</span><span>${years[years.length - 1]}</span>
-        </div>
-      </div>`;
+        <div style="margin-top:8px;padding-top:8px;border-top:1px solid #DED9D5">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+            <span style="font-size:9px;color:#6E6259;font-weight:700;text-transform:uppercase;letter-spacing:0.05em">Trend</span>
+            <div style="display:flex;align-items:center;gap:8px">${yoyHtml}${cagrHtml}</div>
+          </div>
+          <svg width="${W}" height="${H}" style="width:100%">${bars}</svg>
+          <div style="display:flex;justify-content:space-between;font-size:8px;color:#AEA29A;font-family:monospace;margin-top:2px">
+            <span>${years[0]}</span><span>${years[years.length - 1]}</span>
+          </div>
+        </div>`;
     }
 
     if (region && region !== 'Other') {
@@ -1541,11 +1554,11 @@ const App = {
       const total = regionCountries.length;
       if (rank > 0) {
         content += `
-        <div style="margin-top:6px;padding-top:6px;border-top:1px solid #DED9D5;font-size:9px;color:#6E6259;display:flex;align-items:center;gap:4px">
-          <span style="color:#004990;font-weight:700;font-size:10px">#${rank}</span>
-          <span>of ${total} in ${region}</span>
-          <span style="margin-left:auto;padding:2px 6px;border-radius:4px;font-size:8px;font-weight:700;${roleBg}">${roleLabel}</span>
-        </div>`;
+          <div style="margin-top:6px;padding-top:6px;border-top:1px solid #DED9D5;font-size:9px;color:#6E6259;display:flex;align-items:center;gap:4px">
+            <span style="color:#004990;font-weight:700;font-size:10px">#${rank}</span>
+            <span>of ${total} in ${region}</span>
+            <span style="margin-left:auto;padding:2px 6px;border-radius:4px;font-size:8px;font-weight:700;${roleBg}">${roleLabel}</span>
+          </div>`;
       }
     }
 

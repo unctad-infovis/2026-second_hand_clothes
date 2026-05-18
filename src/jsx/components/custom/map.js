@@ -1080,11 +1080,12 @@ export const TradeMap = {
         const stat = catStats[c.key];
         const valStr = stat.count > 0 ? `$${fmtShort(stat.total)}` : '—';
         const cntStr = stat.count > 0 ? `${stat.count}` : '0';
-        return `<div class="legend-flow-item" style="opacity:${active ? 1 : 0.3}">
-                <span class="legend-flow-dot" style="background:${CONFIG.flowColors[c.key]}"></span>
-                <span class="legend-flow-label">${c.label}</span>
-                <span class="legend-flow-stat">${cntStr} · ${valStr}</span>
-            </div>`;
+        return `
+          <div class="legend-flow-item" style="opacity:${active ? 1 : 0.3}">
+              <span class="legend-flow-dot" style="background:${CONFIG.flowColors[c.key]}"></span>
+              <span class="legend-flow-label">${c.label}</span>
+              <span class="legend-flow-stat">${cntStr} · ${valStr}</span>
+          </div>`;
       })
       .join('');
 
@@ -1094,33 +1095,33 @@ export const TradeMap = {
     const arcCount = netFlows.length;
 
     container.innerHTML = `
-            <div class="legend-section">
-                <span class="legend-section-label">Flows</span>
-                <div class="legend-flows">${flowItems}</div>
-            </div>
-            <span class="legend-bar-divider"></span>
-            <div class="legend-section">
-                <span class="legend-section-label">Nodes</span>
-                <div class="legend-nodes">
-                    <span class="legend-nodes-hint">← Imp</span>
-                    <span class="legend-node" style="width:14px;height:14px;background:#ED1847" title="Strong net importer"></span>
-                    <span class="legend-node" style="width:10px;height:10px;background:#F9C0C5" title="Net importer"></span>
-                    <span class="legend-node" style="width:7px;height:7px;background:#F7DFDF"  title="Slight net importer"></span>
-                    <span class="legend-node" style="width:4px;height:4px;background:#DED9D5;border:1px solid #AEA29A" title="Balanced"></span>
-                    <span class="legend-node" style="width:7px;height:7px;background:#E3EDF6"  title="Slight net exporter"></span>
-                    <span class="legend-node" style="width:10px;height:10px;background:#C5DFEF" title="Net exporter"></span>
-                    <span class="legend-node" style="width:14px;height:14px;background:#009EDB" title="Strong net exporter"></span>
-                    <span class="legend-nodes-hint">Exp →</span>
-                </div>
-            </div>
-            <span class="legend-bar-divider"></span>
-            <div class="legend-section">
-                <span class="legend-section-label">Threshold</span>
-                <span class="legend-threshold-badge${isManual ? ' manual' : ''}">${isManual ? 'MANUAL' : 'AUTO'}</span>
-                <span class="legend-threshold-val">$${fmtShort(currentThreshold)}</span>
-                <span class="legend-arc-count">${arcCount} arcs</span>
-            </div>
-        `;
+      <div class="legend-section">
+        <span class="legend-section-label">Flows</span>
+        <div class="legend-flows">${flowItems}</div>
+      </div>
+      <span class="legend-bar-divider"></span>
+      <div class="legend-section">
+        <span class="legend-section-label">Nodes</span>
+        <div class="legend-nodes">
+          <span class="legend-nodes-hint">← Imp</span>
+          <span class="legend-node" style="width:14px;height:14px;background:#ED1847" title="Strong net importer"></span>
+          <span class="legend-node" style="width:10px;height:10px;background:#F9C0C5" title="Net importer"></span>
+          <span class="legend-node" style="width:7px;height:7px;background:#F7DFDF"  title="Slight net importer"></span>
+          <span class="legend-node" style="width:4px;height:4px;background:#DED9D5;border:1px solid #AEA29A" title="Balanced"></span>
+          <span class="legend-node" style="width:7px;height:7px;background:#E3EDF6"  title="Slight net exporter"></span>
+          <span class="legend-node" style="width:10px;height:10px;background:#C5DFEF" title="Net exporter"></span>
+          <span class="legend-node" style="width:14px;height:14px;background:#009EDB" title="Strong net exporter"></span>
+          <span class="legend-nodes-hint">Exp →</span>
+        </div>
+      </div>
+      <span class="legend-bar-divider"></span>
+      <div class="legend-section">
+        <span class="legend-section-label">Threshold</span>
+        <span class="legend-threshold-badge${isManual ? ' manual' : ''}">${isManual ? 'MANUAL' : 'AUTO'}</span>
+        <span class="legend-threshold-val">$${fmtShort(currentThreshold)}</span>
+        <span class="legend-arc-count">${arcCount} arcs</span>
+      </div>
+  `;
 
     // Update stats
     const shownTotal = d3.sum(netFlows, d => d.netValue);
