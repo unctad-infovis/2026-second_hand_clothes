@@ -1,15 +1,17 @@
-@import url("./variables.css");
-@import url("./header.css");
-@import url("./kpi.css");
-@import url("./panels.css");
-@import url("./modals.css");
-@import url("./insight.css");
-@import url("./mobile.css");
-@import url("./custom.css"); /* Taken from index.html */
+@import url('./variables.css');
+@import url('./header.css');
+@import url('./kpi.css');
+@import url('./panels.css');
+@import url('./modals.css');
+@import url('./insight.css');
+@import url('./mobile.css');
+@import url('./custom.css'); /* Taken from index.html */
 
 /* ── Global reset & base ─────────────────────────────────────── */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -18,7 +20,8 @@ html {
   font-size: clamp(16px, 1vw + 4px, 20px);
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   /*height: 100dvh;*/
@@ -72,7 +75,7 @@ main {
 /* ── Map container ───────────────────────────────────────────── */
 
 #map-container {
-  aspect-ratio: 16/9;
+  aspect-ratio: 16 / 9;
   inset: 0;
   max-height: 600px;
   width: 100%;
@@ -188,7 +191,8 @@ main {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -278,7 +282,9 @@ main {
 
   fill: var(--ungrey-dark);
 
-  text-shadow: 0 0 3px #fff, 0 0 5px #fff;
+  text-shadow:
+    0 0 3px #fff,
+    0 0 5px #fff;
 
   pointer-events: none;
 }
@@ -302,7 +308,7 @@ main {
 }
 
 .custom-checkbox::before {
-  content: "";
+  content: '';
 
   width: 0.65em;
   height: 0.65em;
@@ -380,7 +386,9 @@ main {
 
   cursor: pointer;
 
-  transition: background 0.12s, transform 0.15s;
+  transition:
+    background 0.12s,
+    transform 0.15s;
 }
 
 .group-toggle:hover {
@@ -388,7 +396,7 @@ main {
   color: var(--ungrey-dark);
 }
 
-.group-toggle[aria-expanded="true"] {
+.group-toggle[aria-expanded='true'] {
   transform: rotate(90deg);
 }
 
@@ -445,7 +453,7 @@ main {
   background: var(--unblue-bg);
 }
 
-.country-option input[type="checkbox"] {
+.country-option input[type='checkbox'] {
   width: 13px;
   height: 13px;
 }

@@ -1,4 +1,4 @@
-@import url("./variables.css");
+@import url('./variables.css');
 
 /* ── Shared modal backdrop ────────────────────────────────────── */
 
@@ -57,7 +57,9 @@
       border-radius: var(--radius-lg);
 
       cursor: pointer;
-      transition: background 0.12s, color 0.12s;
+      transition:
+        background 0.12s,
+        color 0.12s;
 
       &:hover {
         color: var(--ungrey-dark);

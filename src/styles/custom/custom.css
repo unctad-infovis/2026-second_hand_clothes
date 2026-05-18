@@ -1,12 +1,16 @@
-#main-header { border-bottom: none !important; }
-#kpi-bar { border-top: none !important; box-shadow: none !important; }
-
+#main-header {
+  border-bottom: none !important;
+}
+#kpi-bar {
+  border-top: none !important;
+  box-shadow: none !important;
+}
 
 body {
   border-bottom: 4px solid #009edb !important;
 }
 
-
-#kpi-bar, #legend-panel {
+#kpi-bar,
+#legend-panel {
   background-color: #f2f8fc !important;
 }

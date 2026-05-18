@@ -1,4 +1,4 @@
-@import url("./variables.css");
+@import url('./variables.css');
 
 /* ── Mobile: Legend toggle FAB ────────────────────────────────── */
 
@@ -241,7 +241,7 @@
     padding: 10px 0 4px;
 
     &::after {
-      content: "";
+      content: '';
       width: 40px;
       height: 4px;
       background: var(--ungrey-border);
@@ -321,7 +321,9 @@
     color: var(--ungrey-text);
 
     cursor: pointer;
-    transition: background 0.15s, color 0.15s;
+    transition:
+      background 0.15s,
+      color 0.15s;
 
     &.active {
       background: var(--unblue-dark);
@@ -342,7 +344,7 @@
 
     cursor: pointer;
 
-    input[type="checkbox"] {
+    input[type='checkbox'] {
       width: 16px;
       height: 16px;
       flex-shrink: 0;

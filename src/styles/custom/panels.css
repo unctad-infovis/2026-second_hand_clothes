@@ -1,4 +1,4 @@
-@import url("./variables.css");
+@import url('./variables.css');
 
 /* ── Legend Bar (horizontal, between header and KPI) ─────────── */
 
@@ -427,7 +427,9 @@
 
       cursor: pointer;
 
-      transition: background 0.12s, color 0.12s;
+      transition:
+        background 0.12s,
+        color 0.12s;
 
       &:hover {
         color: var(--ungrey-dark);
