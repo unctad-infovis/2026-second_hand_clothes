@@ -1,0 +1,66 @@
+@import url("./variables.css");
+
+/* ── KPI Bar ─────────────────────────────────────────────────── */
+
+#kpi-bar {
+  padding: 6px 16px;
+  z-index: 20;
+  flex-shrink: 0;
+  background: rgb(255 255 255 / 97%);
+  border-bottom: 1px solid rgb(203 213 224 / 90%);
+  transition: all 0.3s ease;
+
+  .kpi-inner {
+    max-width: var(--content-max-width);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+    margin: 0 auto;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+
+    @media (min-width: 768px) {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+
+  .kpi-item {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &.kpi-item-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+  }
+
+  .kpi-label {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--ungrey-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .kpi-value {
+    font-family: var(--font-mono);
+    font-size: var(--fs-base);
+    font-weight: 700;
+    color: var(--ungrey-dark);
+    transition: color 0.3s ease;
+  }
+
+  .kpi-divider {
+    width: 1px;
+    height: 16px;
+    flex-shrink: 0;
+    background: var(--ungrey-border);
+  }
+}

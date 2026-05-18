@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="icon" href="/favicon.png" />
+    <link rel="stylesheet" href="/assets/font/fonts.css" />
+    <title>2026-second_hand_clothes</title>
+    <style>
+        /* 1. KPIバーの上の線を非表示にする */
+        #main-header { border-bottom: none !important; }
+        #kpi-bar { border-top: none !important; box-shadow: none !important; }
+        
+        /* 2. 画面の一番下に水色の線を配置する */
+        body {
+            border-bottom: 4px solid #009edb !important;
+        }
+        
+        /* 3. KPIバーとLegendの背景色を変更する */
+        #kpi-bar, #legend-panel {
+            background-color: #f2f8fc !important;
+        }
+    </style>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── UNCTAD Header ── -->
+    <header id="main-header">
+        <div class="header-inner">
+
+            <div class="header-title">
+                <img src="assets/unctad-icon.svg" alt="UNCTAD" class="header-logo">
+                <div class="header-text">
+                    <h3>Global Second-Hand Clothes Trade Monitor</h3>
+                    <h4>UNCTAD &middot; SMEP project</h4>
+                </div>
+            </div>
+
+            <div class="header-controls">
+
+                <div class="ctrl-divider"></div>
+
+                <!-- Region filter -->
+                <div class="ctrl-pill">
+                    <button class="region-btn btn-toggle active" data-region="Global" title="Global">All</button>
+                    <button class="region-btn btn-toggle" data-region="Africa"   title="Africa">Africa</button>
+                    <button class="region-btn btn-toggle" data-region="Americas" title="Americas">Americas</button>
+                    <button class="region-btn btn-toggle" data-region="Asia"     title="Asia">Asia</button>
+                    <button class="region-btn btn-toggle" data-region="Europe"   title="Europe">Europe</button>
+                    <button class="region-btn btn-toggle" data-region="Oceania"  title="Oceania">Oceania</button>
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <!-- Year select -->
+                <div class="ctrl-pill">
+                    <select id="year-select" class="ctrl-year">
+                        <option value="2024" selected>2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                        <option value="2016">2016</option>
+                        <option value="2015">2015</option>
+                    </select>
+                </div>
+
+                <!-- Flow direction filter -->
+                <div class="ctrl-pill" title="Filter by economic flow direction">
+                    <span class="ctrl-flows-label">Flows</span>
+                    <label class="flow-label" title="North to South">
+                        <input type="checkbox" class="flow-checkbox" value="north-south" checked>
+                        <span style="color:#009EDB">N→S</span>
+                    </label>
+                    <label class="flow-label" title="South to North">
+                        <input type="checkbox" class="flow-checkbox" value="south-north" checked>
+                        <span style="color:#72BF44">S→N</span>
+                    </label>
+                    <label class="flow-label" title="South to South">
+                        <input type="checkbox" class="flow-checkbox" value="south-south" checked>
+                        <span style="color:#FBAF17">S→S</span>
+                    </label>
+                    <label class="flow-label" title="North to North">
+                        <input type="checkbox" class="flow-checkbox" value="north-north" checked>
+                        <span style="color:#AEA29A">N→N</span>
+                    </label>
+                </div>
+
+                <div id="threshold-divider" class="ctrl-divider"></div>
+
+                <!-- Threshold filter -->
+                <div id="threshold-group" class="ctrl-pill" title="Visibility threshold — minimum trade value to display">
+                    <button class="threshold-btn btn-toggle active" data-threshold="auto">Auto</button>
+                    <button class="threshold-btn btn-toggle" data-threshold="10000000">$10M</button>
+                    <button class="threshold-btn btn-toggle" data-threshold="1000000">$1M</button>
+                    <button class="threshold-btn btn-toggle" data-threshold="500000">$500k</button>
+                    <button class="threshold-btn btn-toggle" data-threshold="100000">$100k</button>
+                    <button class="threshold-btn btn-toggle" data-threshold="10000">$10k</button>
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <!-- Exporter picker -->
+                <div class="picker-wrapper">
+                    <button id="exp-btn" class="country-picker-btn">
+                        <div class="picker-labels">
+                            <span class="picker-type">Exporter (From)</span>
+                            <span id="exp-label" class="picker-value">All Exporters</span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;margin-left:4px">
+                            <span id="exp-count" class="picker-badge hidden"></span>
+                            <svg class="picker-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </div>
+                    </button>
+                    <div id="exp-menu" class="country-picker-menu hidden">
+                        <div class="picker-search-area">
+                            <input type="text" id="exp-search" placeholder="Search Exporter...">
+                            <button id="exp-clear-all" class="picker-clear">Clear</button>
+                        </div>
+                        <div id="exp-list" class="picker-list"></div>
+                    </div>
+                </div>
+
+                <!-- Importer picker -->
+                <div class="picker-wrapper">
+                    <button id="imp-btn" class="country-picker-btn">
+                        <div class="picker-labels">
+                            <span class="picker-type">Importer (To)</span>
+                            <span id="imp-label" class="picker-value">All Importers</span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;margin-left:4px">
+                            <span id="imp-count" class="picker-badge hidden" style="background:#b45309"></span>
+                            <svg class="picker-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </div>
+                    </button>
+                    <div id="imp-menu" class="country-picker-menu hidden">
+                        <div class="picker-search-area">
+                            <input type="text" id="imp-search" placeholder="Search Importer...">
+                            <button id="imp-clear-all" class="picker-clear">Clear</button>
+                        </div>
+                        <div id="imp-list" class="picker-list"></div>
+                    </div>
+                </div>
+
+            </div><!-- /.header-controls -->
+        </div><!-- /.header-inner -->
+    </header>
+
+    <!-- ── Legend Bar (between filters and KPI) ── -->
+    <div id="legend-panel">
+        <div class="legend-mobile-header">
+            <span>Legend</span>
+            <button id="mobile-legend-close" class="btn-close">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div id="legend-content"></div>
+        <div id="total-stats">
+            <div class="stat-row">
+                <span class="stat-label">Shown</span>
+                <span class="stat-val" id="stat-value">—</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Bilateral</span>
+                <span class="stat-secondary" id="stat-bilateral">—</span>
+            </div>
+            <span id="stat-coverage"></span>
+        </div>
+        <div class="legend-footer">
+            <img src="assets/smep-logo.png" alt="SMEP">
+        </div>
+    </div>
+
+    <!-- ── KPI Bar ── -->
+    <div id="kpi-bar">
+        <div class="kpi-inner">
+            <div class="kpi-item" title="Active filter: region or country selection">
+                <span class="kpi-label">Filter</span>
+                <span class="kpi-value" id="kpi-scope">Global</span>
+            </div>
+            <div class="kpi-divider"></div>
+            <div class="kpi-item" title="Total trade value of visible flows (USD)">
+                <span class="kpi-label">Volume</span>
+                <span class="kpi-value" id="kpi-total">—</span>
+            </div>
+            <div class="kpi-divider"></div>
+            <div class="kpi-item" title="Number of bilateral trade corridors shown on map">
+                <span class="kpi-label">Corridors</span>
+                <span class="kpi-value" id="kpi-flows">—</span>
+            </div>
+            <div class="kpi-divider"></div>
+            <div class="kpi-item" title="Number of countries active in the current view">
+                <span class="kpi-label">Countries</span>
+                <span class="kpi-value" id="kpi-countries">—</span>
+            </div>
+            <div class="kpi-divider"></div>
+            <div class="kpi-item kpi-item-col" title="Largest net exporter by trade balance (includes all flows, before threshold)">
+                <span class="kpi-label">#1 Exporter</span>
+                <span class="kpi-value" id="kpi-top-exp" style="color:#0077B6">—</span>
+            </div>
+            <div class="kpi-divider"></div>
+            <div class="kpi-item kpi-item-col" title="Largest net importer by trade balance (includes all flows, before threshold)">
+                <span class="kpi-label">#1 Importer</span>
+                <span class="kpi-value" id="kpi-top-imp" style="color:#C0392B">—</span>
+            </div>
+            <div class="kpi-divider"></div>
+            <div class="kpi-item" title="North-to-South flows as share of total visible trade value">
+                <span class="kpi-label">N→S</span>
+                <span class="kpi-value" id="kpi-ns-pct" style="color:#009EDB">—</span>
+            </div>
+            <div class="kpi-divider"></div>
+            <div class="kpi-item" title="South-to-South flows as share of total visible trade value">
+                <span class="kpi-label">S→S</span>
+                <span class="kpi-value" id="kpi-ss-pct" style="color:#FBAF17">—</span>
+            </div>
+        </div>
+    </div>
+
+    <main>
+
+        <!-- ── Map + Overlays ── -->
+        <div class="map-area">
+            <div id="map-container"></div>
+
+<div id="tooltip"></div>
+
+            <!-- Insight Side Panel (P1) -->
+            <div id="insight-panel">
+                <div class="panel-header">
+                    <div class="panel-title-group">
+                        <div class="panel-country-name-row">
+                            <div id="panel-country-name">—</div>
+                            <button id="searoute-btn" class="searoute-btn" title="Show actual shipping routes (experimental feature)" disabled>
+                                <span class="searoute-btn-label">Sea Route</span>
+                                <span class="searoute-experimental-badge">EXPERIMENTAL</span>
+                            </button>
+                        </div>
+                        <div id="panel-country-meta">—</div>
+                    </div>
+                    <button id="panel-close-btn" class="btn-close" title="Close">
+                        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                <div id="panel-body">
+                    <div style="text-align:center;color:#AEA29A;font-size:12px;padding:32px 0">Click a country on the map</div>
+                </div>
+            </div>
+
+            <!-- P2-A: Arc Detail Modal -->
+            <div id="arc-modal" class="hidden">
+                <div class="modal-backdrop" id="arc-modal-backdrop"></div>
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <div>
+                            <div id="arc-modal-title" class="modal-title">—</div>
+                            <div id="arc-modal-meta" class="modal-subtitle">Bilateral Trade History</div>
+                        </div>
+                        <button id="arc-modal-close" class="btn-close">
+                            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                    <div id="arc-modal-body" class="modal-body"></div>
+                </div>
+            </div>
+
+            <!-- P2-B: Compare Modal -->
+            <div id="compare-modal" class="hidden">
+                <div class="modal-backdrop" id="compare-modal-backdrop"></div>
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <div id="compare-modal-title" class="modal-title">Country Comparison</div>
+                        <button id="compare-modal-close" class="btn-close">
+                            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                    <div id="compare-modal-body" class="modal-body"></div>
+                </div>
+            </div>
+
+            <!-- Mobile FABs -->
+            <button id="mobile-legend-btn">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
+                Legend
+            </button>
+
+            <button id="fit-screen-btn" title="Fit to screen">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+            </button>
+
+            <button id="mobile-filter-btn">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                Filters
+                <span id="mobile-filter-badge" class="filter-badge"></span>
+            </button>
+
+            <!-- Backdrops (initially hidden, JS toggles .hidden) -->
+            <div id="mobile-legend-backdrop"  class="hidden"></div>
+            <div id="mobile-filter-backdrop"  class="hidden"></div>
+            <div id="mobile-country-backdrop" class="hidden"></div>
+
+            <div id="loader">
+                <div class="loader-spinner"></div>
+                <p>Loading Trade Data...</p>
+            </div>
+        </div><!-- /.map-area -->
+
+    </main>
+
+    <!-- ── Map Footer ── -->
+    <footer id="map-footer">
+        <p>Source: BACI based on UN Comtrade. Data cover HS&nbsp;6309 (Worn clothing and other worn articles).</p>
+        <p>Note: Sea routes are shown only for flows between different UNCTAD regions (Africa, Americas, Asia, Europe, Oceania) and represent major maritime shipping lanes computed via the Eurostat <em>searoute</em> algorithm using representative ports based on UNCTAD PLSCI scores. Flows within the same region are shown as arcs. Routes do not reflect actual tracked second-hand clothing (HS&nbsp;6309) cargo paths and may not represent the actual mode of transport used.</p>
+        <p class="footer-method-link"><button id="methodology-btn" class="footer-link-btn">Methodology &amp; Data Sources</button></p>
+    </footer>
+
+    <!-- ── Methodology Modal ── -->
+    <div id="methodology-modal" class="hidden">
+        <div class="modal-backdrop" id="methodology-modal-backdrop"></div>
+        <div class="modal-card methodology-card">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-title">Methodology &amp; Data Sources</div>
+                    <div class="modal-subtitle">Global Second-Hand Clothes Trade Monitor &mdash; Technical Notes</div>
+                </div>
+                <button id="methodology-modal-close" class="btn-close">
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="modal-body method-body">
+
+                <section class="method-section">
+                    <h3 class="method-section-title">Data Source</h3>
+                    <dl class="method-dl">
+                        <dt>Database</dt>
+                        <dd>BACI International Trade Database (CEPII), derived from UN Comtrade mirror data. Harmonized bilateral trade flows at the HS 6-digit level.</dd>
+                        <dt>Product coverage</dt>
+                        <dd>HS&nbsp;6309 — <em>Worn clothing and other worn articles.</em> Includes second-hand garments traded in bulk regardless of quality grade.</dd>
+                        <dt>Years available</dt>
+                        <dd>2015–2024 (provisional for the most recent year)</dd>
+                        <dt>Value unit</dt>
+                        <dd>Current USD (thousands, then converted to display units)</dd>
+                    </dl>
+                </section>
+
+                <section class="method-section">
+                    <h3 class="method-section-title">Flow Direction Classification</h3>
+                    <p class="method-note">Countries are classified as <strong>North</strong> (developed) or <strong>South</strong> (developing/least-developed) using the UNCTAD Development Status classification, consistent with UNCTAD flagship publications.</p>
+                    <dl class="method-dl">
+                        <dt><span class="method-flow-dot" style="background:#009EDB"></span> N&rarr;S</dt>
+                        <dd>Export from a developed economy to a developing economy</dd>
+                        <dt><span class="method-flow-dot" style="background:#72BF44"></span> S&rarr;N</dt>
+                        <dd>Export from a developing economy to a developed economy</dd>
+                        <dt><span class="method-flow-dot" style="background:#FBAF17"></span> S&rarr;S</dt>
+                        <dd>Both exporter and importer are developing or least-developed economies</dd>
+                        <dt><span class="method-flow-dot" style="background:#AEA29A"></span> N&rarr;N</dt>
+                        <dd>Both exporter and importer are developed economies</dd>
+                    </dl>
+                </section>
+
+                <section class="method-section">
+                    <h3 class="method-section-title">Trade Flow Calculation</h3>
+                    <dl class="method-dl">
+                        <dt>Net bilateral flow</dt>
+                        <dd>For each country pair (A, B), the net flow equals the larger reported value between A&rarr;B and B&rarr;A exports. The dominant direction determines the arc direction. This reduces double-counting from mirror reporting in UN Comtrade.</dd>
+                        <dt>Arc width</dt>
+                        <dd>Scaled proportionally to the net trade value on a square-root scale to prevent large flows from dominating small ones visually.</dd>
+                        <dt>Arc curvature</dt>
+                        <dd>All arcs curve in a consistent clockwise direction (SVG <code>sweep-flag = 1</code>). This means eastward flows bend northward and westward flows bend southward, providing a secondary visual cue for flow direction that complements the color encoding.</dd>
+                    </dl>
+                </section>
+
+                <section class="method-section">
+                    <h3 class="method-section-title">Display Threshold (Auto Mode)</h3>
+                    <p class="method-note">To avoid visual overload, the map limits the number of displayed arcs to a maximum of <strong>40</strong> at a time.</p>
+                    <dl class="method-dl">
+                        <dt>Global view</dt>
+                        <dd>Minimum threshold: $10&thinsp;M. Arcs below this value are hidden.</dd>
+                        <dt>With country selection</dt>
+                        <dd>Floor scales down with selection breadth (1–3 countries: $10&thinsp;K; 4–10: $100&thinsp;K; 11–30: $500&thinsp;K; 31+: $1&thinsp;M). If the number of arcs above the floor exceeds 40, the threshold is raised to the 40th-highest value.</dd>
+                        <dt>Manual thresholds</dt>
+                        <dd>Fixed cut-off values ($10&thinsp;k – $10&thinsp;M) override the automatic algorithm.</dd>
+                    </dl>
+                </section>
+
+                <section class="method-section">
+                    <h3 class="method-section-title">Partner Concentration (HHI)</h3>
+                    <p class="method-note">Shown in the country detail panel when a country is clicked. Measures how much a country&rsquo;s trade is spread across partners versus concentrated in just a few analogous to asking &ldquo;does this country trade with everyone, or depend heavily on one partner?&rdquo;</p>
+                    <dl class="method-dl">
+                        <dt>Index used</dt>
+                        <dd>Herfindahl&ndash;Hirschman Index (HHI): the sum of squared partner trade shares, scaled to 0&ndash;10&thinsp;000. A score of 10&thinsp;000 means 100% of trade goes to a single partner; a score near 0 means trade is evenly spread across many partners.</dd>
+                        <dt>Formula</dt>
+                        <dd><code>HHI = &sum;(share<sub>i</sub>&sup2;) &times; 10&thinsp;000</code>, where share<sub>i</sub> is each partner&rsquo;s fraction of that country&rsquo;s total bilateral trade value.</dd>
+                        <dt>Interpretation</dt>
+                        <dd>
+                            <span class="method-hhi-band" style="color:#72BF44">&#9632;</span> <strong>Diversified</strong> (0–2&thinsp;000): trade spread across many partners<br>
+                            <span class="method-hhi-band" style="color:#FBAF17">&#9632;</span> <strong>Moderate</strong> (2&thinsp;000–4&thinsp;000): some partners dominate but diversification remains<br>
+                            <span class="method-hhi-band" style="color:#ef4444">&#9632;</span> <strong>Highly concentrated</strong> (&gt;4&thinsp;000): trade heavily dependent on one or two partners
+                        </dd>
+                        <dt>Threshold note</dt>
+                        <dd>These bands are calibrated for international trade dependency analysis. They are deliberately lower than the antitrust thresholds used in competition law (which start at 2&thinsp;500 for &ldquo;concentrated markets&rdquo;), reflecting that even moderate trade concentration poses diversification risks.</dd>
+                        <dt>Data scope</dt>
+                        <dd>Computed from all net bilateral flows for the selected year, regardless of the display threshold. This ensures the score is not distorted by the map&rsquo;s visibility filter.</dd>
+                    </dl>
+                </section>
+
+                <section class="method-section">
+                    <h3 class="method-section-title">Maritime Route Visualization</h3>
+                    <dl class="method-dl">
+                        <dt>Coverage</dt>
+                        <dd>Sea routes are displayed only for trade flows between different UNCTAD regions (Africa, Americas, Asia, Europe, Oceania). Flows within the same region are shown as straight arcs to avoid visual clutter from short intra-regional routes.</dd>
+                        <dt>Algorithm</dt>
+                        <dd>Routes are computed using the Eurostat <em>searoute</em> algorithm over a navigable sea graph.</dd>
+                        <dt>Port selection</dt>
+                        <dd>Representative ports are chosen based on UNCTAD Liner Shipping Connectivity Index (LSCI) scores; the highest-ranked port in each country is used as the routing node. For large countries spanning multiple coasts (United States, Canada, Australia), the nearest coast port to the partner country is selected.</dd>
+                        <dt>Disclaimer</dt>
+                        <dd>Routes are indicative only. They do not represent actual tracked HS&nbsp;6309 cargo paths, may not reflect the mode of transport used, and should not be used for navigation.</dd>
+                    </dl>
+                </section>
+
+                <section class="method-section">
+                    <h3 class="method-section-title">Map Disclaimer</h3>
+                    <p class="method-note">The boundaries and names shown on this map do not imply official endorsement or acceptance by the United Nations. Dotted and dashed lines represent approximate borders for which the final status has not yet been determined. The designation of countries or territories does not imply the expression of any opinion on the part of UNCTAD concerning their legal status.</p>
+                </section>
+
+                <section class="method-section method-section-last">
+                    <h3 class="method-section-title">How to Cite</h3>
+                    <p class="method-cite">UNCTAD (2025). <em>Global Second-Hand Clothes Trade Monitor.</em> United Nations Conference on Trade and Development, Geneva.</p>
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Mobile Filter Panel (bottom sheet) ── -->
+    <div id="mobile-filter-panel">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+            <span>Filters</span>
+            <button id="mobile-filter-close" class="btn-close">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="sheet-body">
+
+            <div class="sheet-section">
+                <div class="section-label">Region</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <button class="region-btn btn-toggle-lg" data-region="Global">All</button>
+                    <button class="region-btn btn-toggle-lg" data-region="Africa">Africa</button>
+                    <button class="region-btn btn-toggle-lg" data-region="Americas">Americas</button>
+                    <button class="region-btn btn-toggle-lg" data-region="Asia">Asia</button>
+                    <button class="region-btn btn-toggle-lg" data-region="Europe">Europe</button>
+                    <button class="region-btn btn-toggle-lg" data-region="Oceania">Oceania</button>
+                </div>
+            </div>
+
+            <div class="sheet-section">
+                <div class="section-label">Year</div>
+                <select id="m-year-select" class="sheet-select">
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                    <option value="2019">2019</option>
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
+                    <option value="2015">2015</option>
+                </select>
+            </div>
+
+            <div class="sheet-section">
+                <div class="section-label">Flow Direction</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                    <label class="flow-label-lg">
+                        <input type="checkbox" class="flow-checkbox" value="north-south" checked style="accent-color:#009EDB">
+                        <span style="color:#009EDB">N → S</span>
+                    </label>
+                    <label class="flow-label-lg">
+                        <input type="checkbox" class="flow-checkbox" value="south-north" checked style="accent-color:#72BF44">
+                        <span style="color:#72BF44">S → N</span>
+                    </label>
+                    <label class="flow-label-lg">
+                        <input type="checkbox" class="flow-checkbox" value="south-south" checked style="accent-color:#FBAF17">
+                        <span style="color:#FBAF17">S → S</span>
+                    </label>
+                    <label class="flow-label-lg">
+                        <input type="checkbox" class="flow-checkbox" value="north-north" checked style="accent-color:#AEA29A">
+                        <span style="color:#AEA29A">N → N</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="sheet-section">
+                <div class="section-label">Min. Trade Value</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <button class="threshold-btn btn-toggle-lg" data-threshold="auto">Auto</button>
+                    <button class="threshold-btn btn-toggle-lg" data-threshold="10000000">$10M</button>
+                    <button class="threshold-btn btn-toggle-lg" data-threshold="1000000">$1M</button>
+                    <button class="threshold-btn btn-toggle-lg" data-threshold="500000">$500k</button>
+                    <button class="threshold-btn btn-toggle-lg" data-threshold="100000">$100k</button>
+                    <button class="threshold-btn btn-toggle-lg" data-threshold="10000">$10k</button>
+                </div>
+            </div>
+
+            <div class="sheet-section">
+                <div class="section-label">Exporter (From)</div>
+                <button id="m-exp-btn" class="picker-btn-full">
+                    <span id="m-exp-label" class="picker-value">All Exporters</span>
+                    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:8px">
+                        <span id="m-exp-count" class="picker-badge hidden"></span>
+                        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </div>
+                </button>
+            </div>
+
+            <div class="sheet-section">
+                <div class="section-label">Importer (To)</div>
+                <button id="m-imp-btn" class="picker-btn-full">
+                    <span id="m-imp-label" class="picker-value">All Importers</span>
+                    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:8px">
+                        <span id="m-imp-count" class="picker-badge hidden" style="background:#b45309"></span>
+                        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </div>
+                </button>
+            </div>
+
+        </div><!-- /.sheet-body -->
+    </div><!-- /#mobile-filter-panel -->
+
+    <script type="module" src="src/jsx/components/main.js"></script>
+  </body>
+</html>
