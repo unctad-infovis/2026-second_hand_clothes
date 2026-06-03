@@ -249,12 +249,6 @@ export const TradeMap = {
   _zoomRaf: null,
   _pendingZoomK: 1,
 
-  // Returns the fill for a land polygon, applying special fills for disputed territories.
-  _specialFill(d, defaultFill) {
-    if (d?.properties?.code === 'C00002') return 'url(#aksai-chin-hatch)';
-    return defaultFill;
-  },
-
   // Returns the set of numeric code strings that should be co-highlighted with the given code.
   // Covers forward (CHN → HKG/MAC/TWN) and reverse (HKG → CHN/MAC/TWN) lookups.
   _getHoverGroup(codeStr) {
@@ -414,38 +408,35 @@ export const TradeMap = {
     // Graticule visual style is handled by the .graticule CSS class
     graticulePath.enter().append('path').attr('class', 'graticule').merge(graticulePath).attr('d', this.path);
 
-    const lands = landLayer.selectAll('path.land').data(STATE.geoData.features, d => d.properties.id || d.id);
+    const lands = landLayer.selectAll('path.land').data(STATE.geoData.features, d => d.properties.code);
 
     lands.exit().remove();
 
-    // Stroke, stroke-width, and transition are handled by the .land CSS class
+    // fill and transition are handled by the .land CSS classes
     const landsEnter = lands
       .enter()
       .append('path')
       .attr('class', 'land')
+      .attr('data-code', d => d.properties.code)
       .on('mouseover', (_event, d) => {
         if (!d?.properties) return;
         const group = this._getHoverGroup(String(d.properties.code));
         this.g
           .selectAll('path.land')
           .filter(ld => ld?.properties && group.has(String(ld.properties.code)))
-          .attr('fill', ld => this._specialFill(ld, C.hover));
+          .classed('is-hovered', true);
       })
       .on('mouseout', (_event, d) => {
         if (!d?.properties) return;
         const group = this._getHoverGroup(String(d.properties.code));
-        const focusCode = this.focusedIso && this._reverseIsoMap?.[this.focusedIso];
-        const focusAliases = this.focusedIso ? this._territoryAliases[this.focusedIso] || [] : [];
-        const focusGroup = new Set([focusCode, ...focusAliases].filter(Boolean));
         this.g
           .selectAll('path.land')
           .filter(ld => ld?.properties && group.has(String(ld.properties.code)))
-          .attr('fill', ld => this._specialFill(ld, focusGroup.has(String(ld.properties.code)) ? C.focus : C.land));
+          .classed('is-hovered', false);
       });
 
     landsEnter
       .merge(lands)
-      .attr('fill', d => this._specialFill(d, C.land))
       .attr('d', this.path);
 
     this._renderBorderLayers(landLayer);
@@ -897,13 +888,8 @@ export const TradeMap = {
 
     this.g
       .selectAll('.land')
-      .transition()
-      .duration(450)
-      .style('opacity', d => (d && highlightCodes.has(String(d.properties.code)) ? 1 : 0.35))
-      .attr('fill', d => {
-        const base = d && highlightCodes.has(String(d.properties.code)) ? C.focus : C.land;
-        return self._specialFill(d, base);
-      });
+      .classed('is-focused', d => d && highlightCodes.has(String(d.properties.code)))
+      .classed('is-dimmed', d => !(d && highlightCodes.has(String(d.properties.code))));
 
     this._renderHalo(iso);
     this._renderParticles(iso, visibleFlows);
@@ -970,10 +956,8 @@ export const TradeMap = {
 
     this.g
       .selectAll('.land')
-      .transition()
-      .duration(400)
-      .style('opacity', 1)
-      .attr('fill', d => this._specialFill(d, C.land));
+      .classed('is-focused', false)
+      .classed('is-dimmed', false);
 
     this._clearHalo();
     this._clearParticles();

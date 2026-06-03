@@ -184,19 +184,25 @@
   .land {
     fill: var(--map-land-fill);
     stroke: var(--ungrey-border);
-    stroke-width: 0.5;
+    stroke-width: 0.2;
     cursor: grab;
-    transition: fill 0.2s ease;
+    transition: fill 0.45s ease, opacity 0.45s ease;
   }
   .land:active {
     cursor: grabbing;
   }
+  .land[data-code='C00002'] { fill: url(#aksai-chin-hatch); }
+  .land.is-hovered { fill: var(--map-hover-fill); }
+  .land.is-focused { fill: var(--map-focus-fill); }
+  .land.is-dimmed { opacity: 0.35; }
+  .land[data-code='C00002'].is-hovered,
+  .land[data-code='C00002'].is-focused { fill: url(#aksai-chin-hatch); }
 
   /* D3 graticule lines */
   .graticule {
     fill: none;
     stroke: var(--ungrey-bg);
-    stroke-width: 0.5;
+    stroke-width: 0.2;
     stroke-opacity: 0.8;
     pointer-events: none;
   }
@@ -209,21 +215,21 @@
   }
   .border-plain {
     stroke: var(--col-border-plain);
-    stroke-width: 0.4;
+    stroke-width: 0.05;
   }
   .border-dashed {
     stroke: var(--col-border-dashed);
-    stroke-width: 0.5;
+    stroke-width: 0.2;
     stroke-dasharray: 4, 3;
   }
   .border-dotted {
     stroke: var(--col-border-dashed);
-    stroke-width: 0.5;
+    stroke-width: 0.2;
     stroke-dasharray: 1.5, 2.5;
   }
   .border-dash-dotted {
     stroke: var(--col-border-dashed);
-    stroke-width: 0.5;
+    stroke-width: 0.2;
     stroke-dasharray: 5, 2, 1.5, 2;
   }
 
