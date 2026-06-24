@@ -566,6 +566,9 @@
   .country-option.search-hidden {
     display: none;
   }
+  .country-picker-menu.is-searching .geo-item {
+    display: none;
+  }
 
   /* ── Group children default display (when .hidden is not present) ── */
   .group-children {

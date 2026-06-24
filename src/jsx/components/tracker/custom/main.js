@@ -331,9 +331,19 @@ const App = {
         menu.querySelectorAll('.group-children').forEach(c => {
           c.classList.remove('hidden');
         });
+        const seen = new Set();
         menu.querySelectorAll('.country-option').forEach(item => {
+          const isGeo = item.classList.contains('geo-item');
+          if (isGeo) {
+            item.classList.add('search-hidden');
+            return;
+          }
           const text = item.innerText.toLowerCase();
-          item.classList.toggle('search-hidden', !text.includes(term));
+          const code = item.querySelector('input[data-country]')?.dataset.country;
+          const matches = text.includes(term);
+          const duplicate = matches && code && seen.has(code);
+          if (matches && code) seen.add(code);
+          item.classList.toggle('search-hidden', !matches || duplicate);
         });
       }
     });

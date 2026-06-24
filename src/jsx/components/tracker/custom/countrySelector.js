@@ -48,7 +48,7 @@ class CountrySelector {
     list.innerHTML = '';
 
     // Geographic Regions
-    this._addSectionHeader(list, '🌍 Geographic Regions');
+    this._addSectionHeader(list, 'Geographic Regions');
     const regionOrder = ['5100', '5200', '5300', '5400', '5500'];
     regionOrder.forEach(contCode => {
       const cont = this.classificationData.regions[contCode];
@@ -77,16 +77,16 @@ class CountrySelector {
               indent: 2,
               icon: '  └'
             });
-            this._addSortedCountries(subsubChild, subsubCountries, 3);
+                  this._addSortedCountries(subsubChild, subsubCountries, 3, 'geo-item');
           });
         } else {
-          this._addSortedCountries(subChild, subCountries, 2);
+          this._addSortedCountries(subChild, subCountries, 2, 'geo-item');
         }
       });
     });
 
     // Development Status
-    this._addSectionHeader(list, '📊 Development Status');
+    this._addSectionHeader(list, 'Development Status');
     ['1500', '1400', '1610'].forEach(devCode => {
       const devGroup = this.classificationData.development[devCode];
       if (!devGroup) return;
@@ -182,17 +182,17 @@ class CountrySelector {
     return { wrapper, childContainer };
   }
 
-  _addSortedCountries(container, codes, indentLevel) {
+  _addSortedCountries(container, codes, indentLevel, extraClass = '') {
     const sorted = codes.map(code => ({ code, name: this.classificationData.countries[code]?.name || code })).sort((a, b) => a.name.localeCompare(b.name));
     for (let i = 0; i < sorted.length; i++) {
       const c = sorted[i];
-      this._addCountryItem(container, c.code, c.name, indentLevel);
+      this._addCountryItem(container, c.code, c.name, indentLevel, extraClass);
     }
   }
 
-  _addCountryItem(parent, code, name, indentLevel = 0) {
+  _addCountryItem(parent, code, name, indentLevel = 0, extraClass = '') {
     const item = document.createElement('div');
-    item.className = 'country-option';
+    item.className = extraClass ? `country-option ${extraClass}` : 'country-option';
     item.style.setProperty('--indent', indentLevel);
 
     const checkbox = document.createElement('input');
