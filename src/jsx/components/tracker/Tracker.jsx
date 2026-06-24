@@ -158,7 +158,7 @@ const App = () => {
             <span className="stat-val stat-value">—</span>
           </div>
           <div className="stat-row">
-            <span className="stat-label">Bilateral</span>
+            <span className="stat-label">Total</span>
             <span className="stat-secondary stat-bilateral">—</span>
           </div>
           <span className="stat-coverage" />
@@ -168,26 +168,6 @@ const App = () => {
       {/* KPI Bar */}
       <div className="kpi-bar">
         <div className="kpi-inner">
-          <div className="kpi-item" title="Active filter: region or country selection">
-            <span className="kpi-label">Filter</span>
-            <span className="kpi-value kpi-scope">Global</span>
-          </div>
-          <div className="kpi-divider" />
-          <div className="kpi-item" title="Total trade value of visible flows (USD)">
-            <span className="kpi-label">Volume</span>
-            <span className="kpi-value kpi-total">—</span>
-          </div>
-          <div className="kpi-divider" />
-          <div className="kpi-item" title="Number of bilateral trade corridors shown on map">
-            <span className="kpi-label">Corridors</span>
-            <span className="kpi-value kpi-flows">—</span>
-          </div>
-          <div className="kpi-divider" />
-          <div className="kpi-item" title="Number of countries active in the current view">
-            <span className="kpi-label">Countries</span>
-            <span className="kpi-value kpi-countries">—</span>
-          </div>
-          <div className="kpi-divider" />
           <div className="kpi-item kpi-item-col" title="Largest net exporter by trade balance (includes all flows, before threshold)">
             <span className="kpi-label">#1 Exporter</span>
             <span className="kpi-value kpi-value-exp kpi-top-exp">—</span>

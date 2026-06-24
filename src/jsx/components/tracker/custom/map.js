@@ -274,12 +274,13 @@ export const TradeMap = {
   },
 
   // Shared compact number formatter (no currency symbol) used in renderLegend
-  _fmtShort(v) {
+  _fmtShort(v, decimals = 2) {
     const a = Math.abs(v);
     const s = v < 0 ? '-' : '';
-    if (a >= 1e9) return `${s + format('.2f')(a / 1e9)}B`;
-    if (a >= 1e6) return `${s + format('.2f')(a / 1e6)}M`;
-    if (a >= 1e3) return `${s + format('.2f')(a / 1e3)}K`;
+    const f = `,.${decimals}f`;
+    if (a >= 1e9) return `${s + format(f)(a / 1e9)}B`;
+    if (a >= 1e6) return `${s + format(f)(a / 1e6)}M`;
+    if (a >= 1e3) return `${s + format(f)(a / 1e3)}K`;
     return s + format(',.0f')(a);
   },
 
@@ -332,11 +333,11 @@ export const TradeMap = {
             .attr('r', function () {
               return (+this.getAttribute('data-original-radius') || 3) / k;
             })
-            .attr('stroke-width', 1.5 / k);
+            .attr('stroke-width', 0.8 / k);
           this.g
             .selectAll('.map-label')
-            .attr('font-size', `${8.5 / Math.sqrt(k)}px`)
-            .attr('stroke-width', 2.5 / k);
+            .attr('font-size', `${11 / Math.sqrt(k)}px`)
+            .attr('stroke-width', 1.5 / k);
         });
       });
     this.svg.call(this.zoomBehavior);
@@ -616,12 +617,12 @@ export const TradeMap = {
     const p98NetBal = quantile(sortedNetBal, 0.98) || d3max(sortedNetBal) || 1;
     const p98NetFlows = quantile(sortedNetFlows, 0.98) || d3max(sortedNetFlows) || 1;
 
-    const maxRadius = Math.max(Math.min(this.width * 0.01, 20), 1);
+    const maxRadius = Math.max(Math.min(this.width * 0.014, 26), 1);
     const maxEdgeWidth = Math.max(Math.min(this.width * 0.008, 12), 1);
 
     const radiusScale = scaleSqrt()
       .domain([0, p98Gross])
-      .range(isFocused ? [3, maxRadius] : [1.5, maxRadius * 0.7])
+      .range(isFocused ? [4, maxRadius] : [2, maxRadius * 0.75])
       .clamp(true);
 
     const edgeWidthScale = scaleSqrt()
@@ -723,7 +724,6 @@ export const TradeMap = {
 
     nodes.exit().transition().duration(500).attr('r', 0).style('opacity', 0).remove();
 
-    // stroke is handled by the .country-node CSS class
     const nodesEnter = nodes
       .enter()
       .append('circle')
@@ -752,7 +752,7 @@ export const TradeMap = {
       .attr('cy', d => projOf(d)[1])
       .attr('r', d => radiusScale(nodeStats[d].grossVolume) / currentK)
       .attr('fill', d => colorScale(nodeStats[d].netBalance))
-      .attr('stroke-width', 1.5 / currentK)
+      .attr('stroke-width', 0.8 / currentK)
       .style('opacity', nodeOpacity);
 
     // 3. Labels
@@ -791,8 +791,7 @@ export const TradeMap = {
       .duration(750)
       .attr('x', d => projOf(d)[0] + radiusScale(nodeStats[d].grossVolume) / currentK + 4)
       .attr('y', d => projOf(d)[1] + 4)
-      .attr('font-size', `${8.5 / Math.sqrt(currentK)}px`)
-      .attr('stroke-width', 2.5 / currentK)
+      .attr('font-size', `${11 / Math.sqrt(currentK)}px`)
       .style('opacity', labelOpacity);
 
     if (this.renderLegend) this.renderLegend();
@@ -1088,12 +1087,12 @@ export const TradeMap = {
 
     container.innerHTML = `
       <div class="legend-section">
-        <span class="legend-section-label">Flows</span>
+        <span class="legend-section-label">Trade Flows</span>
         <div class="legend-flows">${flowItems}</div>
       </div>
       <span class="legend-bar-divider"></span>
       <div class="legend-section">
-        <span class="legend-section-label">Nodes</span>
+        <span class="legend-section-label">Countries</span>
         <div class="legend-nodes">
           <span class="legend-nodes-hint">← Imp</span>
           <span class="legend-node legend-node-importer-strong" title="Strong net importer"></span>
@@ -1110,8 +1109,8 @@ export const TradeMap = {
       <div class="legend-section">
         <span class="legend-section-label">Threshold</span>
         <span class="legend-threshold-badge${isManual ? ' manual' : ''}">${isManual ? 'MANUAL' : 'TOP 20'}</span>
-        <span class="legend-threshold-val">$${fmtShort(currentThreshold)}</span>
-        <span class="legend-arc-count">${arcCount} arcs</span>
+        <span class="legend-threshold-val">$${fmtShort(currentThreshold, isManual ? 0 : 2)}</span>
+        <span class="legend-arc-count">${arcCount} trade flows</span>
       </div>`;
 
     // Update stats

@@ -360,19 +360,9 @@ const App = {
 
   updateKPIBar() {
     const flows = STATE.filteredData || [];
-    const stats = STATE.nodeStats || {};
-    const rawStats = STATE.rawNodeStats || stats;
-    const mf = METRIC_FORMAT[STATE.metric] || METRIC_FORMAT.value;
+    const rawStats = STATE.rawNodeStats || STATE.nodeStats || {};
 
     const total = sum(flows, d => d.netValue);
-    const totalEl = qs('.kpi-total');
-    if (totalEl) totalEl.textContent = mf.fmt(total);
-
-    const flowsEl = qs('.kpi-flows');
-    if (flowsEl) flowsEl.textContent = format(',')(flows.length);
-
-    const countriesEl = qs('.kpi-countries');
-    if (countriesEl) countriesEl.textContent = Object.keys(stats).length;
 
     const topExpEl = qs('.kpi-top-exp');
     const topImpEl = qs('.kpi-top-imp');
@@ -402,9 +392,6 @@ const App = {
       }
     }
 
-    const scopeEl = qs('.kpi-scope');
-    if (scopeEl) scopeEl.textContent = this._buildScopeText();
-
     let nsTotal = 0;
     let ssTotal = 0;
     flows.forEach(d => {
@@ -415,22 +402,6 @@ const App = {
     if (nsPctEl) nsPctEl.textContent = total > 0 ? `${Math.round((nsTotal / total) * 100)}%` : '—';
     const ssPctEl = qs('.kpi-ss-pct');
     if (ssPctEl) ssPctEl.textContent = total > 0 ? `${Math.round((ssTotal / total) * 100)}%` : '—';
-  },
-
-  _buildScopeText() {
-    const region = STATE.region && STATE.region !== 'Global' ? STATE.region : null;
-    const nExp = STATE.selectedExporters?.size || 0;
-    const nImp = STATE.selectedImporters?.size || 0;
-    if (!region && nExp === 0 && nImp === 0) return 'Global';
-    const parts = [];
-    if (region) {
-      parts.push(region);
-      if (nExp === 0 && nImp === 0) parts.push('Intra');
-    }
-    if (nExp > 0 && nImp > 0) parts.push(`${nExp} Exp · ${nImp} Imp`);
-    else if (nExp > 0) parts.push(`${nExp} Exporters`);
-    else if (nImp > 0) parts.push(`${nImp} Importers`);
-    return parts.join(' · ');
   },
 
   // ── P1: Insight Side Panel ──────────────────────────────────────

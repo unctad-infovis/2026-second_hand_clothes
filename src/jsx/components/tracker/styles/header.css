@@ -158,13 +158,14 @@
         font-weight: 700;
       }
 
-      input[type='checkbox'] {
-        accent-color: #fff;
-      }
       &.flow-ns span { color: var(--un-color-blue); }
+      &.flow-ns input[type='checkbox'] { accent-color: var(--un-color-blue); }
       &.flow-sn span { color: var(--un-color-green); }
+      &.flow-sn input[type='checkbox'] { accent-color: var(--un-color-green); }
       &.flow-ss span { color: var(--un-color-yellow); }
+      &.flow-ss input[type='checkbox'] { accent-color: var(--un-color-yellow); }
       &.flow-nn span { color: var(--un-color-purple); }
+      &.flow-nn input[type='checkbox'] { accent-color: var(--un-color-purple); }
     }
 
     /* Country picker button */

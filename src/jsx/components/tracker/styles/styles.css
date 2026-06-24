@@ -323,9 +323,9 @@
     stroke: var(--un-color-grey-light);
   }
 
-  /* Country circle nodes — fill driven by D3 color scale; only stroke is static */
+  /* Country circle nodes — fill driven by D3 color scale */
   .country-node {
-    stroke: var(--un-color-grey-light);
+    stroke: rgb(255 255 255 / 50%);
   }
 
   .trade-arc {
@@ -371,8 +371,7 @@
     stroke: #fff;
   }
 
-  /* SVG text labels — paint-order creates white halo behind text glyphs.
-     stroke-width and font-size are set dynamically by D3 (zoom-dependent). */
+  /* SVG text labels — font-size and stroke-width are set dynamically by D3 (zoom-dependent). */
   .map-label {
     fill: var(--un-color-grey-dark);
     font-family: var(--font-family);
@@ -380,7 +379,7 @@
     paint-order: stroke fill;
     pointer-events: none;
     stroke-linejoin: round;
-    stroke: var(--map-land-fill);
+    stroke: rgb(240 244 248 / 80%);
   }
 
   /* Checkbox customization */
