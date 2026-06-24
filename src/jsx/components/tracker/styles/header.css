@@ -158,18 +158,13 @@
         font-weight: 700;
       }
 
-      &.flow-ns span {
-        color: var(--un-color-blue);
+      input[type='checkbox'] {
+        accent-color: #fff;
       }
-      &.flow-sn span {
-        color: var(--un-color-green);
-      }
-      &.flow-ss span {
-        color: var(--un-color-yellow);
-      }
-      &.flow-nn span {
-        color: var(--un-color-grey);
-      }
+      &.flow-ns span { color: var(--un-color-blue); }
+      &.flow-sn span { color: var(--un-color-green); }
+      &.flow-ss span { color: var(--un-color-yellow); }
+      &.flow-nn span { color: var(--un-color-purple); }
     }
 
     /* Country picker button */

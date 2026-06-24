@@ -5,7 +5,7 @@ const REGIONS = ['Global', 'Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
 const YEARS = [2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015];
 
 const THRESHOLDS = [
-  { value: 'auto', label: 'Auto' },
+  { value: 'auto', label: 'Top 20' },
   { value: '10000000', label: '$10M' },
   { value: '1000000', label: '$1M' },
   { value: '500000', label: '$500k' },
@@ -401,17 +401,15 @@ const App = () => {
             </section>
 
             <section className="method-section">
-              <h3 className="method-section-title">Display Threshold (Auto Mode)</h3>
+              <h3 className="method-section-title">Display Threshold (Top 20 Mode)</h3>
               <p className="method-note">
-                To avoid visual overload, the map limits the number of displayed arcs to a maximum of <strong>40</strong> at a time.
+                To avoid visual overload, the map displays the <strong>top 20</strong> trade flows by net value among the currently visible flow categories.
               </p>
               <dl className="method-dl">
-                <dt>Global view</dt>
-                <dd>Minimum threshold: $10&thinsp;M. Arcs below this value are hidden.</dd>
-                <dt>With country selection</dt>
-                <dd>Floor scales down with selection breadth (1–3 countries: $10&thinsp;K; 4–10: $100&thinsp;K; 11–30: $500&thinsp;K; 31+: $1&thinsp;M). If the number of arcs above the floor exceeds 40, the threshold is raised to the 40th-highest value.</dd>
+                <dt>Top 20 (automatic)</dt>
+                <dd>The 20 highest-value net bilateral flows are shown for the active flow category selection. If fewer than 20 flows exist, all are shown. The threshold adapts when flow categories (N→S, S→N, etc.) are toggled, always selecting the top 20 within the chosen categories.</dd>
                 <dt>Manual thresholds</dt>
-                <dd>Fixed cut-off values ($10&thinsp;k – $10&thinsp;M) override the automatic algorithm.</dd>
+                <dd>Fixed cut-off values ($10&thinsp;k – $10&thinsp;M) override the automatic top-20 selection and show all flows above the chosen minimum value.</dd>
               </dl>
             </section>
 

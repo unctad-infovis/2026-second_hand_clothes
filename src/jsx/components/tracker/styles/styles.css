@@ -16,13 +16,15 @@
   background: var(--unblue-bg-alt);
   color: var(--ungrey-dark);
   font-family: var(--font-family);
-  margin: auto auto;
+  margin: auto;
   max-width: 1350px;
 
   .app {
     border-bottom: 4px solid var(--un-color-blue);
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    position: relative;
   }
 
   &.insight-open .main-header,

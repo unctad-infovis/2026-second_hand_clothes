@@ -126,7 +126,7 @@ export const DataLoader = {
 
     const finalFlows = categoryFiltered.filter(d => d.netValue >= dynamicThreshold);
 
-    // 6. Compute node statistics from visible flows
+    // 7. Compute node statistics from visible flows
     STATE.nodeStats = this.computeStatsFromNetFlows(finalFlows);
     STATE.filteredData = finalFlows;
 

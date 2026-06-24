@@ -37,5 +37,5 @@
   --flow-north-south: var(--un-color-blue);
   --flow-south-north: var(--un-color-green);
   --flow-south-south: var(--un-color-yellow);
-  --flow-north-north: var(--un-color-grey);
+  --flow-north-north: var(--un-color-purple);
 }

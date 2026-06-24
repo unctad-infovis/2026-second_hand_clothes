@@ -8,16 +8,16 @@
     z-index: 20;
     flex-shrink: 0;
     background: var(--unblue-bg);
-    transition: all 0.3s ease;
+    transition: background 0.3s ease;
 
     .kpi-inner {
       max-width: var(--content-max-width);
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      gap: 16px;
+      gap: 10px;
       margin: 0 auto;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       overflow-x: auto;
 
       @media (min-width: 768px) {
@@ -76,6 +76,5 @@
       flex-shrink: 0;
       background: var(--un-color-grey-light);
     }
-
   }
 }

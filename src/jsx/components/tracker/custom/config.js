@@ -16,7 +16,7 @@ export const CONFIG = {
     'north-south': '#009edb', // --un-color-blue
     'south-north': '#72bf44', // --un-color-green
     'south-south': '#fbaf17', // --un-color-yellow
-    'north-north': '#aea29a'  // --un-color-grey
+    'north-north': '#a05fb4'  // --un-color-purple
   },
 
   // Development status: 'north' = Developed economies.

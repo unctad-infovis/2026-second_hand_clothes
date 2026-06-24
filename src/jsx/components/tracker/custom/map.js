@@ -311,7 +311,7 @@ export const TradeMap = {
     this._graticuleGeo = geoGraticule()();
 
     this.zoomBehavior = zoom()
-      .scaleExtent([1.3, 8])
+      .scaleExtent([1.3, 4])
       .filter(event => event.type !== 'wheel')
       .on('zoom', event => {
         // Apply the transform immediately so panning feels instant.
@@ -1109,7 +1109,7 @@ export const TradeMap = {
       <span class="legend-bar-divider"></span>
       <div class="legend-section">
         <span class="legend-section-label">Threshold</span>
-        <span class="legend-threshold-badge${isManual ? ' manual' : ''}">${isManual ? 'MANUAL' : 'AUTO'}</span>
+        <span class="legend-threshold-badge${isManual ? ' manual' : ''}">${isManual ? 'MANUAL' : 'TOP 20'}</span>
         <span class="legend-threshold-val">$${fmtShort(currentThreshold)}</span>
         <span class="legend-arc-count">${arcCount} arcs</span>
       </div>`;
