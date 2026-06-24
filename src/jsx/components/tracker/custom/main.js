@@ -5,7 +5,7 @@ import { DataLoader } from './dataLoader.js';
 import { TradeMap } from './map.js';
 import { RegionConfig } from './regions.js';
 
-import './../../../styles/custom/styles.css';
+import './../styles/styles.css';
 
 const FLOW_DEFAULTS = ['north-south', 'south-north', 'south-south', 'north-north'];
 
@@ -217,6 +217,10 @@ const App = {
     qs('.fit-screen-btn')?.addEventListener('click', () => {
       TradeMap.zoomToRegion('Global');
     });
+
+    // Zoom buttons
+    qs('.zoom-in-btn')?.addEventListener('click', () => TradeMap.zoomBy(1.5));
+    qs('.zoom-out-btn')?.addEventListener('click', () => TradeMap.zoomBy(1 / 1.5));
 
     // Mobile country backdrop closes any open country menu
     qs('.mobile-country-backdrop')?.addEventListener('click', () => {
@@ -973,14 +977,17 @@ const App = {
           const h = Math.max(2, (v / maxYV) * H);
           const x = i * (barW + gap);
           const isCur = years[i] === STATE.year;
-          const yLabel = String(years[i]).slice(2);
-          return `<rect class="trend-bar${isCur ? ' cur' : ''}" x="${x}" y="${H - h}" width="${barW}" height="${h}" rx="2"/><text class="trend-label${isCur ? ' cur' : ''}" x="${x + barW / 2}" y="${H + 11}" text-anchor="middle">${yLabel}</text>`;
+          return `<rect class="trend-bar${isCur ? ' cur' : ''}" x="${x}" y="${H - h}" width="${barW}" height="${h}" rx="2"/>`;
         })
+        .join('');
+      const axisLabels = years
+        .map((y, i) => `<span class="trend-axis-label${y === STATE.year ? ' cur' : ''}">${String(y).slice(2)}</span>`)
         .join('');
       html += `
         <div class="si-section">
           <div class="si-label">Trade Trend (2015–${STATE.year})</div>
-          <svg class="svg-full" width="${W}" height="${H + 14}">${bars}</svg>
+          <svg class="svg-full" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" height="${H}">${bars}</svg>
+          <div class="si-trend-axis">${axisLabels}</div>
         </div>`;
     }
 
@@ -1574,7 +1581,7 @@ const App = {
             <span class="tt-section-label">Trend</span>
             <div class="tt-trend-stats">${yoyHtml}${cagrHtml}</div>
           </div>
-          <svg class="tt-trend-bars" width="${W}" height="${H}">${bars}</svg>
+          <svg class="tt-trend-bars" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" height="${H}">${bars}</svg>
           <div class="tt-trend-axis">
             <span>${years[0]}</span><span>${years[years.length - 1]}</span>
           </div>

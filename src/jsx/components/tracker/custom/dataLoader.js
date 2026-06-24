@@ -100,16 +100,7 @@ export const DataLoader = {
       netFlows = netFlows.filter(d => STATE.selectedImporters.has(d.importer));
     }
 
-    // 4. Semantic Zoom Thresholding
-    let dynamicThreshold;
-    if (STATE.thresholdMode !== 'auto') {
-      dynamicThreshold = STATE.thresholdMode;
-    } else {
-      dynamicThreshold = this.computeAutoThreshold(netFlows);
-    }
-    STATE.effectiveThreshold = dynamicThreshold;
-
-    // Save pre-threshold totals for legend coverage display.
+    // 4. Save pre-threshold totals for legend coverage display.
     // These only depend on year/region/selection, not on threshold or flow-category filters,
     // so skip the recompute when only those UI controls changed.
     const preKey = `${STATE.year}|${STATE.region}|${[...STATE.selectedExporters].sort()}|${[...STATE.selectedImporters].sort()}`;
@@ -120,10 +111,20 @@ export const DataLoader = {
       STATE.rawNodeStats = this.computeStatsFromNetFlows(netFlows);
     }
 
-    const thresholded = netFlows.filter(d => d.netValue >= dynamicThreshold);
+    // 5. Flow category filter (before threshold so auto always picks from visible categories)
+    const categoryFiltered = netFlows.filter(d => STATE.flowFilters.has(d.flowCategory));
 
-    // 5. Flow category filter
-    const finalFlows = thresholded.filter(d => STATE.flowFilters.has(d.flowCategory));
+    // 6. Threshold — for auto, compute from category-filtered flows so selecting
+    //    a sparse category (e.g. S→N) still shows its top 20 rather than nothing.
+    let dynamicThreshold;
+    if (STATE.thresholdMode !== 'auto') {
+      dynamicThreshold = STATE.thresholdMode;
+    } else {
+      dynamicThreshold = this.computeAutoThreshold(categoryFiltered);
+    }
+    STATE.effectiveThreshold = dynamicThreshold;
+
+    const finalFlows = categoryFiltered.filter(d => d.netValue >= dynamicThreshold);
 
     // 6. Compute node statistics from visible flows
     STATE.nodeStats = this.computeStatsFromNetFlows(finalFlows);
@@ -132,32 +133,10 @@ export const DataLoader = {
     return finalFlows;
   },
 
-  // Arc-count-capped adaptive threshold.
-  // Keeps displayed arcs ≤ TARGET_MAX while applying a minimum floor
-  // that scales with selection breadth to suppress noise.
-  computeAutoThreshold(flows, targetMax = 40) {
-    const n = STATE.selectedExporters.size + STATE.selectedImporters.size;
-    const isRegional = STATE.region && STATE.region !== 'Global';
-
-    let floor;
-    if (n === 0 && !isRegional) {
-      floor = 10000000; // global view: $10M
-    } else if (n <= 3) {
-      floor = 10000; // 1-3 countries: $10K
-    } else if (n <= 10) {
-      floor = 100000; // 4-10: $100K
-    } else if (n <= 30) {
-      floor = 500000; // 11-30: $500K
-    } else {
-      floor = 1000000; // 31+: $1M
-    }
-    if (isRegional && n === 0) floor = 1000000;
-
-    const aboveFloor = flows.filter(d => d.netValue >= floor);
-    if (aboveFloor.length <= targetMax) return floor;
-
-    // Raise threshold until arc count ≤ targetMax
-    const sorted = aboveFloor.slice().sort((a, b) => b.netValue - a.netValue);
+  // Rank-based threshold: show the top N flows by value, no floors.
+  computeAutoThreshold(flows, targetMax = 20) {
+    if (flows.length <= targetMax) return 0;
+    const sorted = flows.slice().sort((a, b) => b.netValue - a.netValue);
     return sorted[targetMax - 1].netValue;
   },
 

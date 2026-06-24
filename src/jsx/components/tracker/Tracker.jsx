@@ -88,13 +88,11 @@ const App = () => {
             <img src="./assets/img/unctad-icon.svg" alt="UNCTAD" className="header-logo" />
             <div className="header-text">
               <h3>Global Second-Hand Clothes Trade Monitor</h3>
-              <h4>UNCTAD &middot; SMEP project</h4>
+              <h4>UN Trade and Development (UNCTAD) &middot; Sustainable Manufacturing and Environmental Pollution Programme project</h4>
             </div>
           </div>
 
           <div className="header-controls">
-            <div className="ctrl-divider" />
-
             {/* Region filter */}
             <div className="ctrl-pill">
               {REGIONS.map((region, i) => (
@@ -105,17 +103,6 @@ const App = () => {
             </div>
 
             <div className="ctrl-divider" />
-
-            {/* Year select */}
-            <div className="ctrl-pill">
-              <select className="ctrl-year year-select" defaultValue="2024">
-                {YEARS.map(y => (
-                  <option key={y} value={y}>
-                    {y}
-                  </option>
-                ))}
-              </select>
-            </div>
 
             {/* Flow direction filter */}
             <div className="ctrl-pill" title="Filter by economic flow direction">
@@ -129,6 +116,9 @@ const App = () => {
             </div>
             <div className="ctrl-divider threshold-divider" />
 
+            <CountryPicker prefix="exp" type="Exporter (From)" label="All Exporters" />
+            <CountryPicker prefix="imp" type="Importer (To)" label="All Importers" />
+            <br />
             {/* Threshold filter */}
             <div className="ctrl-pill threshold-group" title="Visibility threshold - minimum trade value to display">
               {THRESHOLDS.map((t, i) => (
@@ -139,9 +129,16 @@ const App = () => {
             </div>
 
             <div className="ctrl-divider" />
-
-            <CountryPicker prefix="exp" type="Exporter (From)" label="All Exporters" />
-            <CountryPicker prefix="imp" type="Importer (To)" label="All Importers" />
+            {/* Year select */}
+            <div className="ctrl-pill">
+              <select className="ctrl-year year-select" defaultValue="2024">
+                {YEARS.map(y => (
+                  <option key={y} value={y}>
+                    {y}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
       </header>
@@ -165,9 +162,6 @@ const App = () => {
             <span className="stat-secondary stat-bilateral">—</span>
           </div>
           <span className="stat-coverage" />
-        </div>
-        <div className="legend-footer">
-          <img src="./assets/img/smep-logo.png" alt="SMEP" />
         </div>
       </div>
 
@@ -292,6 +286,22 @@ const App = () => {
             </svg>
           </button>
 
+          {/* Zoom controls */}
+          <div className="zoom-controls">
+            <button className="zoom-btn zoom-in-btn" title="Zoom in" type="button">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <title>Zoom in</title>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m-8-8h16" />
+              </svg>
+            </button>
+            <button className="zoom-btn zoom-out-btn" title="Zoom out" type="button">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <title>Zoom out</title>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 12h16" />
+              </svg>
+            </button>
+          </div>
+
           <button className="mobile-filter-btn" type="button">
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <title>Filter</title>
@@ -315,16 +325,18 @@ const App = () => {
 
       {/* Map Footer */}
       <footer className="map-footer">
-        <p>Source: BACI based on UN Comtrade. Data cover HS&nbsp;6309 (Worn clothing and other worn articles).</p>
+        <p><em>Source:</em> UN Trade and Development (UNCTAD) and BACI based on UN Comtrade. Data cover HS&nbsp;6309 (Worn clothing and other worn articles).</p>
         <p>
-          Note: Sea routes are shown only for flows between different UNCTAD regions (Africa, Americas, Asia, Europe, Oceania) and represent major maritime shipping lanes computed via the Eurostat <em>searoute</em> algorithm using representative ports based on UNCTAD PLSCI scores. Flows within the same region are shown
-          as arcs. Routes do not reflect actual tracked second-hand clothing (HS&nbsp;6309) cargo paths and may not represent the actual mode of transport used.
-        </p>
-        <p className="footer-method-link">
+          <em>Note:</em> Sea routes are shown only for flows between different UNCTAD regions (Africa, Americas, Asia, Europe, Oceania) and represent major maritime shipping lanes computed via the Eurostat <em>searoute</em> algorithm using representative ports based on UNCTAD PLSCI scores. Flows within the same region are shown
+          as arcs. Routes do not reflect actual tracked second-hand clothing (HS&nbsp;6309) cargo paths and may not represent the actual mode of transport used.{' '}
           <button className="footer-link-btn methodology-btn" type="button">
-            Methodology &amp; Data Sources
-          </button>
+            Methodology &amp; Data Sources.
+          </button>{' '}
+          <a href="https://unctad.org/page/map-disclaimer">Map disclaimer</a>.
         </p>
+        <div className="footer-logos">
+          <img src="./assets/img/smep-logo.png" alt="SMEP" />
+        </div>
       </footer>
 
       {/* Methodology Modal */}
@@ -463,7 +475,7 @@ const App = () => {
             <section className="method-section method-section-last">
               <h3 className="method-section-title">How to Cite</h3>
               <p className="method-cite">
-                UNCTAD (2025). <em>Global Second-Hand Clothes Trade Monitor.</em> United Nations Conference on Trade and Development, Geneva.
+                UN Trade and Development (UNCTAD) (2025). <em>Global Second-Hand Clothes Trade Monitor.</em> United Nations Conference on Trade and Development, Geneva.
               </p>
             </section>
           </div>

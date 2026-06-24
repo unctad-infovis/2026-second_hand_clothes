@@ -5,7 +5,7 @@
   --header-height-desktop: auto;
   --content-max-width: 1600px;
   --panel-legend-width: clamp(160px, 14vw, 220px);
-  --panel-insight-width: clamp(280px, 25vw, 380px);
+  --panel-insight-width: clamp(280px, 30vw, 380px);
 
   /* Typography */
   --font-family: Inter, Arial, sans-serif;
@@ -28,14 +28,14 @@
   --bp-xl: 1280px;
 
   /* Font sizes */
-  --fs-micro: 0.4375rem; /* 7px */
-  --fs-xxs: 0.5rem; /* 8px */
-  --fs-xs: 0.5625rem; /* 9px */
-  --fs-sm: 0.625rem; /* 10px */
-  --fs-label: 0.6875rem; /* 11px */
-  --fs-base: 0.75rem; /* 12px */
-  --fs-body: 0.8125rem; /* 13px */
-  --fs-md: 0.9375rem; /* 15px */
+  --fs-micro: 0.5625rem; /* 9px */
+  --fs-xxs: 0.625rem; /* 10px */
+  --fs-xs: 0.6875rem; /* 11px */
+  --fs-sm: 0.75rem; /* 12px */
+  --fs-label: 0.8125rem; /* 13px */
+  --fs-base: 0.875rem; /* 14px */
+  --fs-body: 0.9375rem; /* 15px */
+  --fs-md: 1.0625rem; /* 17px */
   --fs-xl: 1.5rem; /* 24px */
 
   /* Mobile viewport height (set dynamically by JS to handle iOS Safari URL bar) */

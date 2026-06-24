@@ -8,17 +8,17 @@
 
     & + .si-section {
       padding-top: 14px;
-      border-top: 1px solid var(--ungrey-bg);
+      border-top: 1px solid var(--un-color-grey-lighest);
     }
   }
 
   .si-label {
-    margin-bottom: 8px;
+    color: var(--un-color-grey-dark);
     font-size: var(--fs-xs);
     font-weight: 700;
-    color: var(--ungrey-text);
-    text-transform: uppercase;
     letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
 
     &.si-label-flush {
       margin-bottom: 0;
@@ -26,10 +26,10 @@
   }
 
   .si-sublabel {
-    margin-bottom: 8px;
+    color: var(--un-color-grey);
     font-size: var(--fs-xxs);
     font-style: italic;
-    color: var(--ungrey);
+    margin-bottom: 8px;
   }
 
   /* KPI grid */
@@ -48,23 +48,23 @@
   }
 
   .si-kpi-card {
+    border-radius: var(--radius-lg);
     padding: 8px 10px;
     text-align: center;
-    border-radius: var(--radius-lg);
 
     .si-kpi-label {
-      margin-bottom: 3px;
       font-size: var(--fs-xxs);
       font-weight: 700;
-      text-transform: uppercase;
       letter-spacing: 0.04em;
+      margin-bottom: 3px;
+      text-transform: uppercase;
     }
 
     .si-kpi-value {
+      color: var(--ungrey-dark);
       font-family: var(--font-mono);
       font-size: var(--fs-body);
       font-weight: 700;
-      color: var(--ungrey-dark);
     }
 
     &.exp {
@@ -72,16 +72,16 @@
       border: 1px solid rgb(0 119 184 / 22%);
 
       .si-kpi-label {
-        color: var(--unblue-dark);
+        color: var(--un-color-blue-darkest);
       }
     }
 
     &.net {
       background: var(--unblue-bg);
-      border: 1px solid var(--ungrey-border);
+      border: 1px solid var(--un-color-grey-light);
 
       .si-kpi-label {
-        color: var(--ungrey-text);
+        color: var(--un-color-grey-dark);
       }
     }
 
@@ -90,7 +90,7 @@
       border: 1px solid rgb(237 24 71 / 18%);
 
       .si-kpi-label {
-        color: var(--unred-dark);
+        color: var(--un-color-red);
       }
     }
   }
@@ -101,65 +101,65 @@
     border-right: none;
   }
   .si-kpi-card-compare-mid {
+    align-items: center;
     border-radius: 0;
     display: flex;
-    align-items: center;
     justify-content: center;
   }
   .si-kpi-card-compare-vs {
-    color: var(--ungrey);
+    color: var(--un-color-grey);
+    font-size: var(--fs-md);
     font-weight: 700;
-    font-size: 14px;
   }
   .si-kpi-card-compare-b {
-    border-radius: 0 8px 8px 0;
-    border-left: none;
     background: rgba(251, 175, 23, 0.1);
+    border-left: none;
+    border-radius: 0 8px 8px 0;
     border: 1px solid rgba(251, 175, 23, 0.3);
   }
   .si-kpi-value-small {
-    font-size: 11px;
+    font-size: var(--fs-label);
   }
 
   /* Inline badge */
 
   .si-badge {
+    border-radius: 999px;
+    border: 1px solid;
     display: inline-block;
-    padding: 2px 10px;
     font-size: var(--fs-xs);
     font-weight: 700;
-    border: 1px solid;
-    border-radius: 999px;
+    padding: 2px 10px;
   }
 
   .si-badge-wrap {
-    text-align: center;
     margin-bottom: 12px;
+    text-align: center;
   }
 
   /* Chart legend */
 
   .si-chart-legend {
-    display: flex;
     align-items: center;
+    display: flex;
     gap: 12px;
     margin-bottom: 6px;
 
     .si-legend-item {
-      display: flex;
       align-items: center;
+      display: flex;
       gap: 4px;
 
       .si-legend-swatch {
-        width: 12px;
-        height: 2px;
-        flex-shrink: 0;
         border-radius: 1px;
+        flex-shrink: 0;
+        height: 2px;
+        width: 12px;
       }
 
       span {
+        color: var(--un-color-grey-dark);
         font-size: var(--fs-xs);
-        color: var(--ungrey-text);
       }
     }
   }
@@ -167,19 +167,19 @@
   /* Data table */
 
   .si-table {
-    width: 100%;
     border-collapse: collapse;
+    width: 100%;
 
     &.has-margin {
       margin-bottom: 14px;
     }
 
     th {
-      padding: 3px 8px;
+      border-bottom: 1px solid var(--un-color-grey-light);
+      color: var(--un-color-grey-dark);
       font-size: var(--fs-xs);
       font-weight: 700;
-      color: var(--ungrey-text);
-      border-bottom: 1px solid var(--ungrey-border);
+      padding: 3px 8px;
 
       &.ar {
         text-align: right;
@@ -193,9 +193,9 @@
     }
 
     td {
-      padding: 4px 8px;
       font-family: var(--font-mono);
       font-size: var(--fs-sm);
+      padding: 4px 8px;
 
       &.ar {
         text-align: right;
@@ -210,16 +210,16 @@
         font-weight: 700;
       }
       &.muted {
-        color: var(--ungrey-text);
+        color: var(--un-color-grey-dark);
       }
       &.cur {
+        color: var(--un-color-blue-darkest);
         font-weight: 700;
-        color: var(--unblue-dark);
       }
       &.compare-label {
-        font-size: 9px;
-        text-transform: uppercase;
+        font-size: var(--fs-xs);
         letter-spacing: 0.04em;
+        text-transform: uppercase;
       }
     }
 
@@ -234,26 +234,26 @@
   /* Narrative box */
 
   .si-narrative-box {
-    padding: 12px;
-    margin-bottom: 14px;
     background: rgb(0 73 144 / 6%);
-    border: 1px solid rgb(0 73 144 / 14%);
     border-radius: var(--radius-lg);
+    border: 1px solid rgb(0 73 144 / 14%);
+    margin-bottom: 14px;
+    padding: 12px;
 
     .si-narrative-title {
-      margin-bottom: 8px;
+      color: var(--un-color-blue-darkest);
       font-size: var(--fs-xs);
       font-weight: 700;
-      color: var(--unblue-dark);
-      text-transform: uppercase;
       letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
     }
 
     p {
-      margin: 0 0 6px;
+      color: var(--ungrey-dark);
       font-size: var(--fs-label);
       line-height: 1.5;
-      color: var(--ungrey-dark);
+      margin: 0 0 6px;
 
       &:last-child {
         margin-bottom: 0;
@@ -261,8 +261,8 @@
     }
 
     .si-narrative-empty {
-      font-size: 11px;
-      color: var(--ungrey);
+      color: var(--un-color-grey);
+      font-size: var(--fs-label);
       font-style: italic;
     }
   }
@@ -276,34 +276,34 @@
   }
 
   .si-role-badge {
+    border-radius: 999px;
     display: inline-block;
-    padding: 3px 14px;
     font-size: var(--fs-sm);
     font-weight: 700;
-    border-radius: 999px;
+    padding: 3px 14px;
 
     &.exp {
-      color: var(--unblue);
       background: rgb(0 158 219 / 12%);
+      color: var(--un-color-blue);
     }
     &.imp {
-      color: var(--unred-dark);
       background: rgb(237 24 71 / 10%);
+      color: var(--un-color-red);
     }
   }
 
   /* Generic card */
 
   .si-card {
-    padding: 12px;
     background: var(--unblue-bg);
-    border: 1px solid var(--ungrey-border);
     border-radius: var(--radius-lg);
+    border: 1px solid var(--un-color-grey-light);
+    padding: 12px;
 
     &.si-card-center {
+      align-items: center;
       display: flex;
       flex-direction: column;
-      align-items: center;
     }
   }
 
@@ -316,16 +316,16 @@
   }
 
   .si-partner-row {
-    display: flex;
     align-items: center;
+    display: flex;
     gap: 5px;
 
     .si-rank {
-      min-width: 28px;
+      color: var(--un-color-grey-dark);
       flex-shrink: 0;
       font-family: var(--font-mono);
       font-size: var(--fs-xs);
-      color: var(--ungrey-text);
+      min-width: 28px;
     }
 
     .si-arrow {
@@ -335,45 +335,45 @@
     }
 
     .si-name {
-      flex: 1;
-      overflow: hidden;
-      font-size: var(--fs-label);
       color: var(--ungrey-dark);
+      flex: 1;
+      font-size: var(--fs-label);
+      overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
 
     .si-bar-wrap {
-      width: 36px;
-      height: 5px;
-      flex-shrink: 0;
-      overflow: hidden;
-      background: var(--ungrey-bg);
+      background: var(--un-color-grey-lighest);
       border-radius: 999px;
+      flex-shrink: 0;
+      height: 5px;
+      overflow: hidden;
+      width: 36px;
 
       .si-bar-fill {
+        border-radius: 999px;
         height: 100%;
         opacity: 0.75;
-        border-radius: 999px;
       }
     }
 
     .si-split {
-      width: 34px;
       flex-shrink: 0;
       font-family: var(--font-mono);
       font-size: var(--fs-xs);
       font-weight: 700;
       text-align: right;
+      width: 34px;
     }
 
     .si-val {
-      width: 44px;
+      color: var(--un-color-grey-dark);
       flex-shrink: 0;
       font-family: var(--font-mono);
       font-size: var(--fs-sm);
-      color: var(--ungrey-text);
       text-align: right;
+      width: 44px;
     }
 
     .si-actions {
@@ -392,21 +392,21 @@
   /* Action buttons */
 
   .si-btn {
-    padding: 2px 6px;
+    background: var(--un-color-grey-lighest);
+    border-radius: var(--radius-sm);
+    border: none;
+    color: var(--un-color-grey-dark);
+    cursor: pointer;
     font-family: var(--font-family);
     font-size: var(--fs-xxs);
-    color: var(--ungrey-text);
-    cursor: pointer;
-    background: var(--ungrey-bg);
-    border: none;
-    border-radius: var(--radius-sm);
+    padding: 2px 6px;
     transition:
       background 0.12s,
       color 0.12s;
 
     &:hover {
+      background: var(--un-color-blue-darkest);
       color: #fff;
-      background: var(--unblue-dark);
     }
     &.cmp:hover {
       background: var(--col-compare);
@@ -416,12 +416,12 @@
   /* Flow composition bar */
 
   .si-flow-bar {
+    border-radius: 999px;
     display: flex;
     gap: 1px;
     height: 6px;
     margin-bottom: 8px;
     overflow: hidden;
-    border-radius: 999px;
   }
 
   .si-comp-rows {
@@ -431,20 +431,20 @@
   }
 
   .si-comp-row {
-    display: flex;
     align-items: center;
+    display: flex;
     gap: 8px;
 
     .si-comp-dot {
-      width: 10px;
-      height: 10px;
-      flex-shrink: 0;
       border-radius: 2px;
+      flex-shrink: 0;
+      height: 10px;
+      width: 10px;
     }
     .si-comp-label {
+      color: var(--ungrey-dark);
       flex: 1;
       font-size: var(--fs-sm);
-      color: var(--ungrey-dark);
     }
     .si-comp-pct {
       font-family: var(--font-mono);
@@ -456,30 +456,30 @@
   /* HHI stats */
 
   .si-hhi-stats {
+    border-top: 1px solid var(--un-color-grey-light);
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 8px;
-    padding-top: 10px;
+    grid-template-columns: repeat(3, 1fr);
     margin-top: 10px;
+    padding-top: 10px;
     text-align: center;
-    border-top: 1px solid var(--ungrey-border);
 
     .hhi-l {
+      color: var(--un-color-grey-dark);
       font-size: var(--fs-xxs);
       font-weight: 700;
-      color: var(--ungrey-text);
       text-transform: uppercase;
     }
     .hhi-v {
+      color: var(--ungrey-dark);
       font-family: var(--font-mono);
       font-size: var(--fs-base);
       font-weight: 700;
-      color: var(--ungrey-dark);
     }
     .hhi-s {
-      overflow: hidden;
+      color: var(--un-color-grey-dark);
       font-size: var(--fs-xxs);
-      color: var(--ungrey-text);
+      overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
@@ -488,32 +488,32 @@
   /* Chart footer legend */
 
   .si-chart-footer {
-    display: flex;
     align-items: center;
-    justify-content: center;
+    display: flex;
     gap: 12px;
+    justify-content: center;
     margin-top: 8px;
 
     .si-legend-item {
-      display: flex;
       align-items: center;
+      display: flex;
       gap: 4px;
 
       .si-legend-swatch {
-        width: 10px;
-        height: 3px;
         border-radius: 2px;
+        height: 3px;
+        width: 10px;
       }
       span {
-        font-size: var(--fs-xs);
         color: var(--ungrey-dark);
+        font-size: var(--fs-xs);
       }
     }
   }
 
   .si-chart-caption {
-    font-size: 8px;
-    color: var(--ungrey-text);
+    color: var(--un-color-grey-dark);
+    font-size: var(--fs-xxs);
     font-style: italic;
     margin-top: 4px;
     text-align: center;
@@ -522,162 +522,162 @@
   /* Partners header row */
 
   .si-partners-hdr {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
 
     .si-partners-hint {
+      color: var(--un-color-grey);
       font-size: var(--fs-xxs);
       font-style: italic;
-      color: var(--ungrey);
     }
   }
 
   /* Tooltip content (replaces inline styles in showTooltip) */
   .tt-head {
-    display: flex;
     align-items: center;
-    justify-content: space-between;
+    display: flex;
     gap: 12px;
+    justify-content: space-between;
     margin-bottom: 8px;
   }
   .tt-title {
+    color: var(--un-color-blue-darkest);
+    font-size: var(--fs-body);
     font-weight: 700;
-    color: var(--unblue-dark);
-    font-size: 13px;
     line-height: 1.2;
   }
   .tt-region {
-    font-size: 9px;
-    color: var(--ungrey-text);
+    color: var(--un-color-grey-dark);
+    font-size: var(--fs-xs);
   }
   .tt-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
     gap: 8px;
+    grid-template-columns: 1fr 1fr;
     margin-bottom: 8px;
   }
   .tt-card {
     background: var(--unblue-bg);
-    border: 1px solid var(--ungrey-border);
     border-radius: 6px;
+    border: 1px solid var(--un-color-grey-light);
     padding: 6px 8px;
   }
   .tt-card-label {
-    font-size: 8px;
-    color: var(--ungrey-text);
-    text-transform: uppercase;
+    color: var(--un-color-grey-dark);
+    font-size: var(--fs-xxs);
     font-weight: 700;
     margin-bottom: 2px;
+    text-transform: uppercase;
   }
   .tt-card-value {
-    font-size: 12px;
-    font-weight: 700;
     color: var(--ungrey-dark);
     font-family: monospace;
+    font-size: var(--fs-base);
+    font-weight: 700;
   }
   .tt-role-wrap {
-    text-align: center;
     margin-bottom: 8px;
+    text-align: center;
   }
   .tt-role-badge {
-    font-size: 9px;
+    border-radius: 99px;
+    font-size: var(--fs-xs);
     font-weight: 700;
     padding: 2px 10px;
-    border-radius: 99px;
   }
   .tt-role-badge.exp {
     background: rgba(0, 158, 219, 0.15);
-    color: var(--unblue);
+    color: var(--un-color-blue);
   }
   .tt-role-badge.imp {
     background: rgba(237, 24, 71, 0.15);
-    color: var(--unred-dark);
+    color: var(--un-color-red);
   }
   .tt-section {
-    padding-top: 8px;
-    border-top: 1px solid var(--ungrey-border);
+    border-top: 1px solid var(--un-color-grey-light);
     margin-top: 2px;
+    padding-top: 8px;
 
     &.has-extra-margin {
       margin-top: 8px;
     }
   }
   .tt-section-label {
-    font-size: 9px;
-    color: var(--ungrey-text);
+    color: var(--un-color-grey-dark);
+    font-size: var(--fs-xs);
     font-weight: 700;
-    text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 6px;
+    text-transform: uppercase;
   }
   .tt-partner-row {
-    display: flex;
     align-items: center;
+    display: flex;
+    font-size: var(--fs-sm);
     gap: 6px;
-    font-size: 10px;
     margin-bottom: 3px;
   }
   .tt-partner-arrow {
-    font-weight: 700;
     flex-shrink: 0;
+    font-weight: 700;
   }
   .tt-partner-name {
     color: var(--ungrey-dark);
-    width: 72px;
+    flex-shrink: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    flex-shrink: 0;
+    width: 72px;
   }
   .tt-partner-bar {
+    background: var(--un-color-grey-lighest);
+    border-radius: 99px;
     flex: 1;
     height: 5px;
-    background: var(--ungrey-bg);
-    border-radius: 99px;
     overflow: hidden;
   }
   .tt-partner-bar-fill {
+    border-radius: 99px;
     height: 100%;
     opacity: 0.7;
-    border-radius: 99px;
   }
   .tt-partner-val {
-    color: var(--ungrey-text);
-    font-family: monospace;
-    font-size: 9px;
-    width: 52px;
-    text-align: right;
+    color: var(--un-color-grey-dark);
     flex-shrink: 0;
+    font-family: monospace;
+    font-size: var(--fs-xs);
+    text-align: right;
+    width: 52px;
   }
   .tt-flow-bar {
-    display: flex;
-    height: 4px;
     border-radius: 99px;
-    overflow: hidden;
+    display: flex;
     gap: 1px;
+    height: 4px;
+    overflow: hidden;
   }
   .tt-flow-labels {
-    display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 4px;
-    margin-top: 5px;
+    display: flex;
     flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+    margin-top: 5px;
   }
   .tt-flow-label {
-    font-size: 9px;
+    font-size: var(--fs-xs);
     font-weight: 700;
   }
   .tt-flow-sep {
-    color: var(--ungrey-border);
-    font-size: 9px;
+    color: var(--un-color-grey-light);
+    font-size: var(--fs-xs);
     margin: 0 2px;
   }
   .tt-trend-head {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: space-between;
     margin-bottom: 5px;
   }
@@ -692,43 +692,43 @@
     font-weight: 700;
   }
   .tt-yoy {
-    font-size: 9px;
+    font-size: var(--fs-xs);
   }
   .tt-cagr {
-    font-size: 8px;
+    font-size: var(--fs-xxs);
   }
   .tt-trend-bars {
     width: 100%;
   }
   .tt-trend-axis {
+    color: var(--un-color-grey);
     display: flex;
-    justify-content: space-between;
-    font-size: 8px;
-    color: var(--ungrey);
     font-family: monospace;
+    font-size: var(--fs-xxs);
+    justify-content: space-between;
     margin-top: 2px;
   }
   .tt-rank {
+    align-items: center;
+    border-top: 1px solid var(--un-color-grey-light);
+    color: var(--un-color-grey-dark);
+    display: flex;
+    font-size: var(--fs-xs);
+    gap: 4px;
     margin-top: 6px;
     padding-top: 6px;
-    border-top: 1px solid var(--ungrey-border);
-    font-size: 9px;
-    color: var(--ungrey-text);
-    display: flex;
-    align-items: center;
-    gap: 4px;
   }
   .tt-rank-num {
-    color: var(--unblue-dark);
+    color: var(--un-color-blue-darkest);
+    font-size: var(--fs-sm);
     font-weight: 700;
-    font-size: 10px;
   }
   .tt-rank-badge {
+    border-radius: 4px;
+    font-size: var(--fs-xxs);
+    font-weight: 700;
     margin-left: auto;
     padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 8px;
-    font-weight: 700;
   }
 
   /* ── Flow category color variable (inherited by children) ── */
@@ -747,48 +747,48 @@
 
   /* ── Static color utilities ── */
   .col-exp {
-    color: var(--unblue);
+    color: var(--un-color-blue);
   }
   .col-imp {
-    color: var(--unred-dark);
+    color: var(--un-color-red);
   }
   .col-exp-text {
-    color: var(--unblue-text);
+    color: var(--un-color-blue-dark);
   }
   .col-positive {
-    color: var(--ungreen);
+    color: var(--un-color-green);
   }
   .col-negative {
-    color: var(--unred-dark);
+    color: var(--un-color-red);
   }
   .col-muted {
-    color: var(--ungrey);
+    color: var(--un-color-grey);
   }
   .col-yellow {
-    color: var(--unyellow);
+    color: var(--un-color-yellow);
   }
   .col-amber {
     color: var(--col-compare);
   }
   .col-amber-dark {
-    color: var(--col-compare-dark);
+    color: var(--un-color-yellow-darkest);
   }
   .bg-exp {
-    background: var(--unblue);
+    background: var(--un-color-blue);
   }
   .bg-imp {
-    background: var(--unred-dark);
+    background: var(--un-color-red);
   }
 
   /* ── Legend swatch color variants ── */
   .swatch-exp {
-    background: var(--unblue);
+    background: var(--un-color-blue);
   }
   .swatch-imp {
-    background: var(--unred-dark);
+    background: var(--un-color-red);
   }
   .swatch-yellow {
-    background: var(--unyellow);
+    background: var(--un-color-yellow);
   }
 
   /* ── Dynamic bar widths driven by --pct CSS custom property (set by JS) ── */
@@ -802,23 +802,23 @@
   /* ── Flow composition segments: width + color via CSS vars ── */
   .si-flow-seg,
   .tt-flow-seg {
+    background: var(--flow-color, var(--un-color-grey));
     height: 100%;
-    background: var(--flow-color, var(--ungrey));
     width: var(--pct, 0%);
   }
 
   /* ── Elements that inherit color from a parent .flow-X class ── */
   .si-comp-dot {
-    background: var(--flow-color, var(--ungrey));
+    background: var(--flow-color, var(--un-color-grey));
   }
   .si-comp-pct {
-    color: var(--flow-color, var(--ungrey));
+    color: var(--flow-color, var(--un-color-grey));
   }
   .tt-flow-label {
-    color: var(--flow-color, var(--ungrey));
+    color: var(--flow-color, var(--un-color-grey));
   }
   .legend-flow-dot {
-    background: var(--flow-color, var(--ungrey));
+    background: var(--flow-color, var(--un-color-grey));
   }
   .cat-strong {
     color: var(--flow-color, inherit);
@@ -826,139 +826,139 @@
 
   /* ── Flow badge in arc modal ── */
   .si-badge.flow-badge {
-    color: var(--flow-color);
     border-color: color-mix(in srgb, var(--flow-color) 33%, transparent);
+    color: var(--flow-color);
   }
 
   /* ── HHI concentration gauge ── */
   .si-card[data-hhi='low'] {
-    --hhi-color: var(--ungreen);
+    --hhi-color: var(--un-color-green);
   }
   .si-card[data-hhi='mid'] {
-    --hhi-color: var(--unyellow);
+    --hhi-color: var(--un-color-yellow);
   }
   .si-card[data-hhi='high'] {
     --hhi-color: var(--col-danger);
   }
   .hhi-arc-bg {
-    stroke: var(--ungrey-border);
     fill: none;
-    stroke-width: 9;
     stroke-linecap: round;
+    stroke-width: 9;
+    stroke: var(--un-color-grey-light);
   }
   .hhi-arc-filled {
-    stroke: var(--hhi-color, var(--ungrey));
     fill: none;
-    stroke-width: 9;
     stroke-linecap: round;
+    stroke-width: 9;
+    stroke: var(--hhi-color, var(--un-color-grey));
   }
   .hhi-badge {
     background: color-mix(in srgb, var(--hhi-color) 13%, transparent);
-    color: var(--hhi-color);
     border-color: color-mix(in srgb, var(--hhi-color) 26%, transparent);
+    color: var(--hhi-color);
   }
 
   /* ── Rank display in partner rows ── */
   .rank-display {
-    font-size: 9px;
+    color: var(--un-color-grey);
     font-family: monospace;
-    color: var(--ungrey);
+    font-size: var(--fs-xs);
   }
   .rank-pos {
-    color: var(--ungrey);
+    color: var(--un-color-grey);
   }
   .rank-partner {
     font-weight: 700;
   }
   .rank-partner[data-tier='high'] {
-    color: var(--ungreen);
+    color: var(--un-color-green);
   }
   .rank-partner[data-tier='mid'] {
-    color: var(--unyellow);
+    color: var(--un-color-yellow);
   }
   .rank-partner[data-tier='low'] {
-    color: var(--ungrey);
+    color: var(--un-color-grey);
   }
   .rank-muted {
-    font-size: 9px;
+    color: var(--un-color-grey);
     font-family: monospace;
-    color: var(--ungrey);
+    font-size: var(--fs-xs);
   }
 
   /* ── Bilateral split badge ── */
   .split-badge {
-    font-size: 9px;
+    color: var(--un-color-grey);
     font-family: monospace;
+    font-size: var(--fs-xs);
     font-weight: 700;
-    color: var(--ungrey);
   }
   .split-exp {
-    color: var(--unblue);
+    color: var(--un-color-blue);
   }
   .split-imp {
-    color: var(--unred-dark);
+    color: var(--un-color-red);
   }
 
   /* ── SVG container utilities (replaces inline style on SVG elements) ── */
   .svg-full {
-    width: 100%;
     overflow: visible;
+    width: 100%;
   }
   .svg-polar {
-    width: 100%;
     max-width: 220px;
+    width: 100%;
   }
   .svg-gauge {
-    width: 100%;
     max-height: 130px;
+    width: 100%;
   }
 
   /* ── Bilateral history midline ── */
   .chart-midline {
-    stroke: var(--ungrey-border);
     stroke-width: 0.5;
+    stroke: var(--un-color-grey-light);
   }
 
   /* ── HHI gauge elements ── */
   .gauge-tick {
-    stroke: var(--ungrey);
     stroke-width: 1;
+    stroke: var(--un-color-grey);
   }
   .gauge-needle {
-    stroke: var(--ungrey-dark);
-    stroke-width: 2.5;
     stroke-linecap: round;
+    stroke-width: 2.5;
+    stroke: var(--ungrey-dark);
   }
   .gauge-score {
-    font-size: 22px;
-    font-weight: 700;
     fill: var(--ungrey-dark);
     font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 700;
   }
   .gauge-sublabel {
-    font-size: 9px;
-    fill: var(--ungrey-text);
+    fill: var(--un-color-grey-dark);
     font-family: var(--font-family);
+    font-size: var(--fs-xs);
   }
 
   /* ── Polar fingerprint grid ── */
   .polar-grid-ring {
     fill: none;
-    stroke: var(--chart-grid);
     stroke-width: 0.6;
+    stroke: var(--chart-grid);
   }
   .polar-grid-ring.dashed {
     stroke-dasharray: 2 3;
   }
   .polar-grid-axis {
-    stroke: var(--chart-grid);
     stroke-width: 0.5;
+    stroke: var(--chart-grid);
   }
   .polar-label {
-    font-size: 10px;
-    font-weight: 700;
-    fill: var(--ungrey);
+    fill: var(--un-color-grey);
     font-family: var(--font-family);
+    font-size: var(--fs-sm);
+    font-weight: 700;
   }
   .polar-center {
     fill: var(--ungrey-dark);
@@ -966,132 +966,145 @@
 
   /* ── Butterfly chart labels and grid ── */
   .butterfly-label {
-    font-size: 7.5px;
     fill: var(--ungrey-dark);
     font-family: var(--font-family);
+    font-size: var(--fs-micro);
   }
   .butterfly-grid-line {
-    stroke: var(--chart-grid);
-    stroke-width: 0.6;
     stroke-dasharray: 2, 2;
+    stroke-width: 0.6;
+    stroke: var(--chart-grid);
   }
 
   /* ── SVG chart element styles (bilateral history bars) ── */
   .chart-bar-exp {
-    fill: var(--unblue);
+    fill: var(--un-color-blue);
     opacity: 0.45;
   }
   .chart-bar-exp.cur {
     opacity: 1;
   }
   .chart-bar-imp {
-    fill: var(--unred-dark);
+    fill: var(--un-color-red);
     opacity: 0.45;
   }
   .chart-bar-imp.cur {
     opacity: 1;
   }
   .chart-cur-box {
-    stroke: var(--unblue-text);
     fill: none;
+    stroke: var(--un-color-blue-dark);
   }
   .chart-label {
-    fill: var(--ungrey);
-    font-size: 7px;
+    fill: var(--un-color-grey);
     font-family: 'Inter', monospace;
+    font-size: var(--fs-micro);
   }
   .chart-label.cur {
-    fill: var(--unblue-text);
+    fill: var(--un-color-blue-dark);
   }
 
   /* ── Butterfly chart bars ── */
   .butterfly-exp {
-    fill: var(--unblue);
+    fill: var(--un-color-blue);
     opacity: 0.78;
   }
   .butterfly-imp {
-    fill: var(--unred-dark);
+    fill: var(--un-color-red);
     opacity: 0.78;
   }
   .butterfly-axis-exp {
-    fill: var(--unblue);
-    font-size: 7px;
-    font-weight: 700;
+    fill: var(--un-color-blue);
     font-family: 'Inter', sans-serif;
+    font-size: var(--fs-micro);
+    font-weight: 700;
   }
   .butterfly-axis-imp {
-    fill: var(--unred-dark);
-    font-size: 7px;
-    font-weight: 700;
+    fill: var(--un-color-red);
     font-family: 'Inter', sans-serif;
+    font-size: var(--fs-micro);
+    font-weight: 700;
   }
 
   /* ── Polar fingerprint bars ── */
   .polar-exp {
-    stroke: var(--unblue);
-    stroke-width: 6;
-    stroke-linecap: round;
     opacity: 0.88;
+    stroke-linecap: round;
+    stroke-width: 6;
+    stroke: var(--un-color-blue);
   }
   .polar-imp {
-    stroke: var(--unred-dark);
-    stroke-width: 6;
-    stroke-linecap: round;
     opacity: 0.88;
+    stroke-linecap: round;
+    stroke-width: 6;
+    stroke: var(--un-color-red);
   }
 
   /* ── Compare trend chart dots ── */
   .chart-dot-exp {
-    fill: var(--unblue);
+    fill: var(--un-color-blue);
     opacity: 0.7;
   }
   .chart-dot-exp.cur {
     opacity: 1;
   }
   .chart-dot-compare {
-    fill: var(--col-compare-dark);
+    fill: var(--un-color-yellow-darkest);
     opacity: 0.7;
   }
   .chart-dot-compare.cur {
-    fill: var(--unyellow);
+    fill: var(--un-color-yellow);
     opacity: 1;
   }
 
   /* ── Trend bars in panel and tooltip ── */
   .trend-bar {
-    fill: var(--ungrey-border);
+    fill: var(--un-color-grey-light);
   }
   .trend-bar.cur {
-    fill: var(--unblue-dark);
-    stroke: var(--unblue-text);
+    fill: var(--un-color-blue-darkest);
     stroke-width: 1;
+    stroke: var(--un-color-blue-dark);
+  }
+  .si-trend-axis {
+    color: var(--un-color-grey);
+    display: flex;
+    font-family: monospace;
+    font-size: var(--fs-xxs);
+    justify-content: space-between;
+    margin-top: 2px;
+  }
+  .trend-axis-label.cur {
+    color: var(--un-color-blue-dark);
+    font-weight: 700;
   }
   .trend-label {
-    fill: var(--ungrey);
+    font-size: var(--fs-sm);
+    fill: var(--un-color-grey);
   }
   .trend-label.cur {
-    fill: var(--unblue-text);
+    fill: var(--un-color-blue-dark);
   }
 
   /* ── Generic SVG axis / chart labels ── */
   .axis-label {
-    fill: var(--ungrey-text);
-    font-size: 7px;
+    fill: var(--un-color-grey-dark);
     font-family: 'Inter', monospace;
+    font-size: var(--fs-micro);
   }
 
   /* ── Compare modal trend polylines ── */
   .chart-line-exp {
     fill: none;
-    stroke: var(--unblue);
-    stroke-width: 1.5;
     opacity: 0.8;
+    stroke-width: 1.5;
+    stroke: var(--un-color-blue);
   }
   .chart-line-compare {
     fill: none;
-    stroke: var(--col-compare-dark);
-    stroke-width: 1.5;
     opacity: 0.8;
+    stroke-width: 1.5;
+    stroke: var(--un-color-yellow-darkest);
   }
 
   /* ── Tooltip visibility state ── */

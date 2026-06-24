@@ -8,15 +8,15 @@ export const CONFIG = {
   },
 
   colors: {
-    value: { label: 'Export Value ($)', discrete: { large: '#0ea5e9', medium: '#6366f1', small: '#334155' } }
+    value: { label: 'Export Value ($)', discrete: { large: '#009edb', medium: '#a05fb4', small: '#4f4740' } }
   },
 
   // Flow category base colors (North = Developed, South = Developing/LDC)
   flowColors: {
-    'north-south': '#009EDB', // UNCTAD Blue
-    'south-north': '#72BF44', // UNCTAD Green
-    'south-south': '#FBAF17', // UNCTAD Yellow
-    'north-north': '#AEA29A' // UNCTAD Warm Grey
+    'north-south': '#009edb', // --un-color-blue
+    'south-north': '#72bf44', // --un-color-green
+    'south-south': '#fbaf17', // --un-color-yellow
+    'north-north': '#aea29a'  // --un-color-grey
   },
 
   // Development status: 'north' = Developed economies.

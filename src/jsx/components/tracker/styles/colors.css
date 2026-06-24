@@ -1,0 +1,41 @@
+/* Tracker-specific colour tokens — only values not covered by --un-color-* in src/styles/colors.css */
+
+#app-root-2026-second_hand_clothes {
+  /* Near-black text / UI foreground — darker than --un-color-grey-darkest (#4f4740) */
+  --ungrey-dark: #222;
+
+  /* Light blue page backgrounds — no --un-color-* equivalent */
+  --unblue-bg: #f2f8fc;
+  --unblue-bg-alt: #f3f8fd;
+
+  /* UN ceremonial yellow — slightly different from --un-color-yellow */
+  --unyellow-un: #ffcb05;
+
+  /* Danger / error state */
+  --col-danger: #ef4444;
+
+  /* Compare / amber accent */
+  --col-compare: #b45309;
+
+  /* Warning badge */
+  --col-warning-text: #92400e;
+  --col-warning-bg: #fefce8;
+  --col-warning-border: #fcd34d;
+
+  /* Experimental badge text on yellow background */
+  --col-badge-yellow-text: #4a3800;
+
+  /* Map element colors */
+  --map-land-fill: var(--un-color-grey-lighest);
+  --map-hover-fill: var(--un-color-grey-lighest);
+  --map-focus-fill: var(--un-color-blue-light);
+  --map-disputed-fill: #f0ede8;
+  --col-border-plain: #fff;
+  --col-border-dashed: #fff;
+
+  /* Flow category colors */
+  --flow-north-south: var(--un-color-blue);
+  --flow-south-north: var(--un-color-green);
+  --flow-south-south: var(--un-color-yellow);
+  --flow-north-north: var(--un-color-grey);
+}

@@ -21,15 +21,15 @@ const initColors = () => {
   const s = getComputedStyle(getRoot());
   const v = name => s.getPropertyValue(name).trim();
   C = {
-    land: v('--map-land-fill'), // default country fill
-    hover: v('--map-hover-fill'), // mouseover country fill
     focus: v('--map-focus-fill'), // focused-country and partner fill
     hatchFill: v('--map-disputed-fill'), // disputed territory hatching
-    hatchStroke: v('--ungrey'), // disputed territory hatch lines
-    scaleRed: v('--unred-dark'), // color scale: net importer pole
-    scaleImpMid: v('--legend-imp-mid'), // color scale: mild importer
-    scaleExpMid: v('--legend-exp-mid'), // color scale: mild exporter
-    scaleBlue: v('--unblue') // color scale: net exporter pole
+    hatchStroke: v('--un-color-grey'), // disputed territory hatch lines
+    hover: v('--map-hover-fill'), // mouseover country fill
+    land: v('--map-land-fill'), // default country fill
+    scaleBlue: v('--un-color-blue'), // color scale: net exporter pole
+    scaleExpMid: v('--un-color-blue-light'), // color scale: mild exporter
+    scaleImpMid: v('--un-color-red-light'), // color scale: mild importer
+    scaleRed: v('--un-color-red') // color scale: net importer pole
   };
 };
 
@@ -311,7 +311,8 @@ export const TradeMap = {
     this._graticuleGeo = geoGraticule()();
 
     this.zoomBehavior = zoom()
-      .scaleExtent([0.2, 8])
+      .scaleExtent([1.3, 8])
+      .filter(event => event.type !== 'wheel')
       .on('zoom', event => {
         // Apply the transform immediately so panning feels instant.
         this.g.attr('transform', event.transform);
@@ -394,6 +395,11 @@ export const TradeMap = {
     this.svg.transition().duration(1200).call(this.zoomBehavior.transform, transform);
   },
 
+  zoomBy(factor) {
+    if (!this.svg || !this.zoomBehavior) return;
+    this.svg.transition().duration(300).call(this.zoomBehavior.scaleBy, factor);
+  },
+
   // Static map (land polygons) with D3 Data Join
   renderStaticMap() {
     if (!STATE.geoData || !this.g) return;
@@ -435,9 +441,7 @@ export const TradeMap = {
           .classed('is-hovered', false);
       });
 
-    landsEnter
-      .merge(lands)
-      .attr('d', this.path);
+    landsEnter.merge(lands).attr('d', this.path);
 
     this._renderBorderLayers(landLayer);
   },
@@ -954,10 +958,7 @@ export const TradeMap = {
     this.g.selectAll('.country-node').transition().duration(400).style('opacity', 1);
     this.g.selectAll('.map-label-unified').transition().duration(400).style('opacity', 1);
 
-    this.g
-      .selectAll('.land')
-      .classed('is-focused', false)
-      .classed('is-dimmed', false);
+    this.g.selectAll('.land').classed('is-focused', false).classed('is-dimmed', false);
 
     this._clearHalo();
     this._clearParticles();

@@ -1,7 +1,7 @@
 export const RegionConfig = {
   // UNCTAD 5 Major Regions + Global Definition
   regions: {
-    Global: { center: [0, 20], scale: 1 },
+    Global: { center: [0, 20], scale: 1.3 },
     Africa: { center: [20, 0], scale: 2.5 },
     Americas: { center: [-80, 10], scale: 1.8 }, // Centered so both North and South America are visible
     Asia: { center: [100, 30], scale: 2.0 },

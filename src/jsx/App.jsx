@@ -6,13 +6,11 @@ import './../styles/styles.css';
 
 import meta from './../meta.json';
 
-import ArticleApp from './components/Article.jsx';
-import { STATE } from './components/custom/config.js';
-
-import MainApp from './components/custom/main.js';
+import MainApp from './components/tracker/custom/main.js';
+import Tracker from './components/tracker/Tracker.jsx';
 
 const components = {
-  ArticleApp
+  Tracker
 };
 
 const App = () => {
@@ -47,7 +45,7 @@ const App = () => {
 
   return (
     <div className="app" ref={appRef}>
-      <Article components={components} meta={meta} MainApp={MainApp} State={STATE} />
+      <Article components={components} meta={meta} />
     </div>
   );
 };
