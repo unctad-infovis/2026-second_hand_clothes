@@ -337,8 +337,16 @@ export const TradeMap = {
             const px = +this.getAttribute('data-proj-x');
             const py = +this.getAttribute('data-proj-y');
             const r = +this.getAttribute('data-radius') || 0;
-            this.setAttribute('x', px + (r + 4) / k);
-            this.setAttribute('y', py + 4 / k);
+            const kPlaced = +this.getAttribute('data-placed-k') || 0;
+            if (kPlaced) {
+              const dx = +this.getAttribute('data-placed-dx');
+              const dy = +this.getAttribute('data-placed-dy');
+              this.setAttribute('x', px + dx * kPlaced / k);
+              this.setAttribute('y', py + dy * kPlaced / k);
+            } else {
+              this.setAttribute('x', px + (r + 4) / k);
+              this.setAttribute('y', py + 4 / k);
+            }
           });
         });
       });
@@ -799,7 +807,7 @@ export const TradeMap = {
       .attr('data-radius', d => radiusScale(nodeStats[d].grossVolume))
       // paint-order, stroke, and pointer-events are handled by .map-label CSS class
       .transition()
-      .duration(750)
+      .duration(250)
       .attr('x', d => projOf(d)[0] + (radiusScale(nodeStats[d].grossVolume) + 4) / currentK)
       .attr('y', d => projOf(d)[1] + 4 / currentK)
       .attr('font-size', d => {
@@ -811,6 +819,11 @@ export const TradeMap = {
       })
       .attr('stroke-width', 1.5 / currentK)
       .style('opacity', labelOpacity);
+
+    // Schedule deconfliction after the 250ms transition settles
+    if (this._deconflictTimeout) clearTimeout(this._deconflictTimeout);
+    const _kSnap = currentK;
+    this._deconflictTimeout = setTimeout(() => this._deconflictLabels(_kSnap), 300);
 
     if (this.renderLegend) this.renderLegend();
 
@@ -829,6 +842,78 @@ export const TradeMap = {
 
   isVisible(iso) {
     return !!STATE.countryCoords[iso];
+  },
+
+  // Greedy label deconfliction — runs once after the render transition settles.
+  // For each label, tries 6 candidate anchor positions and picks the one with the
+  // fewest bounding-box overlaps against already-placed labels.
+  // Stores data-placed-dx/dy/k so the zoom handler can scale offsets proportionally.
+  _deconflictLabels(k) {
+    if (!this.g) return;
+    const GAP = 4;
+    const els = Array.from(this.g.selectAll('.map-label').nodes());
+    if (els.length <= 1) return;
+
+    // Clear any stale placement data so zoom handler falls back gracefully
+    // until this run finishes
+    els.forEach(el => el.removeAttribute('data-placed-k'));
+
+    const placed = [];
+
+    function bbOverlaps(a, b) {
+      return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+    }
+
+    function countOverlaps(box) {
+      let n = 0;
+      for (const p of placed) if (bbOverlaps(box, p)) n++;
+      return n;
+    }
+
+    for (const el of els) {
+      const px = +el.getAttribute('data-proj-x');
+      const py = +el.getAttribute('data-proj-y');
+      const r = +el.getAttribute('data-radius') || 0;
+
+      let dim;
+      try { dim = el.getBBox(); } catch (e) { continue; }
+      if (!dim.width) continue;
+
+      const bw = dim.width;
+      const bh = dim.height;
+      const edge = (r + GAP) / k;
+      // Approximate: text baseline is at y, box top is ~0.85*bh above baseline
+      const ascent = bh * 0.82;
+
+      const candidates = [
+        [px + edge,           py + GAP / k],               // right (default)
+        [px - edge - bw,      py + GAP / k],               // left
+        [px - bw / 2,         py - edge - bh + ascent],    // above-center
+        [px - bw / 2,         py + edge + bh - ascent],    // below-center
+      ];
+
+      let bestTx = candidates[0][0];
+      let bestTy = candidates[0][1];
+      let bestScore = Infinity;
+
+      for (const [tx, ty] of candidates) {
+        const box = { x: tx, y: ty - ascent, w: bw, h: bh };
+        const score = countOverlaps(box);
+        if (score < bestScore) {
+          bestScore = score;
+          bestTx = tx;
+          bestTy = ty;
+          if (score === 0) break;
+        }
+      }
+
+      el.setAttribute('x', bestTx);
+      el.setAttribute('y', bestTy);
+      el.setAttribute('data-placed-dx', bestTx - px);
+      el.setAttribute('data-placed-dy', bestTy - py);
+      el.setAttribute('data-placed-k', k);
+      placed.push({ x: bestTx, y: bestTy - ascent, w: bw, h: bh });
+    }
   },
 
   // Focus mode (insight panel spotlight)
