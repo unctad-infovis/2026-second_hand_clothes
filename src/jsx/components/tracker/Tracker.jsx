@@ -305,13 +305,9 @@ const App = () => {
 
       {/* Map Footer */}
       <footer className="map-footer">
-        <p><em>Source:</em> UN Trade and Development (UNCTAD) and BACI based on UN Comtrade. Data cover HS&nbsp;6309 (Worn clothing and other worn articles).</p>
         <p>
-          <em>Note:</em> Sea routes are shown only for flows between different UNCTAD regions (Africa, Americas, Asia, Europe, Oceania) and represent major maritime shipping lanes computed via the Eurostat <em>searoute</em> algorithm using representative ports based on UNCTAD PLSCI scores. Flows within the same region are shown
-          as arcs. Routes do not reflect actual tracked second-hand clothing (HS&nbsp;6309) cargo paths and may not represent the actual mode of transport used.{' '}
-          <button className="footer-link-btn methodology-btn" type="button">
-            Methodology &amp; Data Sources.
-          </button>{' '}
+          <em>Source:</em> UN Trade and Development (UNCTAD) and BACI based on UN Comtrade. Data cover HS&nbsp;6309 (Worn clothing and other worn articles).{' '}
+          <button className="footer-link-btn methodology-btn" type="button">Methodology &amp; Data Sources</button>{' '}·{' '}
           <a href="https://unctad.org/page/map-disclaimer">Map disclaimer</a>.
         </p>
         <div className="footer-logos">
