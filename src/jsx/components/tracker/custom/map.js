@@ -318,8 +318,9 @@ export const TradeMap = {
           this._zoomRaf = null;
           const k = this._pendingZoomK;
           this.g.selectAll('.land, .graticule, .border-plain').attr('stroke-width', 0.5 / k);
-          this.g.selectAll('.border-dashed, .border-dash-dotted').attr('stroke-width', 0.4 / k);
-          this.g.selectAll('.border-dotted').attr('stroke-width', 0.5 / k);
+          this.g.selectAll('.border-dashed').attr('stroke-width', 0.5 / k);
+          this.g.selectAll('.border-dotted').attr('stroke-width', 0.7 / k);
+          this.g.selectAll('.border-dash-dotted').attr('stroke-width', 0.6 / k);
           this.g.selectAll('.trade-arc').attr('stroke-width', function () {
             return (+this.getAttribute('data-original-width') || 1) / k;
           });
