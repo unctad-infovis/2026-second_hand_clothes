@@ -306,9 +306,13 @@ const App = () => {
       {/* Map Footer */}
       <footer className="map-footer">
         <p>
-          <em>Source:</em> UN Trade and Development (UNCTAD) and BACI based on UN Comtrade. Data cover HS&nbsp;6309 (Worn clothing and other worn articles).{' '}
-          <button className="footer-link-btn methodology-btn" type="button">Methodology &amp; Data Sources</button>{' '}·{' '}
-          <a href="https://unctad.org/page/map-disclaimer">Map disclaimer</a>.
+          <em>Source:</em> UN Trade and Development (UNCTAD) and BACI based on UN Comtrade. Data cover HS&nbsp;6309 (Worn clothing and other worn articles).
+          <br />
+          <em>Note:</em>{' '}
+          <button className="footer-link-btn methodology-btn" type="button">
+            Methodology &amp; Data Sources
+          </button>{' '}
+          · <a href="https://unctad.org/page/map-disclaimer">Map disclaimer</a>.
         </p>
         <div className="footer-logos">
           <img src="./assets/img/smep-logo.png" alt="SMEP" />
