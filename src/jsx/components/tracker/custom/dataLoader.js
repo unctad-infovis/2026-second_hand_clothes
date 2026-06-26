@@ -11,7 +11,7 @@ export const DataLoader = {
 
   async loadAll() {
     try {
-      const [world, meta, trendSummary, yearFlows] = await Promise.all([json(CONFIG.geoJsonUrl), fetch('./assets/data/meta.json').then(r => r.json()), fetch('./assets/data/trend_summary.json').then(r => r.json()), fetch(`./assets/data/${STATE.year}.json`).then(r => r.json())]);
+      const [world, meta, trendSummary, yearFlows, hierarchy] = await Promise.all([json(CONFIG.geoJsonUrl), fetch('./assets/data/meta.json').then(r => r.json()), fetch('./assets/data/trend_summary.json').then(r => r.json()), fetch(`./assets/data/${STATE.year}.json`).then(r => r.json()), fetch('./assets/data/country_hierarchy.json').then(r => r.json())]);
 
       // Correct the ~11.314° westward longitude shift in the UNCTAD TopoJSON transform
       if (world.transform) {
@@ -37,6 +37,7 @@ export const DataLoader = {
         if (!STATE.countryNames[iso]) STATE.countryNames[iso] = entry.name;
       });
 
+      STATE.countryHierarchy = hierarchy;
       STATE.trendSummary = trendSummary;
       STATE.yearCache[STATE.year] = yearFlows;
 

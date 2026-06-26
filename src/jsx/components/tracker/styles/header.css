@@ -7,7 +7,6 @@
     background: var(--unblue-bg);
     flex-shrink: 0;
     z-index: 30;
-
     .header-inner {
       display: flex;
       flex-direction: column;
@@ -17,13 +16,11 @@
     }
 
     /* Row 1: Logo + Title */
-
     .header-title {
       align-items: flex-start;
       display: flex;
       gap: 10px;
       padding: 14px 0 10px;
-
       img.header-logo {
         flex-shrink: 0;
         height: 40px;
@@ -31,7 +28,6 @@
         object-fit: contain;
         width: 40px;
       }
-
       .header-text {
         h3 {
           color: #000;
@@ -42,7 +38,6 @@
           margin: 0;
           max-width: 100%;
         }
-
         h4 {
           color: rgb(0 0 0 / 60%);
           font-family: var(--font-family);
@@ -58,7 +53,6 @@
 
     .header-controls {
       display: none;
-
       @media (min-width: 768px) {
         align-items: center;
         display: flex;
@@ -67,16 +61,13 @@
         padding: 6px 0 12px;
       }
     }
-
     .ctrl-divider {
       background: rgb(0 0 0 / 15%);
       flex-shrink: 0;
       height: 22px;
       width: 1px;
     }
-
     /* Generic control pill */
-
     .ctrl-pill {
       align-items: center;
       background: #fff;
@@ -87,9 +78,7 @@
       gap: 2px;
       padding: 3px;
     }
-
     /* Toggle buttons */
-
     .btn-toggle {
       background: transparent;
       border-radius: var(--radius-sm);
@@ -104,19 +93,15 @@
       transition:
         background 0.15s,
         color 0.15s;
-
       &:hover {
         color: var(--ungrey-dark);
       }
-
       &.active {
         background: var(--un-color-blue-darkest);
         color: #fff;
       }
     }
-
     /* Year select */
-
     .ctrl-year {
       background: transparent;
       border-radius: var(--radius-sm);
@@ -128,9 +113,7 @@
       outline: none;
       padding: 5px 8px;
     }
-
     /* Flow filter labels */
-
     .ctrl-flows-label {
       color: var(--un-color-grey-dark);
       font-size: var(--fs-sm);
@@ -139,7 +122,6 @@
       margin-right: 2px;
       text-transform: uppercase;
     }
-
     .flow-label {
       align-items: center;
       border-radius: var(--radius-sm);
@@ -148,28 +130,39 @@
       gap: 4px;
       padding: 4px;
       transition: background 0.12s;
-
       &:hover {
         background: var(--unblue-bg);
       }
-
       span {
         font-size: var(--fs-sm);
         font-weight: 700;
       }
-
-      &.flow-ns span { color: var(--un-color-blue); }
-      &.flow-ns input[type='checkbox'] { accent-color: var(--un-color-blue); }
-      &.flow-sn span { color: var(--un-color-green); }
-      &.flow-sn input[type='checkbox'] { accent-color: var(--un-color-green); }
-      &.flow-ss span { color: var(--un-color-yellow); }
-      &.flow-ss input[type='checkbox'] { accent-color: var(--un-color-yellow); }
-      &.flow-nn span { color: var(--un-color-purple); }
-      &.flow-nn input[type='checkbox'] { accent-color: var(--un-color-purple); }
+      &.flow-ns span {
+        color: var(--un-color-blue);
+      }
+      &.flow-ns input[type='checkbox'] {
+        accent-color: var(--un-color-blue);
+      }
+      &.flow-sn span {
+        color: var(--un-color-green);
+      }
+      &.flow-sn input[type='checkbox'] {
+        accent-color: var(--un-color-green);
+      }
+      &.flow-ss span {
+        color: var(--un-color-yellow);
+      }
+      &.flow-ss input[type='checkbox'] {
+        accent-color: var(--un-color-yellow);
+      }
+      &.flow-nn span {
+        color: var(--un-color-purple);
+      }
+      &.flow-nn input[type='checkbox'] {
+        accent-color: var(--un-color-purple);
+      }
     }
-
     /* Country picker button */
-
     .country-picker-btn {
       align-items: center;
       background: #fff;
@@ -183,19 +176,16 @@
       padding: 5px 8px;
       transition: border-color 0.15s;
       width: 144px;
-
       &:hover,
       &.has-selection {
         border-color: var(--un-color-blue-darkest);
       }
-
       .picker-labels {
         align-items: flex-start;
         display: flex;
         flex-direction: column;
         line-height: 1;
       }
-
       .picker-type {
         color: var(--un-color-grey-dark);
         font-size: var(--fs-xxs);
@@ -203,7 +193,6 @@
         margin-bottom: 2px;
         text-transform: uppercase;
       }
-
       .picker-value {
         font-size: var(--fs-label);
         font-weight: 700;
@@ -212,21 +201,19 @@
         text-overflow: ellipsis;
         white-space: nowrap;
       }
-
       .picker-badge {
         background: var(--un-color-blue-darkest);
         border-radius: 999px;
         color: #fff;
+        display: none;
         font-size: var(--fs-xs);
         font-weight: 700;
         line-height: 16px;
         padding: 0 6px;
-
         &.hidden {
           display: none;
         }
       }
-
       .picker-chevron {
         color: var(--un-color-grey-dark);
         flex-shrink: 0;
@@ -234,9 +221,7 @@
         width: 12px;
       }
     }
-
     /* Country picker dropdown */
-
     .country-picker-menu {
       background: #fff;
       border-radius: var(--radius-md);
@@ -252,16 +237,10 @@
       top: 100%;
       width: 256px;
       z-index: 50;
-
-      &.hidden {
-        display: none;
-      }
-
       .picker-search-area {
         background: var(--unblue-bg);
         border-bottom: 1px solid var(--un-color-grey-lighest);
         padding: 8px;
-
         input {
           background: #fff;
           border-radius: var(--radius-sm);
@@ -277,7 +256,6 @@
             border-color: var(--un-color-blue-darkest);
           }
         }
-
         .picker-clear {
           background: none;
           border: none;
@@ -288,14 +266,15 @@
           padding: 4px 0 0;
         }
       }
-
       .picker-list {
         flex: 1;
         overflow-y: auto;
         padding: 8px;
       }
     }
-
+    .country-picker-menu.hidden {
+      display: none;
+    }
     .picker-wrapper {
       position: relative;
       z-index: 50;

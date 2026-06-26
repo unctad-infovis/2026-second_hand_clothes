@@ -263,8 +263,8 @@
   .land:active {
     cursor: grabbing;
   }
-  .land[data-code='C00002'] {
-    fill: url(#aksai-chin-hatch);
+  .land[data-code='C00001'] {
+    display: none;
   }
   .land.is-hovered {
     fill: var(--map-hover-fill);
@@ -274,10 +274,6 @@
   }
   .land.is-dimmed {
     opacity: 0.35;
-  }
-  .land[data-code='C00002'].is-hovered,
-  .land[data-code='C00002'].is-focused {
-    fill: url(#aksai-chin-hatch);
   }
 
   /* D3 graticule lines */
@@ -300,18 +296,20 @@
     stroke: var(--col-border-plain);
   }
   .border-dashed {
-    stroke-dasharray: 4, 3;
-    stroke-width: 0.5;
+    stroke-dasharray: 3, 2.5;
+    stroke-width: 0.4;
     stroke: var(--col-border-dashed);
   }
   .border-dotted {
-    stroke-dasharray: 1.5, 2.5;
-    stroke-width: 0.2;
+    stroke-dasharray: 0.001, 3;
+    stroke-linecap: round;
+    stroke-width: 0.5;
     stroke: var(--col-border-dashed);
   }
   .border-dash-dotted {
-    stroke-dasharray: 5, 2, 1.5, 2;
-    stroke-width: 0.2;
+    stroke-dasharray: 3.5, 1.5, 0.001, 1.5;
+    stroke-linecap: round;
+    stroke-width: 0.4;
     stroke: var(--col-border-dashed);
   }
 
@@ -380,6 +378,15 @@
     pointer-events: none;
     stroke-linejoin: round;
     stroke: rgb(240 244 248 / 80%);
+  }
+  .map-label-nsgt {
+    fill: var(--un-color-grey);
+    font-weight: 500;
+  }
+  .map-label-territory {
+    fill: var(--un-color-grey);
+    font-weight: 400;
+    font-style: italic;
   }
 
   /* Checkbox customization */

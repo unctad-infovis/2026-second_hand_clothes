@@ -22,8 +22,6 @@ const initColors = () => {
   const v = name => s.getPropertyValue(name).trim();
   C = {
     focus: v('--map-focus-fill'), // focused-country and partner fill
-    hatchFill: v('--map-disputed-fill'), // disputed territory hatching
-    hatchStroke: v('--un-color-grey'), // disputed territory hatch lines
     hover: v('--map-hover-fill'), // mouseover country fill
     land: v('--map-land-fill'), // default country fill
     scaleBlue: v('--un-color-blue'), // color scale: net exporter pole
@@ -302,11 +300,6 @@ export const TradeMap = {
     // Positioning and touch-action are handled by the .map-2d-layer CSS class
     this.svg = select(container).append('svg').attr('class', 'map-2d-layer');
 
-    const defs = this.svg.append('defs');
-    const hatch = defs.append('pattern').attr('id', 'aksai-chin-hatch').attr('patternUnits', 'userSpaceOnUse').attr('width', 2).attr('height', 2).attr('patternTransform', 'rotate(45)');
-    hatch.append('rect').attr('width', 2).attr('height', 2).attr('fill', C.hatchFill);
-    hatch.append('line').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', 2).attr('stroke', C.hatchStroke).attr('stroke-width', 0.8);
-
     this.g = this.svg.append('g');
     // GeoJSON graticule is immutable, generate once
     this._graticuleGeo = geoGraticule()();
@@ -324,7 +317,9 @@ export const TradeMap = {
         this._zoomRaf = requestAnimationFrame(() => {
           this._zoomRaf = null;
           const k = this._pendingZoomK;
-          this.g.selectAll('.land, .graticule, .border').attr('stroke-width', 0.5 / k);
+          this.g.selectAll('.land, .graticule, .border-plain').attr('stroke-width', 0.5 / k);
+          this.g.selectAll('.border-dashed, .border-dash-dotted').attr('stroke-width', 0.4 / k);
+          this.g.selectAll('.border-dotted').attr('stroke-width', 0.5 / k);
           this.g.selectAll('.trade-arc').attr('stroke-width', function () {
             return (+this.getAttribute('data-original-width') || 1) / k;
           });
@@ -334,10 +329,17 @@ export const TradeMap = {
               return (+this.getAttribute('data-original-radius') || 3) / k;
             })
             .attr('stroke-width', 0.8 / k);
-          this.g
-            .selectAll('.map-label')
-            .attr('font-size', `${11 / Math.sqrt(k)}px`)
-            .attr('stroke-width', 1.5 / k);
+          const baseFs = 11 / Math.sqrt(k);
+          this.g.selectAll('.map-label:not(.map-label-nsgt):not(.map-label-territory)').attr('font-size', `${baseFs}px`).attr('stroke-width', 1.5 / k);
+          this.g.selectAll('.map-label-nsgt').attr('font-size', `${baseFs * 0.78}px`).attr('stroke-width', 1.2 / k);
+          this.g.selectAll('.map-label-territory').attr('font-size', `${baseFs * 0.7}px`).attr('stroke-width', 1.2 / k);
+          this.g.selectAll('.map-label').each(function () {
+            const px = +this.getAttribute('data-proj-x');
+            const py = +this.getAttribute('data-proj-y');
+            const r = +this.getAttribute('data-radius') || 0;
+            this.setAttribute('x', px + (r + 4) / k);
+            this.setAttribute('y', py + 4 / k);
+          });
         });
       });
     this.svg.call(this.zoomBehavior);
@@ -357,7 +359,7 @@ export const TradeMap = {
     const yTop = this.height * (isPortrait ? 0.02 : 0.06);
     const yBot = this.height * (isPortrait ? 0.02 : 0.12);
 
-    this.projection = geoNaturalEarth1().fitExtent(
+    this.projection = geoNaturalEarth1().rotate([-11.314, 0]).fitExtent(
       [
         [0, yTop],
         [this.width, this.height - yBot]
@@ -786,12 +788,28 @@ export const TradeMap = {
     labelsEnter
       .merge(labels)
       .text(d => STATE.countryNames[d] || d)
-      // fill, stroke, stroke-linejoin, and paint-order are handled by .map-label CSS class
+      .attr('class', d => {
+        const stscod = STATE.countryHierarchy[d]?.stscod;
+        if (stscod === '3') return 'map-label map-label-unified map-label-nsgt';
+        if (stscod !== '1' && stscod !== '2' && stscod !== '0') return 'map-label map-label-unified map-label-territory';
+        return 'map-label map-label-unified';
+      })
+      .attr('data-proj-x', d => projOf(d)[0])
+      .attr('data-proj-y', d => projOf(d)[1])
+      .attr('data-radius', d => radiusScale(nodeStats[d].grossVolume))
+      // paint-order, stroke, and pointer-events are handled by .map-label CSS class
       .transition()
       .duration(750)
-      .attr('x', d => projOf(d)[0] + radiusScale(nodeStats[d].grossVolume) / currentK + 4)
-      .attr('y', d => projOf(d)[1] + 4)
-      .attr('font-size', `${11 / Math.sqrt(currentK)}px`)
+      .attr('x', d => projOf(d)[0] + (radiusScale(nodeStats[d].grossVolume) + 4) / currentK)
+      .attr('y', d => projOf(d)[1] + 4 / currentK)
+      .attr('font-size', d => {
+        const stscod = STATE.countryHierarchy[d]?.stscod;
+        const base = 11 / Math.sqrt(currentK);
+        if (stscod === '3') return `${base * 0.78}px`;
+        if (stscod !== '1' && stscod !== '2' && stscod !== '0') return `${base * 0.7}px`;
+        return `${base}px`;
+      })
+      .attr('stroke-width', 1.5 / currentK)
       .style('opacity', labelOpacity);
 
     if (this.renderLegend) this.renderLegend();

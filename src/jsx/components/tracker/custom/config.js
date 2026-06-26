@@ -121,6 +121,7 @@ export const STATE = {
 
   countryCoords: {},
   countryNames: {},
+  countryHierarchy: {}, // iso3cd → { maplab, stscod } from BNDA_CTY.csv
   routes: {},
 
   // Border line layers from TopoJSON (dashed/dotted/dash-dotted for disputed borders)

@@ -29,7 +29,10 @@ class CountrySelector {
         _classificationCache = await response.json();
       }
       this.classificationData = _classificationCache;
+      // TWN (Taiwan) excluded per UN cartographic guidelines — no trade data available
+      const EXCLUDE = new Set(['TWN']);
       this.allCountries = Object.keys(this.classificationData.countries)
+        .filter(code => !EXCLUDE.has(code))
         .map(code => ({ code, name: this.classificationData.countries[code].name }))
         .sort((a, b) => a.name.localeCompare(b.name));
     } catch (error) {
@@ -183,7 +186,8 @@ class CountrySelector {
   }
 
   _addSortedCountries(container, codes, indentLevel, extraClass = '') {
-    const sorted = codes.map(code => ({ code, name: this.classificationData.countries[code]?.name || code })).sort((a, b) => a.name.localeCompare(b.name));
+    const EXCLUDE = new Set(['TWN']);
+    const sorted = codes.filter(code => !EXCLUDE.has(code)).map(code => ({ code, name: this.classificationData.countries[code]?.name || code })).sort((a, b) => a.name.localeCompare(b.name));
     for (let i = 0; i < sorted.length; i++) {
       const c = sorted[i];
       this._addCountryItem(container, c.code, c.name, indentLevel, extraClass);
