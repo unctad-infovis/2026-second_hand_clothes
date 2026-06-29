@@ -21,6 +21,11 @@ For developing please refer to `package.json`
 
 The following packages are used in this project by default.
 
+### Project specific
+
+* **d3** - used to create the map and charts
+* **topojson-client** - used to create the map
+
 ### Build & Dev Server
 
 * **vite** — development server with hot module replacement and production bundler, replaces webpack
