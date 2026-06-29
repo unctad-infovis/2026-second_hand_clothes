@@ -334,25 +334,25 @@ export const TradeMap = {
           if (k <= 1.6) {
             this.g.selectAll('.border-dashed').style('stroke-width', '1').style('stroke-dasharray', '2, 3');
             this.g.selectAll('.border-dotted').style('stroke-width', '1').style('stroke-dasharray', '0, 2');
-            this.g.selectAll('.border-dash-dotted').style('stroke-width', '1').style('stroke-dasharray', '2, 3, 1, 3');
+            this.g.selectAll('.border-dash-dotted').style('stroke-width', '1').style('stroke-dasharray', '2, 2, 0, 2');
 
           // Step 2 — 1× zoom in, k ≈ 1.9 (k ≤ 2.3)
           } else if (k <= 2.3) {
             this.g.selectAll('.border-dashed').style('stroke-width', '0.5').style('stroke-dasharray', '2, 2');
             this.g.selectAll('.border-dotted').style('stroke-width', '1').style('stroke-dasharray', '0, 2');
-            this.g.selectAll('.border-dash-dotted').style('stroke-width', '0.5').style('stroke-dasharray', '2, 3, 1, 3');
+            this.g.selectAll('.border-dash-dotted').style('stroke-width', '0.5').style('stroke-dasharray', '2, 2, 0, 2');
 
           // Step 3 — 2× zoom in, k ≈ 2.8 (k ≤ 3.2)
           } else if (k <= 3.2) {
             this.g.selectAll('.border-dashed').style('stroke-width', '0.5').style('stroke-dasharray', '1, 1.5');
             this.g.selectAll('.border-dotted').style('stroke-width', '0.8').style('stroke-dasharray', '0, 1.75');
-            this.g.selectAll('.border-dash-dotted').style('stroke-width', '0.5').style('stroke-dasharray', '2, 3, 1, 3');
+            this.g.selectAll('.border-dash-dotted').style('stroke-width', '0.5').style('stroke-dasharray', '1, 1.5, 0, 1.5');
 
           // Step 4 — 3× zoom in, k ≈ 4.0 (k > 3.2)
           } else {
             this.g.selectAll('.border-dashed').style('stroke-width', '0.5').style('stroke-dasharray', '1, 1.5');
             this.g.selectAll('.border-dotted').style('stroke-width', '0.7').style('stroke-dasharray', '0, 1.5');
-            this.g.selectAll('.border-dash-dotted').style('stroke-width', '0.5').style('stroke-dasharray', '2, 3, 1, 3');
+            this.g.selectAll('.border-dash-dotted').style('stroke-width', '0.5').style('stroke-dasharray', '1, 1.5, 0, 1.5');
           }
           this.g.selectAll('.trade-arc').attr('stroke-width', function () {
             return (+this.getAttribute('data-original-width') || 1) / k;
