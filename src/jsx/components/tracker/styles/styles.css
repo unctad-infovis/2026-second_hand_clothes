@@ -295,21 +295,27 @@
     stroke-width: 0.5;
     stroke: var(--col-border-plain);
   }
+
+  /*
+   * DISPUTED BORDER STYLES
+   * ─────────────────────────────────────────────────────────────────────────
+   * stroke-width and stroke-dasharray here are overridden immediately by
+   * map.js inline styles (zoom fires on load). Only stroke-linecap and
+   * stroke (color) are read from CSS — do not remove those.
+   *
+   * To adjust the appearance at each zoom step, edit map.js — search for
+   * "Disputed border styles" in the zoom handler.
+   */
   .border-dashed {
-    stroke-dasharray: 0.5, 1.5;
-    stroke-width: 0.5;
+    stroke-linecap: round;
     stroke: var(--col-border-dashed);
   }
   .border-dotted {
-    stroke-dasharray: 0.001, 1.5;
     stroke-linecap: round;
-    stroke-width: 0.7;
     stroke: var(--col-border-dashed);
   }
   .border-dash-dotted {
-    stroke-dasharray: 0.8, 1, 0.001, 1;
     stroke-linecap: round;
-    stroke-width: 0.6;
     stroke: var(--col-border-dashed);
   }
 

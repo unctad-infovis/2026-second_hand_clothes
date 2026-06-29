@@ -318,9 +318,42 @@ export const TradeMap = {
           this._zoomRaf = null;
           const k = this._pendingZoomK;
           this.g.selectAll('.land, .graticule, .border-plain').attr('stroke-width', 0.5 / k);
-          this.g.selectAll('.border-dashed').attr('stroke-width', 0.5 / k);
-          this.g.selectAll('.border-dotted').attr('stroke-width', 0.7 / k);
-          this.g.selectAll('.border-dash-dotted').attr('stroke-width', 0.6 / k);
+
+          // ── Disputed border styles ──────────────────────────────────────────────
+          // A zoom is always triggered on map load, so these .style() inline values
+          // are active from the start and fully override the CSS declarations.
+          // Only stroke-linecap (round) and stroke color come from CSS.
+          //
+          // All values are SVG user units. Screen pixels = SVG value × k.
+          // To adjust a zoom step: find its block below and change the numbers.
+          //   stroke-width → line thickness
+          //   dasharray    → "dash, gap" or "dash, gap, dot, gap"
+          //                  dot = near-zero dash (0 or 0.001) + stroke-linecap:round
+          //
+          // Step 1 — world view, k ≈ 1.3 (k ≤ 1.6)
+          if (k <= 1.6) {
+            this.g.selectAll('.border-dashed').style('stroke-width', '1').style('stroke-dasharray', '2, 3');
+            this.g.selectAll('.border-dotted').style('stroke-width', '1').style('stroke-dasharray', '0, 2');
+            this.g.selectAll('.border-dash-dotted').style('stroke-width', '1').style('stroke-dasharray', '2, 3, 1, 3');
+
+          // Step 2 — 1× zoom in, k ≈ 1.9 (k ≤ 2.3)
+          } else if (k <= 2.3) {
+            this.g.selectAll('.border-dashed').style('stroke-width', '0.5').style('stroke-dasharray', '2, 2');
+            this.g.selectAll('.border-dotted').style('stroke-width', '1').style('stroke-dasharray', '0, 2');
+            this.g.selectAll('.border-dash-dotted').style('stroke-width', '0.5').style('stroke-dasharray', '2, 3, 1, 3');
+
+          // Step 3 — 2× zoom in, k ≈ 2.8 (k ≤ 3.2)
+          } else if (k <= 3.2) {
+            this.g.selectAll('.border-dashed').style('stroke-width', '0.5').style('stroke-dasharray', '1, 1.5');
+            this.g.selectAll('.border-dotted').style('stroke-width', '0.8').style('stroke-dasharray', '0, 1.75');
+            this.g.selectAll('.border-dash-dotted').style('stroke-width', '0.5').style('stroke-dasharray', '2, 3, 1, 3');
+
+          // Step 4 — 3× zoom in, k ≈ 4.0 (k > 3.2)
+          } else {
+            this.g.selectAll('.border-dashed').style('stroke-width', '0.5').style('stroke-dasharray', '1, 1.5');
+            this.g.selectAll('.border-dotted').style('stroke-width', '0.7').style('stroke-dasharray', '0, 1.5');
+            this.g.selectAll('.border-dash-dotted').style('stroke-width', '0.5').style('stroke-dasharray', '2, 3, 1, 3');
+          }
           this.g.selectAll('.trade-arc').attr('stroke-width', function () {
             return (+this.getAttribute('data-original-width') || 1) / k;
           });
@@ -331,9 +364,18 @@ export const TradeMap = {
             })
             .attr('stroke-width', 0.8 / k);
           const baseFs = 11 / Math.sqrt(k);
-          this.g.selectAll('.map-label:not(.map-label-nsgt):not(.map-label-territory)').attr('font-size', `${baseFs}px`).attr('stroke-width', 1.5 / k);
-          this.g.selectAll('.map-label-nsgt').attr('font-size', `${baseFs * 0.78}px`).attr('stroke-width', 1.2 / k);
-          this.g.selectAll('.map-label-territory').attr('font-size', `${baseFs * 0.7}px`).attr('stroke-width', 1.2 / k);
+          this.g
+            .selectAll('.map-label:not(.map-label-nsgt):not(.map-label-territory)')
+            .attr('font-size', `${baseFs}px`)
+            .attr('stroke-width', 1.5 / k);
+          this.g
+            .selectAll('.map-label-nsgt')
+            .attr('font-size', `${baseFs * 0.78}px`)
+            .attr('stroke-width', 1.2 / k);
+          this.g
+            .selectAll('.map-label-territory')
+            .attr('font-size', `${baseFs * 0.7}px`)
+            .attr('stroke-width', 1.2 / k);
           this.g.selectAll('.map-label').each(function () {
             const px = +this.getAttribute('data-proj-x');
             const py = +this.getAttribute('data-proj-y');
@@ -342,8 +384,8 @@ export const TradeMap = {
             if (kPlaced) {
               const dx = +this.getAttribute('data-placed-dx');
               const dy = +this.getAttribute('data-placed-dy');
-              this.setAttribute('x', px + dx * kPlaced / k);
-              this.setAttribute('y', py + dy * kPlaced / k);
+              this.setAttribute('x', px + (dx * kPlaced) / k);
+              this.setAttribute('y', py + (dy * kPlaced) / k);
             } else {
               this.setAttribute('x', px + (r + 4) / k);
               this.setAttribute('y', py + 4 / k);
@@ -368,13 +410,15 @@ export const TradeMap = {
     const yTop = this.height * (isPortrait ? 0.02 : 0.06);
     const yBot = this.height * (isPortrait ? 0.02 : 0.12);
 
-    this.projection = geoNaturalEarth1().rotate([-11.314, 0]).fitExtent(
-      [
-        [0, yTop],
-        [this.width, this.height - yBot]
-      ],
-      { type: 'Sphere' }
-    );
+    this.projection = geoNaturalEarth1()
+      .rotate([-11.314, 0])
+      .fitExtent(
+        [
+          [0, yTop],
+          [this.width, this.height - yBot]
+        ],
+        { type: 'Sphere' }
+      );
 
     this.path = geoPath().projection(this.projection);
   },
@@ -877,7 +921,11 @@ export const TradeMap = {
       const r = +el.getAttribute('data-radius') || 0;
 
       let dim;
-      try { dim = el.getBBox(); } catch (e) { continue; }
+      try {
+        dim = el.getBBox();
+      } catch (e) {
+        continue;
+      }
       if (!dim.width) continue;
 
       const bw = dim.width;
@@ -887,10 +935,10 @@ export const TradeMap = {
       const ascent = bh * 0.82;
 
       const candidates = [
-        [px + edge,           py + GAP / k],               // right (default)
-        [px - edge - bw,      py + GAP / k],               // left
-        [px - bw / 2,         py - edge - bh + ascent],    // above-center
-        [px - bw / 2,         py + edge + bh - ascent],    // below-center
+        [px + edge, py + GAP / k], // right (default)
+        [px - edge - bw, py + GAP / k], // left
+        [px - bw / 2, py - edge - bh + ascent], // above-center
+        [px - bw / 2, py + edge + bh - ascent] // below-center
       ];
 
       let bestTx = candidates[0][0];
