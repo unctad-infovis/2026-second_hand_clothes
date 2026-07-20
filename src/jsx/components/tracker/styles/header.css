@@ -1,8 +1,6 @@
 @import url('./variables.css');
-
 #app-root-2026-second_hand_clothes {
   /* UNCTAD Main Header */
-
   .main-header {
     background: var(--unblue-bg);
     flex-shrink: 0;
@@ -14,7 +12,6 @@
       max-width: var(--content-max-width);
       padding: 0 16px;
     }
-
     /* Row 1: Logo + Title */
     .header-title {
       align-items: flex-start;
@@ -48,9 +45,7 @@
         }
       }
     }
-
     /* Row 2: Filter controls (desktop only) */
-
     .header-controls {
       display: none;
       @media (min-width: 768px) {
@@ -239,7 +234,7 @@
       z-index: 50;
       .picker-search-area {
         background: var(--unblue-bg);
-        border-bottom: 1px solid var(--un-color-grey-lighest);
+        border-bottom: 1px solid var(--un-color-grey-lightest);
         padding: 8px;
         input {
           background: #fff;
@@ -251,7 +246,6 @@
           outline: none;
           padding: 6px 8px;
           width: 100%;
-
           &:focus {
             border-color: var(--un-color-blue-darkest);
           }

@@ -80,7 +80,7 @@ class CountrySelector {
               indent: 2,
               icon: '  └'
             });
-                  this._addSortedCountries(subsubChild, subsubCountries, 3, 'geo-item');
+            this._addSortedCountries(subsubChild, subsubCountries, 3, 'geo-item');
           });
         } else {
           this._addSortedCountries(subChild, subCountries, 2, 'geo-item');
@@ -187,7 +187,10 @@ class CountrySelector {
 
   _addSortedCountries(container, codes, indentLevel, extraClass = '') {
     const EXCLUDE = new Set(['TWN']);
-    const sorted = codes.filter(code => !EXCLUDE.has(code)).map(code => ({ code, name: this.classificationData.countries[code]?.name || code })).sort((a, b) => a.name.localeCompare(b.name));
+    const sorted = codes
+      .filter(code => !EXCLUDE.has(code))
+      .map(code => ({ code, name: this.classificationData.countries[code]?.name || code }))
+      .sort((a, b) => a.name.localeCompare(b.name));
     for (let i = 0; i < sorted.length; i++) {
       const c = sorted[i];
       this._addCountryItem(container, c.code, c.name, indentLevel, extraClass);

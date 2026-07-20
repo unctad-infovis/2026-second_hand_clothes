@@ -336,19 +336,19 @@ export const TradeMap = {
             this.g.selectAll('.border-dotted').style('stroke-width', '1').style('stroke-dasharray', '0, 2');
             this.g.selectAll('.border-dash-dotted').style('stroke-width', '1').style('stroke-dasharray', '2, 2, 0, 2');
 
-          // Step 2 — 1× zoom in, k ≈ 1.9 (k ≤ 2.3)
+            // Step 2 — 1× zoom in, k ≈ 1.9 (k ≤ 2.3)
           } else if (k <= 2.3) {
             this.g.selectAll('.border-dashed').style('stroke-width', '0.5').style('stroke-dasharray', '2, 2');
             this.g.selectAll('.border-dotted').style('stroke-width', '1').style('stroke-dasharray', '0, 2');
             this.g.selectAll('.border-dash-dotted').style('stroke-width', '0.5').style('stroke-dasharray', '2, 2, 0, 2');
 
-          // Step 3 — 2× zoom in, k ≈ 2.8 (k ≤ 3.2)
+            // Step 3 — 2× zoom in, k ≈ 2.8 (k ≤ 3.2)
           } else if (k <= 3.2) {
             this.g.selectAll('.border-dashed').style('stroke-width', '0.5').style('stroke-dasharray', '1, 1.5');
             this.g.selectAll('.border-dotted').style('stroke-width', '0.8').style('stroke-dasharray', '0, 1.75');
             this.g.selectAll('.border-dash-dotted').style('stroke-width', '0.5').style('stroke-dasharray', '1, 1.5, 0, 1.5');
 
-          // Step 4 — 3× zoom in, k ≈ 4.0 (k > 3.2)
+            // Step 4 — 3× zoom in, k ≈ 4.0 (k > 3.2)
           } else {
             this.g.selectAll('.border-dashed').style('stroke-width', '0.5').style('stroke-dasharray', '1, 1.5');
             this.g.selectAll('.border-dotted').style('stroke-width', '0.7').style('stroke-dasharray', '0, 1.5');
@@ -557,7 +557,7 @@ export const TradeMap = {
   // searoute uses extended longitudes (e.g. -220° for Japan on Pacific routes).
   // This wraps all coords to [-180, 180] and splits at the antimeridian into a MultiLineString.
   normalizeRoute(geometry) {
-    if (!geometry || geometry.type !== 'LineString') return geometry;
+    if (geometry?.type !== 'LineString') return geometry;
     const wrap = lon => (((lon % 360) + 540) % 360) - 180;
     const normalized = geometry.coordinates.map(([lon, lat]) => [wrap(lon), lat]);
     const segments = [];
@@ -901,7 +901,7 @@ export const TradeMap = {
 
     // Clear any stale placement data so zoom handler falls back gracefully
     // until this run finishes
-    els.forEach(el => el.removeAttribute('data-placed-k'));
+    for (const el of els) el.removeAttribute('data-placed-k');
 
     const placed = [];
 
@@ -923,7 +923,7 @@ export const TradeMap = {
       let dim;
       try {
         dim = el.getBBox();
-      } catch (e) {
+      } catch (_e) {
         continue;
       }
       if (!dim.width) continue;

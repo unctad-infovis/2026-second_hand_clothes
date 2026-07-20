@@ -1,10 +1,8 @@
 /* Overrides for the embedded build: visual polish that should stay scoped to the app */
-
 #app-root-2026-second_hand_clothes {
   .hidden {
-    display: none !important;
+    display: none;
   }
-
   .main-header {
     border-bottom: none;
   }

@@ -1,17 +1,13 @@
 @import url('./variables.css');
-
 #app-root-2026-second_hand_clothes {
   /* Shared panel content - data insight sections */
-
   .si-section {
     margin-bottom: 14px;
-
     & + .si-section {
       padding-top: 14px;
-      border-top: 1px solid var(--un-color-grey-lighest);
+      border-top: 1px solid var(--un-color-grey-lightest);
     }
   }
-
   .si-label {
     color: var(--un-color-grey-dark);
     font-size: var(--fs-xs);
@@ -19,26 +15,21 @@
     letter-spacing: 0.05em;
     margin-bottom: 8px;
     text-transform: uppercase;
-
     &.si-label-flush {
       margin-bottom: 0;
     }
   }
-
   .si-sublabel {
     color: var(--un-color-grey);
     font-size: var(--fs-xxs);
     font-style: italic;
     margin-bottom: 8px;
   }
-
   /* KPI grid */
-
   .si-kpi-grid {
     display: grid;
     gap: 8px;
     margin-bottom: 12px;
-
     &.cols-3 {
       grid-template-columns: repeat(3, 1fr);
     }
@@ -46,12 +37,10 @@
       grid-template-columns: repeat(2, 1fr);
     }
   }
-
   .si-kpi-card {
     border-radius: var(--radius-lg);
     padding: 8px 10px;
     text-align: center;
-
     .si-kpi-label {
       font-size: var(--fs-xxs);
       font-weight: 700;
@@ -59,42 +48,34 @@
       margin-bottom: 3px;
       text-transform: uppercase;
     }
-
     .si-kpi-value {
       color: var(--ungrey-dark);
       font-family: var(--font-mono);
       font-size: var(--fs-body);
       font-weight: 700;
     }
-
     &.exp {
       background: rgb(0 119 184 / 9%);
       border: 1px solid rgb(0 119 184 / 22%);
-
       .si-kpi-label {
         color: var(--un-color-blue-darkest);
       }
     }
-
     &.net {
       background: var(--unblue-bg);
       border: 1px solid var(--un-color-grey-light);
-
       .si-kpi-label {
         color: var(--un-color-grey-dark);
       }
     }
-
     &.imp {
       background: rgb(237 24 71 / 7%);
       border: 1px solid rgb(237 24 71 / 18%);
-
       .si-kpi-label {
         color: var(--un-color-red);
       }
     }
   }
-
   /* Compare modal: head/tail card variants */
   .si-kpi-card-compare-a {
     border-radius: 8px 0 0 8px;
@@ -120,9 +101,7 @@
   .si-kpi-value-small {
     font-size: var(--fs-label);
   }
-
   /* Inline badge */
-
   .si-badge {
     border-radius: 999px;
     border: 1px solid;
@@ -131,56 +110,45 @@
     font-weight: 700;
     padding: 2px 10px;
   }
-
   .si-badge-wrap {
     margin-bottom: 12px;
     text-align: center;
   }
-
   /* Chart legend */
-
   .si-chart-legend {
     align-items: center;
     display: flex;
     gap: 12px;
     margin-bottom: 6px;
-
     .si-legend-item {
       align-items: center;
       display: flex;
       gap: 4px;
-
       .si-legend-swatch {
         border-radius: 1px;
         flex-shrink: 0;
         height: 2px;
         width: 12px;
       }
-
       span {
         color: var(--un-color-grey-dark);
         font-size: var(--fs-xs);
       }
     }
   }
-
   /* Data table */
-
   .si-table {
     border-collapse: collapse;
     width: 100%;
-
     &.has-margin {
       margin-bottom: 14px;
     }
-
     th {
       border-bottom: 1px solid var(--un-color-grey-light);
       color: var(--un-color-grey-dark);
       font-size: var(--fs-xs);
       font-weight: 700;
       padding: 3px 8px;
-
       &.ar {
         text-align: right;
       }
@@ -191,12 +159,10 @@
         text-align: left;
       }
     }
-
     td {
       font-family: var(--font-mono);
       font-size: var(--fs-sm);
       padding: 4px 8px;
-
       &.ar {
         text-align: right;
       }
@@ -222,7 +188,6 @@
         text-transform: uppercase;
       }
     }
-
     tr:hover td {
       background: var(--unblue-bg);
     }
@@ -230,16 +195,13 @@
       background: rgb(0 119 184 / 8%);
     }
   }
-
   /* Narrative box */
-
   .si-narrative-box {
     background: rgb(0 73 144 / 6%);
     border-radius: var(--radius-lg);
     border: 1px solid rgb(0 73 144 / 14%);
     margin-bottom: 14px;
     padding: 12px;
-
     .si-narrative-title {
       color: var(--un-color-blue-darkest);
       font-size: var(--fs-xs);
@@ -248,40 +210,33 @@
       margin-bottom: 8px;
       text-transform: uppercase;
     }
-
     p {
       color: var(--ungrey-dark);
       font-size: var(--fs-label);
       line-height: 1.5;
       margin: 0 0 6px;
-
       &:last-child {
         margin-bottom: 0;
       }
     }
-
     .si-narrative-empty {
       color: var(--un-color-grey);
       font-size: var(--fs-label);
       font-style: italic;
     }
   }
-
   /* Role badge */
-
   .si-role-wrap {
     display: flex;
     justify-content: center;
     margin-top: 8px;
   }
-
   .si-role-badge {
     border-radius: 999px;
     display: inline-block;
     font-size: var(--fs-sm);
     font-weight: 700;
     padding: 3px 14px;
-
     &.exp {
       background: rgb(0 158 219 / 12%);
       color: var(--un-color-blue);
@@ -291,35 +246,28 @@
       color: var(--un-color-red);
     }
   }
-
   /* Generic card */
-
   .si-card {
     background: var(--unblue-bg);
     border-radius: var(--radius-lg);
     border: 1px solid var(--un-color-grey-light);
     padding: 12px;
-
     &.si-card-center {
       align-items: center;
       display: flex;
       flex-direction: column;
     }
   }
-
   /* Trading partner list */
-
   .si-partners {
     display: flex;
     flex-direction: column;
     gap: 5px;
   }
-
   .si-partner-row {
     align-items: center;
     display: flex;
     gap: 5px;
-
     .si-rank {
       color: var(--un-color-grey-dark);
       flex-shrink: 0;
@@ -327,13 +275,11 @@
       font-size: var(--fs-xs);
       min-width: 28px;
     }
-
     .si-arrow {
       flex-shrink: 0;
       font-size: var(--fs-sm);
       font-weight: 700;
     }
-
     .si-name {
       color: var(--ungrey-dark);
       flex: 1;
@@ -342,22 +288,19 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-
     .si-bar-wrap {
-      background: var(--un-color-grey-lighest);
+      background: var(--un-color-grey-lightest);
       border-radius: 999px;
       flex-shrink: 0;
       height: 5px;
       overflow: hidden;
       width: 36px;
-
       .si-bar-fill {
         border-radius: 999px;
         height: 100%;
         opacity: 0.75;
       }
     }
-
     .si-split {
       flex-shrink: 0;
       font-family: var(--font-mono);
@@ -366,7 +309,6 @@
       text-align: right;
       width: 34px;
     }
-
     .si-val {
       color: var(--un-color-grey-dark);
       flex-shrink: 0;
@@ -375,7 +317,6 @@
       text-align: right;
       width: 44px;
     }
-
     .si-actions {
       display: flex;
       flex-shrink: 0;
@@ -383,16 +324,13 @@
       opacity: 0;
       transition: opacity 0.12s;
     }
-
     &:hover .si-actions {
       opacity: 1;
     }
   }
-
   /* Action buttons */
-
   .si-btn {
-    background: var(--un-color-grey-lighest);
+    background: var(--un-color-grey-lightest);
     border-radius: var(--radius-sm);
     border: none;
     color: var(--un-color-grey-dark);
@@ -403,7 +341,6 @@
     transition:
       background 0.12s,
       color 0.12s;
-
     &:hover {
       background: var(--un-color-blue-darkest);
       color: #fff;
@@ -412,9 +349,7 @@
       background: var(--col-compare);
     }
   }
-
   /* Flow composition bar */
-
   .si-flow-bar {
     border-radius: 999px;
     display: flex;
@@ -423,18 +358,15 @@
     margin-bottom: 8px;
     overflow: hidden;
   }
-
   .si-comp-rows {
     display: flex;
     flex-direction: column;
     gap: 4px;
   }
-
   .si-comp-row {
     align-items: center;
     display: flex;
     gap: 8px;
-
     .si-comp-dot {
       border-radius: 2px;
       flex-shrink: 0;
@@ -452,9 +384,7 @@
       font-weight: 700;
     }
   }
-
   /* HHI stats */
-
   .si-hhi-stats {
     border-top: 1px solid var(--un-color-grey-light);
     display: grid;
@@ -463,7 +393,6 @@
     margin-top: 10px;
     padding-top: 10px;
     text-align: center;
-
     .hhi-l {
       color: var(--un-color-grey-dark);
       font-size: var(--fs-xxs);
@@ -484,21 +413,17 @@
       white-space: nowrap;
     }
   }
-
   /* Chart footer legend */
-
   .si-chart-footer {
     align-items: center;
     display: flex;
     gap: 12px;
     justify-content: center;
     margin-top: 8px;
-
     .si-legend-item {
       align-items: center;
       display: flex;
       gap: 4px;
-
       .si-legend-swatch {
         border-radius: 2px;
         height: 3px;
@@ -510,7 +435,6 @@
       }
     }
   }
-
   .si-chart-caption {
     color: var(--un-color-grey-dark);
     font-size: var(--fs-xxs);
@@ -518,22 +442,18 @@
     margin-top: 4px;
     text-align: center;
   }
-
   /* Partners header row */
-
   .si-partners-hdr {
     align-items: center;
     display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
-
     .si-partners-hint {
       color: var(--un-color-grey);
       font-size: var(--fs-xxs);
       font-style: italic;
     }
   }
-
   /* Tooltip content (replaces inline styles in showTooltip) */
   .tt-head {
     align-items: center;
@@ -599,7 +519,6 @@
     border-top: 1px solid var(--un-color-grey-light);
     margin-top: 2px;
     padding-top: 8px;
-
     &.has-extra-margin {
       margin-top: 8px;
     }
@@ -632,7 +551,7 @@
     width: 72px;
   }
   .tt-partner-bar {
-    background: var(--un-color-grey-lighest);
+    background: var(--un-color-grey-lightest);
     border-radius: 99px;
     flex: 1;
     height: 5px;
@@ -730,7 +649,6 @@
     margin-left: auto;
     padding: 2px 6px;
   }
-
   /* ── Flow category color variable (inherited by children) ── */
   .flow-ns {
     --flow-color: var(--flow-north-south);
@@ -744,7 +662,6 @@
   .flow-nn {
     --flow-color: var(--flow-north-north);
   }
-
   /* ── Static color utilities ── */
   .col-exp {
     color: var(--un-color-blue);
@@ -779,7 +696,6 @@
   .bg-imp {
     background: var(--un-color-red);
   }
-
   /* ── Legend swatch color variants ── */
   .swatch-exp {
     background: var(--un-color-blue);
@@ -790,7 +706,6 @@
   .swatch-yellow {
     background: var(--un-color-yellow);
   }
-
   /* ── Dynamic bar widths driven by --pct CSS custom property (set by JS) ── */
   .si-bar-fill {
     width: var(--pct, 0%);
@@ -798,7 +713,6 @@
   .tt-partner-bar-fill {
     width: var(--pct, 0%);
   }
-
   /* ── Flow composition segments: width + color via CSS vars ── */
   .si-flow-seg,
   .tt-flow-seg {
@@ -806,7 +720,6 @@
     height: 100%;
     width: var(--pct, 0%);
   }
-
   /* ── Elements that inherit color from a parent .flow-X class ── */
   .si-comp-dot {
     background: var(--flow-color, var(--un-color-grey));
@@ -823,13 +736,11 @@
   .cat-strong {
     color: var(--flow-color, inherit);
   }
-
   /* ── Flow badge in arc modal ── */
   .si-badge.flow-badge {
     border-color: color-mix(in srgb, var(--flow-color) 33%, transparent);
     color: var(--flow-color);
   }
-
   /* ── HHI concentration gauge ── */
   .si-card[data-hhi='low'] {
     --hhi-color: var(--un-color-green);
@@ -857,7 +768,6 @@
     border-color: color-mix(in srgb, var(--hhi-color) 26%, transparent);
     color: var(--hhi-color);
   }
-
   /* ── Rank display in partner rows ── */
   .rank-display {
     color: var(--un-color-grey);
@@ -884,7 +794,6 @@
     font-family: monospace;
     font-size: var(--fs-xs);
   }
-
   /* ── Bilateral split badge ── */
   .split-badge {
     color: var(--un-color-grey);
@@ -898,7 +807,6 @@
   .split-imp {
     color: var(--un-color-red);
   }
-
   /* ── SVG container utilities (replaces inline style on SVG elements) ── */
   .svg-full {
     overflow: visible;
@@ -912,13 +820,11 @@
     max-height: 130px;
     width: 100%;
   }
-
   /* ── Bilateral history midline ── */
   .chart-midline {
     stroke-width: 0.5;
     stroke: var(--un-color-grey-light);
   }
-
   /* ── HHI gauge elements ── */
   .gauge-tick {
     stroke-width: 1;
@@ -940,7 +846,6 @@
     font-family: var(--font-family);
     font-size: var(--fs-xs);
   }
-
   /* ── Polar fingerprint grid ── */
   .polar-grid-ring {
     fill: none;
@@ -963,7 +868,6 @@
   .polar-center {
     fill: var(--ungrey-dark);
   }
-
   /* ── Butterfly chart labels and grid ── */
   .butterfly-label {
     fill: var(--ungrey-dark);
@@ -975,7 +879,6 @@
     stroke-width: 0.6;
     stroke: var(--chart-grid);
   }
-
   /* ── SVG chart element styles (bilateral history bars) ── */
   .chart-bar-exp {
     fill: var(--un-color-blue);
@@ -1003,7 +906,6 @@
   .chart-label.cur {
     fill: var(--un-color-blue-dark);
   }
-
   /* ── Butterfly chart bars ── */
   .butterfly-exp {
     fill: var(--un-color-blue);
@@ -1025,7 +927,6 @@
     font-size: var(--fs-micro);
     font-weight: 700;
   }
-
   /* ── Polar fingerprint bars ── */
   .polar-exp {
     opacity: 0.88;
@@ -1039,7 +940,6 @@
     stroke-width: 6;
     stroke: var(--un-color-red);
   }
-
   /* ── Compare trend chart dots ── */
   .chart-dot-exp {
     fill: var(--un-color-blue);
@@ -1056,7 +956,6 @@
     fill: var(--un-color-yellow);
     opacity: 1;
   }
-
   /* ── Trend bars in panel and tooltip ── */
   .trend-bar {
     fill: var(--un-color-grey-light);
@@ -1085,14 +984,12 @@
   .trend-label.cur {
     fill: var(--un-color-blue-dark);
   }
-
   /* ── Generic SVG axis / chart labels ── */
   .axis-label {
     fill: var(--un-color-grey-dark);
     font-family: var(--font-mono);
     font-size: var(--fs-micro);
   }
-
   /* ── Compare modal trend polylines ── */
   .chart-line-exp {
     fill: none;
@@ -1106,7 +1003,6 @@
     stroke-width: 1.5;
     stroke: var(--un-color-yellow-darkest);
   }
-
   /* ── Tooltip visibility state ── */
   .tooltip.visible {
     display: block;

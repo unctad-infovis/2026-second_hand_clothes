@@ -1,5 +1,4 @@
 /* Tracker-specific colour tokens — only values not covered by --un-color-* in src/styles/colors.css */
-
 #app-root-2026-second_hand_clothes {
   /* Near-black text / UI foreground — darker than --un-color-grey-darkest (#4f4740) */
   --ungrey-dark: #222;
@@ -7,7 +6,6 @@
   /* Light blue page backgrounds — no --un-color-* equivalent */
   --unblue-bg: #f2f8fc;
   --unblue-bg-alt: #f3f8fd;
-
   /* UN ceremonial yellow — slightly different from --un-color-yellow */
   --unyellow-un: #ffcb05;
 
@@ -26,12 +24,11 @@
   --col-badge-yellow-text: #4a3800;
 
   /* Map element colors */
-  --map-land-fill: var(--un-color-grey-lighest);
-  --map-hover-fill: var(--un-color-grey-lighest);
+  --map-land-fill: #ded9d5;
+  --map-hover-fill: #ded9d5;
   --map-focus-fill: var(--un-color-blue-light);
   --col-border-plain: #fff;
   --col-border-dashed: #fff;
-
   /* Flow category colors */
   --flow-north-south: var(--un-color-blue);
   --flow-south-north: var(--un-color-green);

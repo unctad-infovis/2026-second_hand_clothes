@@ -1,4 +1,4 @@
-import { format, sum } from 'd3';
+import { sum } from 'd3';
 import { CONFIG, METRIC_FORMAT, STATE } from './config.js';
 import { CountrySelector } from './countrySelector.js';
 import { DataLoader } from './dataLoader.js';
@@ -961,7 +961,7 @@ const App = {
           return `<rect class="trend-bar${isCur ? ' cur' : ''}" x="${x}" y="${H - h}" width="${barW}" height="${h}" rx="2"/>`;
         })
         .join('');
-      const axisLabels = years.map((y, i) => `<span class="trend-axis-label${y === STATE.year ? ' cur' : ''}">${String(y).slice(2)}</span>`).join('');
+      const axisLabels = years.map((y, _i) => `<span class="trend-axis-label${y === STATE.year ? ' cur' : ''}">${String(y).slice(2)}</span>`).join('');
       html += `
         <div class="si-section">
           <div class="si-label">Trade Trend (2015–${STATE.year})</div>
