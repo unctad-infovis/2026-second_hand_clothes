@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import Article from '../Article.mdx';
 
-import './../styles/styles.css';
+import '@unctad-infovis/general-tools/styles/styles.css';
 
 import meta from './../meta.json';
 
