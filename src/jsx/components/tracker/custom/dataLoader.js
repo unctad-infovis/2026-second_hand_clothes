@@ -63,7 +63,6 @@ export const DataLoader = {
       STATE.yearCache = store.years;
       STATE.trendSummary = store.trendSummary;
 
-      // Load routes.json in the background — not needed until a country is clicked.
       // Label typography by UN status (country_hierarchy.json, from UN BNDA_CTY) — optional
       getJSON(`${ASSET_BASE}assets/data/country_hierarchy.json`)
         .then(data => {
@@ -71,20 +70,31 @@ export const DataLoader = {
         })
         .catch(err => console.warn('country_hierarchy.json load failed:', err));
 
-      STATE._routesPromise = getJSON(`${ASSET_BASE}assets/data/routes.json`)
-        .then(data => {
-          STATE.routes = data;
-        })
-        .catch(err => console.warn('routes.json load failed:', err));
-
-      // Start loading bilateral history for the active metric in the background
-      this._loadBilateral(metric);
+      // Bilateral history (2 MB+) is lazy-loaded when a panel or modal needs it (_loadBilateral),
+      // and sea routes are lazy-loaded per country when Sea routes is switched on (loadRoutes).
 
       return true;
     } catch (error) {
       console.error('DataLoader.loadAll error:', error);
       return false;
     }
+  },
+
+  // Sea routes are sliced per country (routes/<ISO3>.json, see scripts/slice-routes.mjs).
+  // Fetch only the focused country's slice, once, and merge it into STATE.routes.
+  loadRoutes(iso) {
+    if (!iso || RegionConfig.getRegion(iso) === 'Other') return Promise.resolve();
+    if (!STATE.routeSlices[iso]) {
+      STATE.routeSlices[iso] = getJSON(`${ASSET_BASE}assets/data/routes/${iso}.json`)
+        .then(data => {
+          Object.assign(STATE.routes, data);
+        })
+        .catch(err => {
+          console.warn(`routes/${iso}.json load failed:`, err);
+          delete STATE.routeSlices[iso]; // allow a retry on the next request
+        });
+    }
+    return STATE.routeSlices[iso];
   },
 
   // Fetch a metric's bilateral history once; point STATE at it if still active.
@@ -131,11 +141,13 @@ export const DataLoader = {
     if (year !== STATE.year) await this.loadYear(STATE.year, metric);
     if (seq !== this._metricSeq) return false;
 
+    // Only fetch the new metric's history if the old one was already wanted
+    const historyWanted = !!(STATE.bilateralHistory || STATE.metricStore[STATE.metric]._bilateralPromise);
     STATE.metric = metric;
     STATE.yearCache = store.years;
     STATE.trendSummary = store.trendSummary;
     STATE.bilateralHistory = store.bilateralHistory; // may be null until loaded
-    this._loadBilateral(metric);
+    if (historyWanted) this._loadBilateral(metric);
 
     this._preThresholdKey = null;
     return true;

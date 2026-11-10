@@ -23,7 +23,17 @@ The map logic is a React port of the stand-alone [UNCTAD-TED/SHC-trade-visualiza
 
 ## Data
 
-Static JSON in `public/assets/data/`, loaded at runtime: `<year>.json` (bilateral flows by year), `weight/<year>.json` (weight data), `bilateral_history.json`, `trend_summary.json`, `routes.json` (sea routes, about 11 MB), `ports.json` (gateway ports), `meta.json` (UN M49 names and coordinates), `country_classification.json`, `country_hierarchy.json` and the two world map TopoJSON files. In production the data is fetched relative to the bundle (`ASSET_BASE` in `custom/dom.js`), so it works when the script is loaded from `storage.unctad.org` into a Drupal page.
+Static JSON in `public/assets/data/`, loaded at runtime: `<year>.json` (bilateral flows by year), `weight/<year>.json` (weight data), `trend_summary.json`, `meta.json` (UN M49 names and coordinates), `country_classification.json`, `country_hierarchy.json` and the world map TopoJSON. In production the data is fetched relative to the bundle (`ASSET_BASE` in `custom/dom.js`), so it works when the script is loaded from `storage.unctad.org` into a Drupal page. The host does not compress responses, so file size is download size.
+
+Loaded only when needed, to keep the first visit small:
+
+* `bilateral_history.json` (and `weight/bilateral_history.json`, about 2 MB each) – fetched when a country panel, corridor modal, compare modal or CSV export first needs it
+* `routes/<ISO3>.json` – sea routes, sliced per country (average 70 KB, largest about 240 KB). Only the focused country's slice is fetched, when **Sea routes** is switched on.
+
+Source data kept outside the build, in `data/`:
+
+* `routes.full.json` – the full sea-route set. `npm run slice-routes` (`scripts/slice-routes.mjs`) regenerates `public/assets/data/routes/` from it, keeping only inter-regional pairs, rounding coordinates to 2 decimals and dropping unused properties. Re-run it whenever `routes.full.json` changes.
+* `worldmap-economies-54030.topo.json`, `ports.json` – not used by the app
 
 ## Embedding
 

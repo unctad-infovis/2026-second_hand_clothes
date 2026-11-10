@@ -237,7 +237,15 @@ const App = {
     // Sea routes toggle (on/off)
     const searouteBtn = qs('.searoute-btn');
     if (searouteBtn)
-      searouteBtn.addEventListener('click', () => {
+      searouteBtn.addEventListener('click', async () => {
+        if (searouteBtn.getAttribute('aria-busy') === 'true') return;
+        // Switching on: fetch the focused country's route slice first (small, cached per country)
+        if (!TradeMap?.searouteMode && TradeMap?.focusedIso && !STATE.routeSlices[TradeMap.focusedIso]) {
+          searouteBtn.setAttribute('aria-busy', 'true');
+          await DataLoader.loadRoutes(TradeMap.focusedIso);
+          searouteBtn.removeAttribute('aria-busy');
+          if (searouteBtn.disabled) return; // the panel closed while loading
+        }
         if (TradeMap?.toggleSeaRoute) TradeMap.toggleSeaRoute();
       });
     getRoot().addEventListener('shc:searoute-toggled', e => {
@@ -719,13 +727,10 @@ const App = {
     const exportBtn = qs('.panel-export-btn');
     if (exportBtn) exportBtn.style.display = '';
 
-    if (TradeMap?.setFocus) {
-      // Wait for routes.json, then focus only if this country's panel is still open
-      const doFocus = () => {
-        if (this._currentPanelIso === iso) TradeMap.setFocus(iso);
-      };
-      STATE._routesPromise ? STATE._routesPromise.then(doFocus) : doFocus();
-    }
+    if (TradeMap?.setFocus) TradeMap.setFocus(iso);
+
+    // The panel shows bilateral splits and partner rankings; re-rendered on shc:bilateral-loaded
+    DataLoader._loadBilateral(STATE.metric);
   },
 
   // Fill or refresh the panel for iso from the current year, metric and region

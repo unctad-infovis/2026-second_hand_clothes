@@ -163,7 +163,8 @@ export const STATE = {
   countryCoords: {},
   countryNames: {},
   countryHierarchy: {}, // iso3 → { maplab, stscod } from country_hierarchy.json (UN BNDA_CTY)
-  routes: {},
+  routes: {}, // route features by sorted pair key, merged in from the per-country slices
+  routeSlices: {}, // iso3 → load promise of routes/<iso3>.json
 
   // Border line layers from TopoJSON (dashed/dotted/dash-dotted for disputed borders)
   borderLayers: null,
