@@ -6,7 +6,7 @@ import '@unctad-infovis/general-tools/styles/styles.css';
 
 import meta from './../meta.json';
 
-import { ensureExternalStyles, installCallDelegation, teardownDomHelpers } from './components/tracker/custom/dom.js';
+import { installCallDelegation, teardownDomHelpers } from './components/tracker/custom/dom.js';
 import MainApp from './components/tracker/custom/main.js';
 import Tracker from './components/tracker/Tracker.jsx';
 
@@ -19,7 +19,6 @@ const App = () => {
 
   useEffect(() => {
     window.appRef = appRef;
-    ensureExternalStyles();
     installCallDelegation();
     MainApp.init();
 

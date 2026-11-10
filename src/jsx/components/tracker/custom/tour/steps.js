@@ -1,5 +1,6 @@
 // Ported from UNCTAD-TED/SHC-trade-visualization: src/tour/steps.js (commit 9e98152).
 import { qs, qsa } from '../dom.js';
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Guided Story — chapter definitions.
 //

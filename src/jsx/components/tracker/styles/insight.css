@@ -163,6 +163,46 @@
     margin-top: 10px;
   }
 
+  .si-hhi-axis {
+    color: var(--un-color-grey-dark);
+    font-size: var(--fs-xxs);
+    font-variant-numeric: tabular-nums;
+    height: 14px;
+    margin-top: 4px;
+    position: relative;
+
+    span {
+      position: absolute;
+      top: 0;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+    span:first-child {
+      transform: none;
+    }
+    span:last-child {
+      transform: translateX(-100%);
+    }
+  }
+
+  .si-hhi-bands {
+    color: var(--un-color-grey-dark);
+    display: grid;
+    font-size: var(--fs-xxs);
+    gap: 1px;
+    grid-template-columns: 20fr 20fr 60fr;
+    margin-top: 1px;
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    span:last-child {
+      text-align: right;
+    }
+  }
+
   /* Chart key */
   .si-chart-legend {
     align-items: center;
@@ -333,46 +373,6 @@
       position: absolute;
       top: -4px;
       width: 2px;
-    }
-  }
-
-  .si-hhi-axis {
-    color: var(--un-color-grey-dark);
-    font-size: var(--fs-xxs);
-    font-variant-numeric: tabular-nums;
-    height: 14px;
-    margin-top: 4px;
-    position: relative;
-
-    span {
-      position: absolute;
-      top: 0;
-      transform: translateX(-50%);
-      white-space: nowrap;
-    }
-    span:first-child {
-      transform: none;
-    }
-    span:last-child {
-      transform: translateX(-100%);
-    }
-  }
-
-  .si-hhi-bands {
-    color: var(--un-color-grey-dark);
-    display: grid;
-    font-size: var(--fs-xxs);
-    gap: 1px;
-    grid-template-columns: 20fr 20fr 60fr;
-    margin-top: 1px;
-
-    span {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    span:last-child {
-      text-align: right;
     }
   }
 
@@ -680,11 +680,11 @@
     .si-kpi-grid.cols-3 .si-kpi-card .si-kpi-value {
       font-size: var(--fs-body);
     }
-    .si-kpi-grid.cols-3 .si-kpi-card + .si-kpi-card {
-      padding-left: 8px;
-    }
     .si-kpi-grid.cols-3 .si-kpi-card {
       padding-right: 8px;
+    }
+    .si-kpi-grid.cols-3 .si-kpi-card + .si-kpi-card {
+      padding-left: 8px;
     }
   }
 }

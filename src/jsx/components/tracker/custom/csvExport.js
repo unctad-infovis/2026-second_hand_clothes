@@ -5,9 +5,9 @@
 // boxes so the export matches the map. Value is USD, weight kg, unit value USD/kg.
 // ─────────────────────────────────────────────────────────────────────────────
 import { CONFIG, STATE } from './config.js';
-import { RegionConfig } from './regions.js';
 import { DataLoader } from './dataLoader.js';
 import { getApp, getRoot, qs, qsa } from './dom.js';
+import { RegionConfig } from './regions.js';
 
 const YEARS = Array.from({ length: 2024 - 2015 + 1 }, (_, i) => 2015 + i);
 

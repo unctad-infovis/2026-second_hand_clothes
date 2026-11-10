@@ -8,6 +8,23 @@ The global trade in second-hand clothes moves used garments between countries, o
 
 The page renders an interactive world map with bilateral trade-flow arcs between exporting and importing countries, filterable by region, year, trade value threshold, and flow direction (North-South, South-North, South-South, North-North), alongside country-level insight panels. Content is authored in MDX and rendered as a standalone React application embeddable within UNCTAD's Drupal platform.
 
+The map logic is a React port of the stand-alone [UNCTAD-TED/SHC-trade-visualization](https://github.com/UNCTAD-TED/SHC-trade-visualization) monitor (`src/jsx/components/tracker/custom/`); the React wrapper is `Tracker.jsx`.
+
+## Features
+
+* **Metric and year** – switch between trade value (USD) and weight (kg), 2015–2024
+* **Filters** – region, exporter and importer country pickers, trade value threshold, top-N limit and flow direction
+* **Insight panels** – country panels and corridor (arc) modals with trend charts, concentration (HHI) and KPIs
+* **Animate** – bar-chart race over the years, with hosted round flags from `@unctad-infovis/unctad-flags`
+* **Guided tour** – spotlight walkthrough of the features (`custom/tour/`)
+* **CSV export** – per country, per corridor or for the current view
+* **Deep links** – the visible view is serialised into the URL hash, for example `#m=value&y=2024&r=Africa&f=ns,sn&x=USA,DEU`. Keys: `m` metric, `y` year, `r` region, `t` threshold, `n` top-N, `f` flow categories, `x`/`i` exporters/importers, `p` drawn `EXPORTER-IMPORTER` pairs. See `custom/deepLink.js`.
+* **Accessibility** – honours `prefers-reduced-motion` (`custom/motion.js`, `styles/reduced-motion.css`)
+
+## Data
+
+Static JSON in `public/assets/data/`, loaded at runtime: `<year>.json` (bilateral flows by year), `weight/<year>.json` (weight data), `bilateral_history.json`, `trend_summary.json`, `routes.json` (sea routes, about 11 MB), `ports.json` (gateway ports), `meta.json` (UN M49 names and coordinates), `country_classification.json`, `country_hierarchy.json` and the two world map TopoJSON files. In production the data is fetched relative to the bundle (`ASSET_BASE` in `custom/dom.js`), so it works when the script is loaded from `storage.unctad.org` into a Drupal page.
+
 ## Embedding
 
 ```html
@@ -49,6 +66,7 @@ The following packages are used in this project by default.
 ### Shared UNCTAD packages
 
 * **@unctad-infovis/general-tools** — shared React components (`ButtonAnchor`, `ButtonShare`, `ChartDataWrapper`, `Image`, `ProgressBar`, `Quote`, `Select`, `Tooltip`, `UNCTADSiteHeader`, `BackToTop`, …), helpers (`BasePath`, `LoadFile`, `CsvToJson`, `FormatNr`, `RoundNr`, `UseIsVisible`, …) and base design-token styles
+* **@unctad-infovis/unctad-flags** — hosted round country flag SVGs, resolved with `getFlagUrl(iso2)` (used in the Animate panel)
 
 These packages are published from the [`un-init-project`](https://github.com/unctad-infovis/un-init-project) monorepo to GitHub Packages, so installing needs an `.npmrc` with `@unctad-infovis:registry=https://npm.pkg.github.com` and a `GITHUB_PACKAGES_TOKEN` environment variable.
 

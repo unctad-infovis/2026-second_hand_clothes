@@ -1,16 +1,16 @@
 // Ported from UNCTAD-TED/SHC-trade-visualization: src/main.js (commit 9e98152).
 import '../styles/styles.css';
 import { format, sum } from 'd3';
-import { CONFIG, STATE, METRIC_FORMAT, fmtSigned, isCompact } from './config.js';
-import { startAnimation, stopAnimation, stopAnimationForMetricChange } from './sns/animationMode.js';
-import { RegionConfig } from './regions.js';
+import { CONFIG, fmtSigned, isCompact, METRIC_FORMAT, STATE } from './config.js';
 import { CountrySelector } from './countrySelector.js';
-import { DataLoader } from './dataLoader.js';
-import { TradeMap } from './map.js';
-import { Tour } from './tour/tour.js';
 import { CsvExport } from './csvExport.js';
+import { DataLoader } from './dataLoader.js';
 import { DeepLink } from './deepLink.js';
 import { byId, getRoot, notifyLayoutChange, onResize, qs, qsa, setApp } from './dom.js';
+import { TradeMap } from './map.js';
+import { RegionConfig } from './regions.js';
+import { startAnimation, stopAnimation, stopAnimationForMetricChange } from './sns/animationMode.js';
+import { Tour } from './tour/tour.js';
 
 // Signed percentage with a true minus sign (U+2212)
 const signedPct = (v, dp) => `${v >= 0 ? '+' : '\u2212'}${Math.abs(v).toFixed(dp)}%`;
@@ -500,7 +500,7 @@ const App = {
           c.style.display = 'block';
         });
         menu.querySelectorAll('.country-option').forEach(item => {
-          const text = item.innerText.toLowerCase();
+          const text = item.textContent.toLowerCase();
           item.style.display = text.includes(term) ? 'flex' : 'none';
         });
       }

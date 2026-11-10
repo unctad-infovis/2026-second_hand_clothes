@@ -5,12 +5,12 @@
 // Drives the real app while a spotlight and a card explain each feature.
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { STATE, isCompact } from '../config.js';
+import { isCompact, STATE } from '../config.js';
 import { DataLoader } from '../dataLoader.js';
-import { TradeMap } from '../map.js';
-import { startAnimation, stopAnimation, isAnimating } from '../sns/animationMode.js';
-import { TOUR_STEPS } from './steps.js';
 import { getRoot, offResize, onResize, qs, qsa } from '../dom.js';
+import { TradeMap } from '../map.js';
+import { isAnimating, startAnimation, stopAnimation } from '../sns/animationMode.js';
+import { TOUR_STEPS } from './steps.js';
 
 const SPOT_PAD = 8;
 

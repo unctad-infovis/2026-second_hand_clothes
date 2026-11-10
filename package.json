@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "postbuild": "node -e \"const fs=require('fs');['dist/index.html'].forEach(p=>{const h=fs.readFileSync(p,'utf8');fs.writeFileSync(p,h.replace(/href=\\\"\\//g,'href=\\\"./').replace(/src=\\\"\\//g,'src=\\\"./'));});\"",
+    "postbuild": "node -e \"import fs from 'node:fs';const p='dist/index.html',h=fs.readFileSync(p,'utf8');fs.writeFileSync(p,h.replace(/href=\\\"\\//g,'href=\\\"./').replace(/src=\\\"\\//g,'src=\\\"./'));\"",
     "start": "vite --open",
     "start_public": "vite --open --host",
     "preview": "vite preview",
@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@unctad-infovis/general-tools": "^1.7.0",
+    "@unctad-infovis/unctad-flags": "^1.0.3",
     "d3": "^7.9.0",
     "topojson-client": "^3.1.0"
   },

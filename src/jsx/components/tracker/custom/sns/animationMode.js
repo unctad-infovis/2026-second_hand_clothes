@@ -1,12 +1,13 @@
 // Ported from UNCTAD-TED/SHC-trade-visualization: src/sns/animationMode.js (commit 9e98152).
+import { getFlagUrl } from '@unctad-infovis/unctad-flags';
 import { ascending, easeCubicOut, interpolateHcl, interpolateNumber, max, quantile, scaleLinear, scalePow, select, zoomTransform } from 'd3';
 import { CONFIG, METRIC_FORMAT, STATE } from '../config.js';
 import { DataLoader } from '../dataLoader.js';
+import { byId, getApp, getRoot, qs } from '../dom.js';
 import { TradeMap } from '../map.js';
-import { iso2Lower } from './iso3toIso2.js';
 // md() sets transition durations to 0 under prefers-reduced-motion
 import { motionDuration as md, prefersReducedMotion } from '../motion.js';
-import { byId, getApp, getRoot, qs } from '../dom.js';
+import { iso2Lower } from './iso3toIso2.js';
 
 const YEARS = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
 const YEAR_MS = 3000;
@@ -678,13 +679,13 @@ function _renderRace(containerId, ranks, color) {
     .style('opacity', '0')
     .style('transform', d => `translateY(${rankMap.get(d.iso) * rowH}px)`);
 
-  // Use flag-icons CSS (works on Windows Chrome, unlike Unicode flag emoji)
+  // Hosted round flag SVGs (work on Windows Chrome, unlike Unicode flag emoji)
   entered
     .append('span')
     .attr('class', 'ap-flag')
     .html(d => {
       const code = iso2Lower(d.iso);
-      return code ? `<span class="fi fi-${code}"></span>${d.iso}` : d.iso;
+      return code ? `<img alt="" class="ap-flag-img" src="${getFlagUrl(code)}" />${d.iso}` : d.iso;
     });
 
   const bwrap = entered.append('div').attr('class', 'ap-bar-wrap');

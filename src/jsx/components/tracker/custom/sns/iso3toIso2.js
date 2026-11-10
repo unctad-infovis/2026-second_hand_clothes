@@ -184,7 +184,7 @@ export function getFlag(iso3) {
     .join('');
 }
 
-// Lowercase ISO2 for flag-icons CSS (e.g. "us")
+// Lowercase ISO2 for getFlagUrl (e.g. "us")
 export function iso2Lower(iso3) {
   const v = ISO3_TO_ISO2[iso3];
   return v ? v.toLowerCase() : null;

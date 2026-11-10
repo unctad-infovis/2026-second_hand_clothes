@@ -1,10 +1,10 @@
 // Ported from UNCTAD-TED/SHC-trade-visualization: src/map.js (commit 9e98152).
 import { ascending, easeCubicOut, easeElasticOut, format, geoGraticule, geoNaturalEarth1, geoPath, interpolateHcl, interpolateNumber, max, pointer, quantile, scaleLinear, scaleSqrt, select, sum, zoom, zoomIdentity, zoomTransform } from 'd3';
-import { CONFIG, STATE, METRIC_FORMAT, isCompact, isCompactTall } from './config.js';
-import { RegionConfig } from './regions.js';
+import { CONFIG, isCompact, isCompactTall, METRIC_FORMAT, STATE } from './config.js';
+import { getRoot, qs } from './dom.js';
 // md() returns 0 ms under reduced motion; transition end callbacks still fire.
 import { motionDuration as md, prefersReducedMotion } from './motion.js';
-import { getRoot, qs } from './dom.js';
+import { RegionConfig } from './regions.js';
 
 export const TradeMap = {
   isoMap: {

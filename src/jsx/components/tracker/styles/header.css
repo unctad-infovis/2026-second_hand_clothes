@@ -415,6 +415,10 @@
       --chip: var(--flow-north-north);
     }
 
+    &:hover .chip-body {
+      border-color: var(--un-color-blue-darkest);
+    }
+
     input.flow-checkbox:checked + .chip-body {
       color: var(--ungrey-dark);
       .chip-swatch {
@@ -426,9 +430,6 @@
     input.flow-checkbox:focus-visible + .chip-body {
       outline: 2px solid var(--un-color-blue);
       outline-offset: 1px;
-    }
-    &:hover .chip-body {
-      border-color: var(--un-color-blue-darkest);
     }
   }
 

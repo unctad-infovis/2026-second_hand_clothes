@@ -2,9 +2,9 @@
 import { geoCentroid, json, sum } from 'd3';
 import * as topojson from 'topojson-client';
 import { CONFIG, STATE } from './config.js';
-import { RegionConfig } from './regions.js';
-import { TradeMap } from './map.js';
 import { ASSET_BASE, getRoot } from './dom.js';
+import { TradeMap } from './map.js';
+import { RegionConfig } from './regions.js';
 
 // Fetch JSON, throwing on HTTP errors instead of parsing an error page.
 async function getJSON(url) {

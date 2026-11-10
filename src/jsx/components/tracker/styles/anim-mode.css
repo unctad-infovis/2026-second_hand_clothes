@@ -41,6 +41,24 @@
     }
   }
 
+  /* Bar chart race panel (base styles) */
+  .anim-panel {
+    background: #fff;
+    border-radius: 0;
+    border-right: 1px solid var(--un-color-grey-light);
+    bottom: 0;
+    box-shadow: 2px 0 8px rgb(0 0 0 / 7%);
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-family);
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 272px;
+    z-index: 20;
+  }
+
   /* Everything that belongs to the interactive dashboard steps aside */
   .app.anim-mode {
     /* Panel / map split ratio: 25% = 1:3 | 30% = 3:7 | 35% = 1:2 */
@@ -134,24 +152,6 @@
         display: none;
       }
     }
-  }
-
-  /* Bar chart race panel (base styles) */
-  .anim-panel {
-    background: #fff;
-    border-radius: 0;
-    border-right: 1px solid var(--un-color-grey-light);
-    bottom: 0;
-    box-shadow: 2px 0 8px rgb(0 0 0 / 7%);
-    display: flex;
-    flex-direction: column;
-    font-family: var(--font-family);
-    left: 0;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    width: 272px;
-    z-index: 20;
   }
 
   /* Panel header — year display */
@@ -267,11 +267,11 @@
     overflow: hidden;
     white-space: nowrap;
     width: 66px;
-    .fi {
-      border-radius: 1px;
+    .ap-flag-img {
+      border-radius: 50%;
       flex-shrink: 0;
-      height: 12px;
-      width: 16px;
+      height: 14px;
+      width: 14px;
     }
   }
 

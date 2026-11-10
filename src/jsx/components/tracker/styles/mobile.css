@@ -263,13 +263,13 @@
         white-space: normal;
       }
 
-      .kpi-scope .kpi-value {
-        font-size: var(--fs-base);
-        white-space: normal;
-      }
       .kpi-value {
         font-size: var(--fs-base);
         max-width: 100%;
+      }
+      .kpi-scope .kpi-value {
+        font-size: var(--fs-base);
+        white-space: normal;
       }
     }
 

@@ -67,15 +67,3 @@ export const notifyLayoutChange = () => getRoot()?.dispatchEvent(new CustomEvent
 export function teardownDomHelpers() {
   for (const h of _resize) offResize(h);
 }
-
-// External stylesheets added to <head> at runtime (flag icons for the Animate panel).
-const EXTERNAL_STYLES = ['https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css'];
-export function ensureExternalStyles() {
-  for (const href of EXTERNAL_STYLES) {
-    if (document.querySelector(`link[rel="stylesheet"][href="${href}"]`)) continue;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = href;
-    document.head.appendChild(link);
-  }
-}

@@ -52,6 +52,12 @@
       }
     }
 
+    .legend-content {
+      min-height: 0;
+      overflow-y: auto;
+      padding: 8px 10px 10px;
+    }
+
     &.collapsed {
       width: auto;
       .legend-head {
@@ -63,12 +69,6 @@
       .legend-content {
         display: none;
       }
-    }
-
-    .legend-content {
-      min-height: 0;
-      overflow-y: auto;
-      padding: 8px 10px 10px;
     }
   }
 
